@@ -5,3 +5,73 @@
     list-style: none;
     font-family: 'Nunito', sans-serif;
 }
+
+#page-layout {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100vh;
+    grid-template-areas: 
+        "nav main";
+}
+
+nav {
+    grid-area: nav;
+    border-radius: 10px;
+    margin: 2rem 1rem 2rem 2rem;
+    color: white;
+    display: flex;
+
+}
+
+main {
+    grid-area: main;
+    border-radius: 10px;
+    margin: 2rem 2rem 2rem 1rem;
+    color: white;    
+}
+
+.sections {
+    border-radius: 10px;
+}
+
+#section-layout {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 20% 40% 40%;
+    grid-template-areas:
+        "section1 section1"
+        "section2 section3"
+        "section2 section4"
+        ;
+    height: 100%;    
+}
+
+.section-one {
+    grid-area: section1;
+    margin: 1rem 1rem .5rem 1rem;
+}
+
+.section-two {
+    grid-area: section2;
+    margin: .5rem .5rem 1rem 1rem;
+}
+
+.section-three {
+    grid-area: section3;
+    margin: .5rem 1rem .5rem .5rem;
+}
+
+.section-four {
+    grid-area: section4;
+    margin: .5rem 1rem 1rem .5rem;
+}
+
+
+body, .sections {
+    background-color: rgba(0, 0, 0, 0.952);
+}
+
+nav, main {
+    background-color: rgba(58, 52, 52, 0.507);
+
+}

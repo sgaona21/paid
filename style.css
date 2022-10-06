@@ -95,7 +95,7 @@ nav, main {
 #main-nav {
     display: flex;
     align-items: center;
-    border-bottom: solid gray 2px;
+    border-bottom: solid gray 3px;
     margin-left: 1rem;
 }
 
@@ -105,6 +105,9 @@ h2 {
 
 #subs {
     border-bottom: solid 3px aquamarine;
+    position: relative;
+    top: 3px;
+    color: aquamarine
 }
 
 #monthly-expenses-nav {

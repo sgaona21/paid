@@ -74,6 +74,10 @@ main {
     color: aquamarine
 }
 
+.add-expense {
+    margin: 1rem;
+}
+
 
 body, .sections {
     background-color: #344C64;

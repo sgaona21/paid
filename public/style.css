@@ -69,6 +69,11 @@ main {
     margin: 1rem 1rem 1rem 1rem;
 }
 
+.section-two li:hover {
+    cursor: pointer;
+    color: aquamarine
+}
+
 
 body, .sections {
     background-color: #344C64;

@@ -4,6 +4,9 @@ console.log("JS Linked")
 const subs = document.getElementById("subs");
 const monthlyExdpensesNav = document.getElementById("monthly-expenses-nav");
 const totalDebt = document.getElementById("total-debt");
+const addExpense = document.querySelector(".add-expense")
+const expenseList = document.querySelector(".expense-list")
+
 
 
 subs.addEventListener("click", () => {
@@ -25,3 +28,12 @@ subs.addEventListener("click", () => {
         subs.style.color = "white";
     }
 })
+
+addExpense.addEventListener("click", () => {
+    console.log("you clicked the plus button!")
+    let newExpenseInput = document.createElement('input');
+    newExpenseInput.setAttribute('type', 'text'); 
+    expenseList.appendChild(newExpenseInput)
+
+})
+

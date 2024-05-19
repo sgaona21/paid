@@ -71,11 +71,13 @@ main {
 
 
 body, .sections {
-    background-color: #164863;
+    background-color: #344C64;
+    background-color: #00215E;
 }
 
 nav, main {
-    background-color: #427D9D;
+    background-color: #240750;
+    background-color: #2C4E80;
 }
 
 

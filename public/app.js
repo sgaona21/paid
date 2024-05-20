@@ -38,4 +38,5 @@ addExpense.addEventListener("click", () => {
     newExpense.type = "text";
     newLi.appendChild(newExpense);
     expenseList.insertBefore(newLi, addExpense);
+    newExpense.focus();
 });

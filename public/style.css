@@ -16,7 +16,7 @@ h1 {
 }
 
 h1:hover {
-    color: aquamarine;
+    color: #FFCB05;
     cursor: pointer;
 }
 
@@ -67,11 +67,12 @@ main {
 
 .section-two {
     margin: 1rem 1rem 1rem 1rem;
+    display: flex;
 }
 
 .section-two li:hover {
     cursor: pointer;
-    color: aquamarine
+    color: #FFCB05;
 }
 
 .add-expense {
@@ -87,6 +88,10 @@ body, .sections {
 nav, main {
     background-color: #240750;
     background-color: #2C4E80;
+}
+
+h3 {
+    padding: 1rem;
 }
 
 
@@ -132,7 +137,7 @@ h2 {
 }
 
 #subs:hover, #monthly-expenses-nav:hover, #total-debt:hover {
-    color: aquamarine;
+    color: #FFCB05;
     cursor: pointer;
 }
 

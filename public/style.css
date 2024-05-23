@@ -6,139 +6,35 @@
     font-family: 'Nunito', sans-serif;
 }
 
-
-
-
-/* DASHBOARD */
-h1 {
-   margin: auto;
-   margin-top: 5%;
+body {
+    background-color: #0174BE;
 }
-
-h1:hover {
-    color: #FFCB05;
-    cursor: pointer;
-}
-
-
-
-
-
-
-/* MAIN PAGE LAYOUT */
 
 #page-layout {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 15% 85%;
     grid-template-rows: 100vh;
-    grid-template-areas: 
-        "nav main";
 }
 
 nav {
-    grid-area: nav;
+    background-color: #0C356A;
     border-radius: 10px;
-    margin: 2rem 1rem 2rem 2rem;
-    color: white;
-    display: flex;
-
+    margin: 1rem .5rem 1rem 1rem;
 }
 
 main {
-    grid-area: main;
-    border-radius: 10px;
-    margin: 2rem 2rem 2rem 1rem;
-    color: white;    
-}
-
-.sections {
-    border-radius: 10px;
-}
-
-#section-layout {
-    display: grid;  
+    display: grid;
     grid-template-rows: 15% 85%;
-    height: 100%;    
 }
 
 .section-one {
-    margin: 1rem 1rem .5rem 1rem;
+    background-color: #0C356A;
+    border-radius: 10px;
+    margin: 1rem 1rem .5rem .5rem;
 }
 
 .section-two {
-    margin: .5rem 1rem 1rem 1rem;
+    border-radius: 10px;
+    background-color: #0C356A;
+    margin: .5rem 1rem 1rem .5rem;
 }
-
-.section-two li:hover {
-    cursor: pointer;
-    color: #FFCB05;
-}
-
-.add-expense {
-    margin: 1rem;
-}
-
-
-body, .sections {
-    background-color: #344C64;
-    background-color: #00215E;
-}
-
-nav, main {
-    background-color: #240750;
-    background-color: #2C4E80;
-}
-
-h3 {
-    padding: 1rem;
-}
-
-
-
-
-
-/* TOP MENU */
-
-.section-one {
-    display: flex;
-    align-items: center;
-}
-#main-nav {
-    display: flex;
-    align-items: center;
-    border-bottom: solid gray 3px;
-    margin-left: 1rem;
-}
-
-h2 {
-    margin-right: 1rem;
-}
-
-/* #subs {
-    border-bottom: solid 3px aquamarine;
-    position: relative;
-    top: 3px;
-    color: aquamarine
-} */
-
-#monthly-expenses-nav {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-
-#total-debt {
-    margin-left: 1rem;
-    margin-right: 0;
-}
-
-#subs, #monthly-expenses-nav, #total-debt {
-    padding-bottom: 1rem;
-}
-
-#subs:hover, #monthly-expenses-nav:hover, #total-debt:hover {
-    color: #FFCB05;
-    cursor: pointer;
-}
-
-
-

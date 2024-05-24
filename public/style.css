@@ -7,12 +7,12 @@
 }
 
 body {
-    background-color: #31363F;
+    background-color: #474e5a;
 }
 
 #page-layout {
     display: grid;
-    grid-template-columns: 15% auto;
+    grid-template-columns: minmax(200px, 15%) minmax(350px, auto);
     grid-template-rows: 100vh;
 }
 

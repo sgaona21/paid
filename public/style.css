@@ -93,15 +93,16 @@ main {
     color: white;
 }     
 
-#user-input-expenses {
+.user-input-expenses {
     display: grid;
     margin: 1rem;
     margin-top: 0;
+    margin-bottom: 0;
     grid-template-columns: 16.67% 16.7% 16.7% 16.7% 16.7% 16.7%;
 }
 
 
-#user-input-expenses input[type=text] {
+.user-input-expenses input[type=text] {
     background-color: lightgrey;
     width: 100%;
     flex-grow: 1;

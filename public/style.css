@@ -54,3 +54,20 @@ main {
     font-size: 1.25rem;
     align-content: center;
 }
+
+
+
+
+/********************* MEDIA QUERIES  *********************/
+
+@media (min-width: 320px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 1024px) {
+
+}

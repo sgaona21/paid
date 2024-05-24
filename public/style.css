@@ -58,14 +58,14 @@ main {
 
 #main-table {
     color: white;
-    display: flex;
+    display: grid;
+    grid-template-columns: 16.67% 16.7% 16.7% 16.7% 16.7% 16.7%;
     margin: 1rem;
 }
 
 #main-table li {
     padding: .25rem;
     border: 1px grey solid;
-    flex-grow: 1;
     text-align: center;
 }
 
@@ -89,7 +89,24 @@ main {
 #initial-add:hover {
     cursor: pointer;
     color: white;
-}                                           
+}     
+
+#user-input-expenses {
+    display: grid;
+    margin: 1rem;
+    grid-template-columns: 16.67% 16.7% 16.7% 16.7% 16.7% 16.7%;
+}
+
+
+#user-input-expenses input[type=text] {
+    background-color: lightgrey;
+    width: 100%;
+    flex-grow: 1;
+    border: none;
+    border: 1px black solid;
+    padding: .25rem;
+    font-weight: bold;
+}
 
 
 

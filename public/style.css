@@ -82,6 +82,7 @@ main {
 #initial-add {
     color: grey;
     margin: 1rem;
+    padding-left: 8%;
     font-weight: bold;
     font-size: 1.25rem;
 }
@@ -106,6 +107,7 @@ main {
     border: 1px black solid;
     padding: .25rem;
     font-weight: bold;
+    text-align: center;
 }
 
 

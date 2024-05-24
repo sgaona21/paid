@@ -6,6 +6,7 @@
     font-family: 'Nunito', sans-serif;
 }
 
+
 body {
     background-color: #474e5a;
 }
@@ -54,6 +55,42 @@ main {
     font-size: 1.25rem;
     align-content: center;
 }
+
+#main-table {
+    color: white;
+    display: flex;
+    margin: 1rem;
+}
+
+#main-table li {
+    padding: .25rem;
+    border: 1px grey solid;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#main-table li:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#main-table li:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#initial-add {
+    color: grey;
+    margin: 1rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+#initial-add:hover {
+    cursor: pointer;
+    color: white;
+}
+
 
 
 

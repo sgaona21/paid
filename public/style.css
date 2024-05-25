@@ -122,6 +122,11 @@ main {
     border: 5px red solid;
 }
 
+.expense-input-container {
+    border-bottom-left-radius: 5px;
+    border: red 2px solid;
+}
+
 
 
 

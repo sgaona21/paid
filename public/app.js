@@ -4,12 +4,14 @@ console.log("JS Linked")
 
 const plusButton = document.getElementById("initial-add");
 const expenseSection = document.querySelector(".section-two");
+const expenseInputContainer = document.querySelector(".expense-input-container");
 
 
-
+console.log(expenseInputContainer.textContent)
 
 plusButton.addEventListener("click", () => {
-    let newExpenseBar = `<div class="user-input-expenses">
+    let newBar = document.createElement('div')
+    newBar.innerHTML = `<div class="user-input-expenses">
                         <div>
                                 <input type="text">
                         </div>
@@ -29,6 +31,5 @@ plusButton.addEventListener("click", () => {
                                 <input type="text">
                         </div>
                         </div>`
-    plusButton.insertAdjacentHTML('beforebegin', newExpenseBar)
-
-})
+    expenseInputContainer.appendChild(newBar)
+});

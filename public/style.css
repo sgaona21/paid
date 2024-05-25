@@ -72,12 +72,10 @@ main {
 
 #main-table li:first-child {
     border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
 }
 
 #main-table li:last-child {
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
 }
 
 #initial-add {

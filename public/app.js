@@ -10,25 +10,25 @@ const expenseSection = document.querySelector(".section-two");
 
 plusButton.addEventListener("click", () => {
     let newExpenseBar = `<div class="user-input-expenses">
-    <div>
-        <input type="text">
-    </div>
-    <div class="check">
-        <input type="checkbox" id="checked">
-    </div>
-    <div>
-        <input type="text">
-    </div>
-    <div>
-        <input type="text">
-    </div>
-    <div>
-        <input type="text">
-    </div>
-    <div>
-        <input type="text">
-    </div>
-</div>`
+                        <div>
+                                <input type="text">
+                        </div>
+                        <div class="check">
+                            <input type="checkbox" id="checked">
+                        </div>
+                        <div>
+                                <input type="text">
+                        </div>
+                        <div>
+                                <input type="text">
+                        </div>
+                        <div>
+                                <input type="text">
+                        </div>
+                        <div>
+                                <input type="text">
+                        </div>
+                        </div>`
     plusButton.insertAdjacentHTML('beforebegin', newExpenseBar)
 
 })

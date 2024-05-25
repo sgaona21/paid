@@ -118,6 +118,10 @@ main {
    border: black solid 1px;
 }
 
+.user-input-expenses-container {
+    border: 5px red solid;
+}
+
 
 
 

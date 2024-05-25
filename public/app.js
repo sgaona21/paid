@@ -13,8 +13,8 @@ plusButton.addEventListener("click", () => {
     <div>
         <input type="text">
     </div>
-    <div>
-        <input type="text">
+    <div class="check">
+        <input type="checkbox" id="checked">
     </div>
     <div>
         <input type="text">

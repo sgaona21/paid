@@ -113,6 +113,16 @@ main {
     text-align: center;
 }
 
+.check {
+   display: flex;
+   justify-content: center;
+   background-color: lightgray;
+   border: black solid 1px;
+}
+
+
+
+
 
 
 

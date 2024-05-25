@@ -122,10 +122,15 @@ main {
     border: 5px red solid;
 }
 
-.expense-input-container {
+
+.expense-input-container div:last-child .user-input-expenses div:first-of-type input {
     border-bottom-left-radius: 5px;
-    border: red 2px solid;
 }
+
+.expense-input-container div:last-child .user-input-expenses div:last-of-type input {
+    border-bottom-right-radius: 5px;
+}
+
 
 
 

@@ -131,6 +131,13 @@ main {
     border-bottom-right-radius: 5px;
 }
 
+.user-input-expenses div:first-child {
+    border-bottom-left-radius: 5px;
+}
+
+.user-input-expenses div:last-child {
+    border-bottom-right-radius: 5px;
+}
 
 
 

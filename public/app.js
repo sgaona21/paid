@@ -11,25 +11,24 @@ console.log(expenseInputContainer.textContent)
 
 plusButton.addEventListener("click", () => {
     let newBar = document.createElement('div')
-    newBar.innerHTML = `<div class="user-input-expenses">
-                        <div>
-                                <input type="text">
+    newBar.className = "user-input-expenses";
+    newBar.innerHTML = `<div>
+                        <input type="text">
                         </div>
                         <div class="check">
-                            <input type="checkbox" id="checked">
+                        <input type="checkbox" id="checked">
                         </div>
                         <div>
-                                <input type="text">
+                        <input type="text">
                         </div>
                         <div>
-                                <input type="text">
+                        <input type="text">
                         </div>
                         <div>
-                                <input type="text">
+                        <input type="text">
                         </div>
                         <div>
-                                <input type="text">
-                        </div>
+                        <input type="text">
                         </div>`
     expenseInputContainer.appendChild(newBar)
 });

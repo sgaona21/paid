@@ -118,29 +118,13 @@ main {
    border: black solid 1px;
 }
 
-.user-input-expenses-container {
-    border: 5px red solid;
-}
-
-
-.expense-input-container div:last-child .user-input-expenses div:first-of-type input {
+.user-input-expenses:last-child div:first-child input[type=text] {
     border-bottom-left-radius: 5px;
 }
 
-.expense-input-container div:last-child .user-input-expenses div:last-of-type input {
+.user-input-expenses:last-child div:last-child input[type=text] {
     border-bottom-right-radius: 5px;
 }
-
-.user-input-expenses div:first-child {
-    border-bottom-left-radius: 5px;
-}
-
-.user-input-expenses div:last-child {
-    border-bottom-right-radius: 5px;
-}
-
-
-
 
 
 

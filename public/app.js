@@ -15,27 +15,12 @@ plusButton.addEventListener("click", () => {
     newBar.innerHTML = `<div>
                                 <input type="text">
                         </div>
+                        <div>
+                            <input type="text">
+                        </div>
                         <div class="check">
                                 <input type="checkbox" class="checked">
-                        </div>
-                        <div>
-                                <input type="text">
-                        </div>
-                        <div>
-                                <input type="text">
-                        </div>
-                        <div>
-                                <input type="text">
-                        </div>
-                        <div>
-                                <input type="text">
                         </div>`
     expenseInputContainer.appendChild(newBar)
 });
 
-plusButton.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            button.click();
-        }
-        console.log("success!!!!")
-    });

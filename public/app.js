@@ -33,7 +33,7 @@ expenseInput.addEventListener("input", () => {
         expenseInput.value = expenseInput.value.charAt(0).toUpperCase() + expenseInput.value.slice(1);
 });
 
-expenseAmountInput.addEventListener("input", () => {
+expenseAmountInput.addEventListener("focusout", () => {
         expenseAmountInput.value = '$' + expenseAmountInput.value;
 })
 

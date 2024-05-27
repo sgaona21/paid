@@ -7,12 +7,12 @@ const expenseSection = document.querySelector(".section-two");
 const expenseInputContainer = document.querySelector(".expense-input-container");
 const expenseInput = document.querySelector(".expense-input");
 const expenseAmountInput = document.querySelector(".expense-amount-input");
+const userInputExpenses = document.querySelector(".user-input-expenses");
 
 
-const stringer = "hello";
-console.log(stringer[0].toUpperCase())
 
-console.log(expenseInputContainer.textContent)
+
+
 
 plusButton.addEventListener("click", () => {
     let newBar = document.createElement('div')
@@ -34,7 +34,12 @@ expenseInput.addEventListener("input", () => {
 });
 
 expenseAmountInput.addEventListener("focusout", () => {
-        expenseAmountInput.value = '$' + expenseAmountInput.value;
+        if (expenseAmountInput.value[0] !== "$") {
+                expenseAmountInput.value = "$" + expenseAmountInput.value;
+        } 
 })
+
+
+
 
 

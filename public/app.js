@@ -6,6 +6,7 @@ const plusButton = document.getElementById("initial-add");
 const expenseSection = document.querySelector(".section-two");
 const expenseInputContainer = document.querySelector(".expense-input-container");
 const expenseInput = document.querySelector(".expense-input");
+const expenseAmountInput = document.querySelector(".expense-amount-input");
 
 
 const stringer = "hello";
@@ -30,4 +31,10 @@ plusButton.addEventListener("click", () => {
 
 expenseInput.addEventListener("input", () => {
         expenseInput.value = expenseInput.value.charAt(0).toUpperCase() + expenseInput.value.slice(1);
+});
+
+expenseAmountInput.addEventListener("input", () => {
+        expenseAmountInput.value = '$' + expenseAmountInput.value;
 })
+
+

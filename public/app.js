@@ -1,6 +1,10 @@
 console.log("JS Linked")
 
-/********************GLOBAL VARIABLES********************/
+
+
+
+
+/******************** GLOBAL VARIABLES ********************/
 
 const plusButton = document.getElementById("initial-add");
 const expenseSection = document.querySelector(".section-two");
@@ -10,6 +14,10 @@ const expenseAmountInput = document.querySelector(".expense-amount-input");
 const userInputExpenses = document.querySelector(".user-input-expenses");
 
 
+
+
+
+/******************* MAIN EXPENSE TABLE ******************/
 
 plusButton.addEventListener("click", () => {
     let newBar = document.createElement('div');
@@ -25,7 +33,6 @@ plusButton.addEventListener("click", () => {
                         </div>`
     expenseInputContainer.appendChild(newBar)
 });
-
 
 expenseInputContainer.addEventListener("focusout", () => {
         if (event.target.className === "expense-input") {

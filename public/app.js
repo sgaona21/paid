@@ -36,6 +36,10 @@ expenseAmountInput.addEventListener("focusout", () => {
         } 
 });
 
+expenseInputContainer.addEventListener("click", () => {
+        console.log("event delegation");
+});
+
 
 
 

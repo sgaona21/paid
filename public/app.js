@@ -4,18 +4,15 @@ console.log("JS Linked")
 
 const plusButton = document.getElementById("initial-add");
 const expenseSection = document.querySelector(".section-two");
-const expenseInputContainer = document.querySelector(".expense-input-container");
 const expenseInput = document.querySelector(".expense-input");
+const expenseInputContainer = document.querySelector(".expense-input-container");
 const expenseAmountInput = document.querySelector(".expense-amount-input");
 const userInputExpenses = document.querySelector(".user-input-expenses");
 
 
 
-
-
-
 plusButton.addEventListener("click", () => {
-    let newBar = document.createElement('div')
+    let newBar = document.createElement('div');
     newBar.className = "user-input-expenses";
     newBar.innerHTML = `<div>
                                 <input type="text" class="expense-input">
@@ -37,7 +34,7 @@ expenseAmountInput.addEventListener("focusout", () => {
         if (expenseAmountInput.value[0] !== "$") {
                 expenseAmountInput.value = "$" + expenseAmountInput.value;
         } 
-})
+});
 
 
 

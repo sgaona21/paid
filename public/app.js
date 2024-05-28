@@ -18,7 +18,7 @@ plusButton.addEventListener("click", () => {
                                 <input type="text" class="expense-input">
                         </div>
                         <div>
-                            <input type="text">
+                            <input type="text" class="expense-amount-input">
                         </div>
                         <div class="check">
                                 <input type="checkbox" class="checked">
@@ -26,21 +26,19 @@ plusButton.addEventListener("click", () => {
     expenseInputContainer.appendChild(newBar)
 });
 
-expenseInput.addEventListener("input", () => {
-        expenseInput.value = expenseInput.value.charAt(0).toUpperCase() + expenseInput.value.slice(1);
+
+expenseInputContainer.addEventListener("focusout", () => {
+        if (event.target.className === "expense-input") {
+                console.log("this has focused out")
+                event.target.value = event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1);
+        }
 });
 
-expenseAmountInput.addEventListener("focusout", () => {
-        if (expenseAmountInput.value[0] !== "$") {
-                expenseAmountInput.value = "$" + expenseAmountInput.value;
+expenseInputContainer.addEventListener("focusout", () => {
+        if (event.target.className === "expense-amount-input") {
+
+        if (event.target.value[0] !== "$") {
+                event.target.value = "$" + event.target.value;
         } 
+        }
 });
-
-expenseInputContainer.addEventListener("click", () => {
-        console.log("event delegation");
-});
-
-
-
-
-

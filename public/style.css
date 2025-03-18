@@ -78,7 +78,7 @@ main {
     border-top-right-radius: 5px;
 }
 
-#initial-add {
+#add-button {
     color: grey;
     margin: 1rem;
     padding-left: 8%;
@@ -86,7 +86,7 @@ main {
     font-size: 1.25rem;
 }
 
-#initial-add:hover {
+#add-button:hover {
     cursor: pointer;
     color: white;
 }     

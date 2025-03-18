@@ -20,19 +20,25 @@ const db = getFirestore(app);
 
 
 
+function heyLOL() {
+    console.log("hey LOL")
+};
 
-
-// Reference to input field
+// DOM ELEMENTS
 const expenseInput = document.querySelector(".expense-input");
 const expenseAmount = document.querySelector(".expense-amount-input");
-const paidCheckbox = document.getElementById("paid-checkbox");
+// const paidCheckbox = document.getElementById("paid-checkbox");
+const checked = document.querySelector(".checked");
 const expensesContainer = document.querySelector(".user-input-expenses")
+const addButton = document.getElementById("add-button");
+const expenseInputContainer = document.querySelector(".expense-input-container")
+
 
 // Function to save input value to Firestore
 const saveExpenseToFirestore = async () => {
     const expenseValue = expenseInput.value;
     const amountValue = expenseAmount.value;
-    const checkStatus = paidCheckbox.checked;
+    const checkStatus = checked.checked;
     
     try {
         await setDoc(doc(db, "expenses", "entry1"), {
@@ -57,7 +63,7 @@ const loadExpenseFromFirestore = async () => {
             const data = docSnap.data();
             expenseInput.value = data.expense || "";
             expenseAmount.value = data.amount || "";
-            paidCheckbox.checked = data.isChecked || false;
+            checked.checked = data.isChecked || false;
             console.log("Expense data loaded from Firestore:", data);
         } else {
             console.log("No saved expense data found.");
@@ -76,9 +82,27 @@ window.addEventListener("DOMContentLoaded", loadExpenseFromFirestore);
 // Save value to Firestore whenever input changes
 expenseInput.addEventListener("input", saveExpenseToFirestore);
 expenseAmount.addEventListener("input", saveExpenseToFirestore);
-paidCheckbox.addEventListener("change", saveExpenseToFirestore);
+checked.addEventListener("change", saveExpenseToFirestore);
 
 
+function addNewExpenseRow() {
+    let newBar = document.createElement('div');
+    newBar.className = "user-input-expenses";
+    newBar.innerHTML = `<div>
+                            <input type="text" class="expense-input">
+                        </div>
+                        <div>
+                            <input type="text" class="expense-amount-input">
+                        </div>
+                        <div class="check">
+                            <input type="checkbox" class="checked">
+                        </div>`
+    expenseInputContainer.appendChild(newBar)          
+
+}
+
+
+addButton.addEventListener("click", addNewExpenseRow)
 
 
 

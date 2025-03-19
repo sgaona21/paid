@@ -1,6 +1,17 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  addDoc,
+  collection,
+  getDocs,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+
 
 
 // Firebase config (already in your code)
@@ -19,11 +30,81 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-
-
 function heyLOL() {
     console.log("hey LOL")
-};
+}
+
+class Expense {
+    constructor(name, amount, isPaid = false) {
+      this.name = name;
+      this.amount = amount;
+      this.isPaid = isPaid;
+    }
+  
+    createNewExpenseRow() {
+        const row = document.createElement("div");
+        row.className = "user-input-expenses";
+        row.setAttribute("data-doc-id", this.docId || "unsaved");
+    
+        row.innerHTML = `
+          <div><input type="text" class="expense-input" value="${this.name}"></div>
+          <div><input type="text" class="expense-amount-input" value="${this.amount}"></div>
+          <div class="check"><input type="checkbox" class="checked" ${this.isPaid ? "checked" : ""}></div>
+          <div><button class="delete-expense-btn">🗑️</button></div>
+        `;
+    
+        // Save reference to DOM element
+        this.rowElement = row;
+    
+        // Add event listeners
+        const nameInput = row.querySelector(".expense-input");
+        const amountInput = row.querySelector(".expense-amount-input");
+        const checkbox = row.querySelector(".checked");
+        const deleteButton = row.querySelector(".delete-expense-btn");
+    
+        nameInput.addEventListener("input", async () => {
+          this.name = nameInput.value;
+          if (this.docId) {
+            await updateDoc(doc(db, "expenses", this.docId), { name: this.name });
+          }
+        });
+    
+        amountInput.addEventListener("input", async () => {
+          this.amount = amountInput.value;
+          if (this.docId) {
+            await updateDoc(doc(db, "expenses", this.docId), { amount: this.amount });
+          }
+        });
+    
+        checkbox.addEventListener("change", async () => {
+          this.isPaid = checkbox.checked;
+          if (this.docId) {
+            await updateDoc(doc(db, "expenses", this.docId), { isPaid: this.isPaid });
+          }
+        });
+    
+        deleteButton.addEventListener("click", async () => {
+          await this.deleteFromFirestore();
+          this.rowElement.remove();
+        });
+    
+        // Append to DOM
+        expenseInputContainer.appendChild(row);
+    }
+  
+    deleteExpense() {
+      
+    }
+
+    loadFromFireStore() {
+
+    }
+  }
+  
+
+
+
+
 
 // DOM ELEMENTS
 const expenseInput = document.querySelector(".expense-input");
@@ -76,7 +157,9 @@ const loadExpenseFromFirestore = async () => {
 
 
 // Load saved value from Firestore on page load
-window.addEventListener("DOMContentLoaded", loadExpenseFromFirestore);
+// window.addEventListener("DOMContentLoaded", loadExpenseFromFirestore);
+
+
 
 
 
@@ -86,44 +169,9 @@ expenseAmount.addEventListener("input", saveExpenseToFirestore);
 checked.addEventListener("change", saveExpenseToFirestore);
 
 
-// function addNewExpenseRow() {
-//     let newBar = document.createElement('div');
-//     newBar.className = "user-input-expenses";
-//     newBar.innerHTML = `
-//         <div><input type="text" class="expense-input"></div>
-//         <div><input type="text" class="expense-amount-input"></div>
-//         <div class="check"><input type="checkbox" class="checked"></div>`;
 
-//     expenseInputContainer.appendChild(newBar);
 
-//     const newExpenseInput = newBar.querySelector('.expense-input');
-//     const newAmountInput = newBar.querySelector('.expense-amount-input');
-//     const newCheckbox = newBar.querySelector('.checked');
 
-//     const saveNewExpenseToFirestore = async () => {
-//         const expenseValue = newExpenseInput.value;
-//         const amountValue = newAmountInput.value;
-//         const checkStatus = newCheckbox.checked;
-        
-//         try {
-//             await setDoc(doc(db, "expenses", "entry2"), {
-//                 expense: expenseValue,
-//                 amount: amountValue,
-//                 isChecked: checkStatus
-//             });
-//             console.log("All expenses saved to Firestore:");
-//         } catch (error) {
-//             console.error("Error saving to Firestore:", error);
-//         }
-//     };
-
-//     newExpenseInput.addEventListener("input", saveNewExpenseToFirestore);
-//     newAmountInput.addEventListener("input", saveNewExpenseToFirestore);
-//     newCheckbox.addEventListener("change", saveNewExpenseToFirestore);
-
-//     window.addEventListener("DOMContentLoaded", loadNewExpenseFromFirestore);
-
-// }
 
 function addNewExpenseRow(expenseValue = "", amountValue = "", isChecked = false) {
     let newBar = document.createElement('div');
@@ -139,27 +187,83 @@ function addNewExpenseRow(expenseValue = "", amountValue = "", isChecked = false
     const newAmountInput = newBar.querySelector('.expense-amount-input');
     const newCheckbox = newBar.querySelector('.checked');
 
+    // 🔥 Save to Firestore only once when the row is created
     const saveNewExpenseToFirestore = async () => {
-        const expenseValue = newExpenseInput.value;
-        const amountValue = newAmountInput.value;
-        const checkStatus = newCheckbox.checked;
-        
+        const expense = newExpenseInput.value;
+        const amount = newAmountInput.value;
+        const isChecked = newCheckbox.checked;
+
         try {
-            await setDoc(doc(db, "expenses", "entry2"), {
-                expense: expenseValue,
-                amount: amountValue,
-                isChecked: checkStatus
+            const docRef = await addDoc(collection(db, "expenses"), {
+                expense,
+                amount,
+                isChecked
             });
-            console.log("entry2 saved to Firestore");
+            console.log("New expense saved with ID:", docRef.id);
+
+            // Store the document ID on the element for future updates
+            newBar.setAttribute("data-doc-id", docRef.id);
+
+            // Add listeners for live updates
+            addUpdateListeners(docRef.id);
         } catch (error) {
-            console.error("Error saving entry2:", error);
+            console.error("Error saving expense:", error);
         }
     };
 
-    newExpenseInput.addEventListener("input", saveNewExpenseToFirestore);
-    newAmountInput.addEventListener("input", saveNewExpenseToFirestore);
-    newCheckbox.addEventListener("change", saveNewExpenseToFirestore);
+    // 🔄 Add event listeners for updating Firestore when the inputs change
+    const addUpdateListeners = (docId) => {
+        const expenseRef = doc(db, "expenses", docId);
+
+        newExpenseInput.addEventListener("input", async () => {
+            try {
+                await updateDoc(expenseRef, { expense: newExpenseInput.value });
+            } catch (error) {
+                console.error("Error updating expense name:", error);
+            }
+        });
+
+        newAmountInput.addEventListener("input", async () => {
+            try {
+                await updateDoc(expenseRef, { amount: newAmountInput.value });
+            } catch (error) {
+                console.error("Error updating amount:", error);
+            }
+        });
+
+        newCheckbox.addEventListener("change", async () => {
+            try {
+                await updateDoc(expenseRef, { isChecked: newCheckbox.checked });
+            } catch (error) {
+                console.error("Error updating checkbox:", error);
+            }
+        });
+    };
+
+    // Initial save when the row is added
+    saveNewExpenseToFirestore();
 }
+
+const loadExpensesFromFirestore = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "expenses"));
+  
+      if (querySnapshot.empty) {
+        console.log("No saved expense data found.");
+        return;
+      }
+  
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        addNewExpenseRow(data.expense, data.amount, data.isChecked);
+      });
+  
+      console.log("All expenses loaded from Firestore.");
+    } catch (error) {
+      console.error("Error loading expenses from Firestore:", error);
+    }
+  };
+
 
 const loadEntry2FromFirestore = async () => {
     try {
@@ -179,13 +283,17 @@ const loadEntry2FromFirestore = async () => {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    loadExpenseFromFirestore();      // Load entry1
-    loadEntry2FromFirestore();       // Load entry2
+    loadExpenseFromFirestore();  
+    loadEntry2FromFirestore();     
 });
 
 
 
-addButton.addEventListener("click", addNewExpenseRow)
+// window.addEventListener("DOMContentLoaded", loadExpensesFromFirestore);
+
+
+addButton.addEventListener("click", () => addNewExpenseRow());
+
 
 
 

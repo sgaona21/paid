@@ -34,72 +34,72 @@ function heyLOL() {
     console.log("hey LOL")
 }
 
-class Expense {
-    constructor(name, amount, isPaid = false) {
-      this.name = name;
-      this.amount = amount;
-      this.isPaid = isPaid;
-    }
+// class Expense {
+//     constructor(name, amount, isPaid = false) {
+//       this.name = name;
+//       this.amount = amount;
+//       this.isPaid = isPaid;
+//     }
   
-    createNewExpenseRow() {
-        const row = document.createElement("div");
-        row.className = "user-input-expenses";
-        row.setAttribute("data-doc-id", this.docId || "unsaved");
+//     createNewExpenseRow() {
+//         const row = document.createElement("div");
+//         row.className = "user-input-expenses";
+//         row.setAttribute("data-doc-id", this.docId || "unsaved");
     
-        row.innerHTML = `
-          <div><input type="text" class="expense-input" value="${this.name}"></div>
-          <div><input type="text" class="expense-amount-input" value="${this.amount}"></div>
-          <div class="check"><input type="checkbox" class="checked" ${this.isPaid ? "checked" : ""}></div>
-          <div><button class="delete-expense-btn">🗑️</button></div>
-        `;
+//         row.innerHTML = `
+//           <div><input type="text" class="expense-input" value="${this.name}"></div>
+//           <div><input type="text" class="expense-amount-input" value="${this.amount}"></div>
+//           <div class="check"><input type="checkbox" class="checked" ${this.isPaid ? "checked" : ""}></div>
+//           <div><button class="delete-expense-btn">🗑️</button></div>
+//         `;
     
-        // Save reference to DOM element
-        this.rowElement = row;
+//         // Save reference to DOM element
+//         this.rowElement = row;
     
-        // Add event listeners
-        const nameInput = row.querySelector(".expense-input");
-        const amountInput = row.querySelector(".expense-amount-input");
-        const checkbox = row.querySelector(".checked");
-        const deleteButton = row.querySelector(".delete-expense-btn");
+//         // Add event listeners
+//         const nameInput = row.querySelector(".expense-input");
+//         const amountInput = row.querySelector(".expense-amount-input");
+//         const checkbox = row.querySelector(".checked");
+//         const deleteButton = row.querySelector(".delete-expense-btn");
     
-        nameInput.addEventListener("input", async () => {
-          this.name = nameInput.value;
-          if (this.docId) {
-            await updateDoc(doc(db, "expenses", this.docId), { name: this.name });
-          }
-        });
+//         nameInput.addEventListener("input", async () => {
+//           this.name = nameInput.value;
+//           if (this.docId) {
+//             await updateDoc(doc(db, "expenses", this.docId), { name: this.name });
+//           }
+//         });
     
-        amountInput.addEventListener("input", async () => {
-          this.amount = amountInput.value;
-          if (this.docId) {
-            await updateDoc(doc(db, "expenses", this.docId), { amount: this.amount });
-          }
-        });
+//         amountInput.addEventListener("input", async () => {
+//           this.amount = amountInput.value;
+//           if (this.docId) {
+//             await updateDoc(doc(db, "expenses", this.docId), { amount: this.amount });
+//           }
+//         });
     
-        checkbox.addEventListener("change", async () => {
-          this.isPaid = checkbox.checked;
-          if (this.docId) {
-            await updateDoc(doc(db, "expenses", this.docId), { isPaid: this.isPaid });
-          }
-        });
+//         checkbox.addEventListener("change", async () => {
+//           this.isPaid = checkbox.checked;
+//           if (this.docId) {
+//             await updateDoc(doc(db, "expenses", this.docId), { isPaid: this.isPaid });
+//           }
+//         });
     
-        deleteButton.addEventListener("click", async () => {
-          await this.deleteFromFirestore();
-          this.rowElement.remove();
-        });
+//         deleteButton.addEventListener("click", async () => {
+//           await this.deleteFromFirestore();
+//           this.rowElement.remove();
+//         });
     
-        // Append to DOM
-        expenseInputContainer.appendChild(row);
-    }
+//         // Append to DOM
+//         expenseInputContainer.appendChild(row);
+//     }
   
-    deleteExpense() {
+//     deleteExpense() {
       
-    }
+//     }
 
-    loadFromFireStore() {
+//     loadFromFireStore() {
 
-    }
-  }
+//     }
+//   }
   
 
 
@@ -292,8 +292,12 @@ window.addEventListener("DOMContentLoaded", () => {
 // window.addEventListener("DOMContentLoaded", loadExpensesFromFirestore);
 
 
-addButton.addEventListener("click", () => addNewExpenseRow());
+// addButton.addEventListener("click", () => addNewExpenseRow());
 
+addButton.addEventListener("click", () => {
+    let brandNewRow = new Expense("", "");
+    brandNewRow.createNewExpenseRow();
+})
 
 
 

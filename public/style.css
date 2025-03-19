@@ -131,6 +131,12 @@ main {
     border-bottom-right-radius: 5px;
 }
 
+.delete-button {
+    color: gray;
+    font-size: 2rem;
+    
+}
+
 
 
 

@@ -41,91 +41,6 @@ const menu = document.getElementById('customMenu');
 
 
 
-
-
-// addButton.addEventListener("click", () => {
-//   let newBar = document.createElement('div');
-//   newBar.className = "user-input-expenses";
-//   newBar.innerHTML = `<div>
-//                               <input type="text" class="expense-input">
-//                       </div>
-//                       <div>
-//                           <input type="text" class="expense-amount-input">
-//                       </div>
-//                       <div class="check">
-//                               <input type="checkbox" class="checked">
-//                       </div>`
-//   expenseInputContainer.appendChild(newBar)
-// });
-
-
-
-
-
-
-// class Expense {
-//   constructor(expense, amount, isChecked = false) {
-//     this.expense = expense;
-//     this.amount = amount;
-//     this.isChecked = isChecked;
-//   }
-
-//   renderExpenseRow() {
-
-//   }
-
-//   deleteExpenseRow() {
-//     let currentTarget = null;
-
-//     document.addEventListener('contextmenu', function(e) {
-//       if (e.target.classList.contains("expense-amount-input") || e.target.classList.contains("expense-input") || e.target.classList.contains("check") ) {
-//         e.preventDefault();
-//         currentTarget = e.target;
-
-//         menu.style.display = 'block';
-//         menu.style.left = `${e.pageX}px`;
-//         menu.style.top = `${e.pageY}px`;
-//       } else {
-//         menu.style.display = 'none';
-//         currentTarget = null;
-//       }
-//     });
-
-//     menu.addEventListener('click', function() {
-//       if (currentTarget.classList.contains("check")) {
-//         currentTarget.parentElement.remove();
-//         currentTarget = null;
-//       } else if (currentTarget.classList.contains("expense-input") || currentTarget.classList.contains("expense-amount-input")) {
-//         currentTarget.parentElement.parentElement.remove();
-//       }
-//       menu.style.display = 'none';
-//     });
-
-//     document.addEventListener('click', function(e) {
-//       if (!menu.contains(e.target)) {
-//         menu.style.display = 'none';
-//       }
-//     });
-//   }
-
-//   saveExpenseRowToDatabase() {
-
-//   }
-
-//   loadExpenseValuesFromDatabase() {
-
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
 class Expense {
   constructor(expense, amount, isChecked = false, id = null) {
     this.expense = expense;
@@ -218,17 +133,6 @@ window.addEventListener("DOMContentLoaded", () => {
   Expense.loadExpenseValuesFromDatabase();
 });
 
-
-
-// let brandNewRow = new Expense("", "", false)
-
-
-
-
-
-// addButton.addEventListener("click", () => {
-//   brandNewRow.deleteExpenseRow();
-// })
 
 // Add new row button
 addButton.addEventListener("click", () => {

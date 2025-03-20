@@ -140,13 +140,13 @@ main {
 
 #customMenu {
     display: none;
-    font-size: 1rem;
+    font-size: .85rem;
     color:whitesmoke;
     position: absolute;
-    border: 2px solid whitesmoke;
+    border: 1px solid whitesmoke;
     border-radius: 10px;
     background: rgb(218, 28, 28);
-    padding: .35rem;
+    padding: .3rem;
     z-index: 1;
     cursor: pointer;
   }

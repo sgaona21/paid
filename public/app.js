@@ -8,7 +8,8 @@ import {
   addDoc,
   collection,
   getDocs,
-  updateDoc
+  updateDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // Firebase config (already in your code)
@@ -35,61 +36,203 @@ function heyLOL() {
 const userInputExpenses = document.querySelector(".user-input-expenses");
 const expenseInputContainer = document.querySelector(".expense-input-container")
 const addButton = document.getElementById("add-button")
-
-
-
-
-
-
-
-
-addButton.addEventListener("click", () => {
-  let newBar = document.createElement('div');
-  newBar.className = "user-input-expenses";
-  newBar.innerHTML = `<div>
-                              <input type="text" class="expense-input">
-                      </div>
-                      <div>
-                          <input type="text" class="expense-amount-input">
-                      </div>
-                      <div class="check">
-                              <input type="checkbox" class="checked">
-                      </div>`
-  expenseInputContainer.appendChild(newBar)
-});
-
-
-
-
 const menu = document.getElementById('customMenu');
-let currentTarget = null;
 
-document.addEventListener('contextmenu', function(e) {
-  if (e.target.classList.contains("expense-amount-input") || e.target.classList.contains("expense-input") || e.target.classList.contains("check") ) {
-    e.preventDefault();
-    currentTarget = e.target;
 
-    menu.style.display = 'block';
-    menu.style.left = `${e.pageX}px`;
-    menu.style.top = `${e.pageY}px`;
-  } else {
-    menu.style.display = 'none';
-    currentTarget = null;
+
+
+
+
+// addButton.addEventListener("click", () => {
+//   let newBar = document.createElement('div');
+//   newBar.className = "user-input-expenses";
+//   newBar.innerHTML = `<div>
+//                               <input type="text" class="expense-input">
+//                       </div>
+//                       <div>
+//                           <input type="text" class="expense-amount-input">
+//                       </div>
+//                       <div class="check">
+//                               <input type="checkbox" class="checked">
+//                       </div>`
+//   expenseInputContainer.appendChild(newBar)
+// });
+
+
+
+
+
+
+// class Expense {
+//   constructor(expense, amount, isChecked = false) {
+//     this.expense = expense;
+//     this.amount = amount;
+//     this.isChecked = isChecked;
+//   }
+
+//   renderExpenseRow() {
+
+//   }
+
+//   deleteExpenseRow() {
+//     let currentTarget = null;
+
+//     document.addEventListener('contextmenu', function(e) {
+//       if (e.target.classList.contains("expense-amount-input") || e.target.classList.contains("expense-input") || e.target.classList.contains("check") ) {
+//         e.preventDefault();
+//         currentTarget = e.target;
+
+//         menu.style.display = 'block';
+//         menu.style.left = `${e.pageX}px`;
+//         menu.style.top = `${e.pageY}px`;
+//       } else {
+//         menu.style.display = 'none';
+//         currentTarget = null;
+//       }
+//     });
+
+//     menu.addEventListener('click', function() {
+//       if (currentTarget.classList.contains("check")) {
+//         currentTarget.parentElement.remove();
+//         currentTarget = null;
+//       } else if (currentTarget.classList.contains("expense-input") || currentTarget.classList.contains("expense-amount-input")) {
+//         currentTarget.parentElement.parentElement.remove();
+//       }
+//       menu.style.display = 'none';
+//     });
+
+//     document.addEventListener('click', function(e) {
+//       if (!menu.contains(e.target)) {
+//         menu.style.display = 'none';
+//       }
+//     });
+//   }
+
+//   saveExpenseRowToDatabase() {
+
+//   }
+
+//   loadExpenseValuesFromDatabase() {
+
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+class Expense {
+  constructor(expense, amount, isChecked = false, id = null) {
+    this.expense = expense;
+    this.amount = amount;
+    this.isChecked = isChecked;
+    this.id = id || crypto.randomUUID(); // unique id if not from Firestore
   }
+
+  renderExpenseRow() {
+    const row = document.createElement("div");
+    row.className = "user-input-expenses";
+    row.setAttribute("data-id", this.id);
+
+    row.innerHTML = `
+      <div><input type="text" class="expense-input" value="${this.expense}"></div>
+      <div><input type="text" class="expense-amount-input" value="${this.amount}"></div>
+      <div class="check"><input type="checkbox" class="checked" ${this.isChecked ? "checked" : ""}></div>
+    `;
+
+    // Save to DB on input change
+    row.querySelector(".expense-input").addEventListener("input", (e) => {
+      this.expense = e.target.value;
+      this.saveExpenseRowToDatabase();
+    });
+
+    row.querySelector(".expense-amount-input").addEventListener("input", (e) => {
+      this.amount = e.target.value;
+      this.saveExpenseRowToDatabase();
+    });
+
+    row.querySelector(".checked").addEventListener("change", (e) => {
+      this.isChecked = e.target.checked;
+      this.saveExpenseRowToDatabase();
+    });
+
+    // Right-click delete setup
+    this.setupDeleteMenu(row);
+
+    expenseInputContainer.appendChild(row);
+  }
+
+  setupDeleteMenu(rowElement) {
+    let currentTarget = null;
+
+    rowElement.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      currentTarget = rowElement;
+      menu.style.display = 'block';
+      menu.style.left = `${e.pageX}px`;
+      menu.style.top = `${e.pageY}px`;
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+
+    menu.addEventListener("click", async () => {
+      if (currentTarget) {
+        await deleteDoc(doc(db, "expenses", this.id));
+        currentTarget.remove();
+        menu.style.display = "none";
+      }
+    });
+  }
+
+  async saveExpenseRowToDatabase() {
+    const expenseData = {
+      expense: this.expense,
+      amount: this.amount,
+      isChecked: this.isChecked
+    };
+
+    await setDoc(doc(db, "expenses", this.id), expenseData);
+  }
+
+  static async loadExpenseValuesFromDatabase() {
+    const querySnapshot = await getDocs(collection(db, "expenses"));
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const expense = new Expense(data.expense, data.amount, data.isChecked, docSnap.id);
+      expense.renderExpenseRow();
+    });
+  }
+}
+
+// Load expenses on page load
+window.addEventListener("DOMContentLoaded", () => {
+  Expense.loadExpenseValuesFromDatabase();
 });
 
-menu.addEventListener('click', function() {
-  if (currentTarget.classList.contains("check")) {
-    currentTarget.parentElement.remove();
-    currentTarget = null;
-  } else if (currentTarget.classList.contains("expense-input") || currentTarget.classList.contains("expense-amount-input")) {
-    currentTarget.parentElement.parentElement.remove();
-  }
-  menu.style.display = 'none';
-});
 
-document.addEventListener('click', function(e) {
-  if (!menu.contains(e.target)) {
-    menu.style.display = 'none';
-  }
+
+// let brandNewRow = new Expense("", "", false)
+
+
+
+
+
+// addButton.addEventListener("click", () => {
+//   brandNewRow.deleteExpenseRow();
+// })
+
+// Add new row button
+addButton.addEventListener("click", () => {
+  const newExpense = new Expense("", "", false);
+  newExpense.renderExpenseRow();
+  newExpense.saveExpenseRowToDatabase();
 });

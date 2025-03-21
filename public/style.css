@@ -83,9 +83,10 @@ main {
 #add-button {
     color: grey;
     margin: 1rem;
-    padding-left: 8%;
+    margin-left: 2rem;
     font-weight: bold;
     font-size: 1.25rem;
+    width: 2%;
 }
 
 #add-button:hover {

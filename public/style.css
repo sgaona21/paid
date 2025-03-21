@@ -37,6 +37,8 @@ main {
 }
 
 .section-two {
+    display: flex;
+    /* justify-content: space-between; */
     border-radius: 10px;
     background-color: #15191f;
     margin: .5rem 1rem 1rem .5rem;
@@ -59,7 +61,7 @@ main {
 #main-table {
     color: white;
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 40% 40% 20%;
     margin: 1rem;
     margin-bottom: 0;
 }
@@ -96,7 +98,7 @@ main {
     margin: 1rem;
     margin-top: 0;
     margin-bottom: 0;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 40% 40% 20%;
     
 
 }
@@ -134,6 +136,7 @@ main {
 }
 
 #expense-grid-container {
+    flex-grow: 1;
     max-width: 50%;
     min-width: 300px;
 }
@@ -149,6 +152,36 @@ main {
     padding: .3rem;
     z-index: 1;
     cursor: pointer;
+  }
+
+.monthly-totals {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    min-width: 20%;
+    margin-left: 4rem;
+}
+
+.monthly-totals div:first-child {
+    color: white;
+    padding: .25rem;
+    border: 1px grey solid;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+} 
+
+.monthly-totals input[type=text] {
+    background-color: lightgray;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-weight: bold;
+    width: 100%;
+    border: none;
+    padding: .25rem;
+
+    
   }
 
 

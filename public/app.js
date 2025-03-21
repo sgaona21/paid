@@ -12,7 +12,7 @@ import {
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// Firebase config (already in your code)
+// Firebase config 
 const firebaseConfig = {
     apiKey: "AIzaSyCSc_JlrE5ojWvMSlE7upEBQqrJqV-7TZg",
     authDomain: "paid-2024.firebaseapp.com",
@@ -46,7 +46,7 @@ class Expense {
     this.expense = expense;
     this.amount = amount;
     this.isChecked = isChecked;
-    this.id = id || crypto.randomUUID(); // unique id if not from Firestore
+    this.id = id || crypto.randomUUID(); 
   }
 
   renderExpenseRow() {

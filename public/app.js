@@ -37,6 +37,7 @@ const userInputExpenses = document.querySelector(".user-input-expenses");
 const expenseInputContainer = document.querySelector(".expense-input-container")
 const addButton = document.getElementById("add-button")
 const menu = document.getElementById('customMenu');
+const totalMonthlyAmount = document.querySelector(".total-monthly-amount")
 
 
 
@@ -140,3 +141,18 @@ addButton.addEventListener("click", () => {
   newExpense.renderExpenseRow();
   newExpense.saveExpenseRowToDatabase();
 });
+
+totalMonthlyAmount.disabled = true;
+
+function calculateMonthlyExpenseSum() {
+  let allAmountValues = document.querySelectorAll(".expense-amount-input");
+  let sum = 0;
+  for (let i = 0; i < allAmountValues.length; i++) {
+    let numberToAdd = parseInt(allAmountValues[i].value)
+    sum += numberToAdd;
+  }
+  totalMonthlyAmount.value = sum;
+}
+
+let monthlyTotalsTitle = document.querySelector(".monthly-totals-title");
+monthlyTotalsTitle.addEventListener("click", calculateMonthlyExpenseSum);

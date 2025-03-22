@@ -39,9 +39,6 @@ const addButton = document.getElementById("add-button")
 const menu = document.getElementById('customMenu');
 const totalMonthlyAmount = document.querySelector(".total-monthly-amount")
 
-
-
-
 class Expense {
   constructor(expense, amount, isChecked = false, id = null) {
     this.expense = expense;
@@ -65,11 +62,20 @@ class Expense {
     row.querySelector(".expense-input").addEventListener("input", (e) => {
       this.expense = e.target.value;
       this.saveExpenseRowToDatabase();
+
+      const expenseInput = document.querySelector(".expense-input");
+      const expenseAmountInput = document.querySelector(".expense-amount-input")
+      expenseAmountInput.addEventListener('blur', calculateMonthlyExpenseSum())
+      expenseInput.addEventListener('blur', calculateMonthlyExpenseSum())
     });
 
     row.querySelector(".expense-amount-input").addEventListener("input", (e) => {
       this.amount = e.target.value;
       this.saveExpenseRowToDatabase();
+      const expenseInput = document.querySelector(".expense-input");
+      const expenseAmountInput = document.querySelector(".expense-amount-input")
+      expenseAmountInput.addEventListener('blur', calculateMonthlyExpenseSum())
+      expenseInput.addEventListener('blur', calculateMonthlyExpenseSum())
     });
 
     row.querySelector(".checked").addEventListener("change", (e) => {
@@ -142,7 +148,6 @@ addButton.addEventListener("click", () => {
   newExpense.saveExpenseRowToDatabase();
 });
 
-totalMonthlyAmount.disabled = true;
 
 function calculateMonthlyExpenseSum() {
   let allAmountValues = document.querySelectorAll(".expense-amount-input");
@@ -151,8 +156,7 @@ function calculateMonthlyExpenseSum() {
     let numberToAdd = parseInt(allAmountValues[i].value)
     sum += numberToAdd;
   }
-  totalMonthlyAmount.value = sum;
+  totalMonthlyAmount.innerHTML = sum;
 }
 
-let monthlyTotalsTitle = document.querySelector(".monthly-totals-title");
-monthlyTotalsTitle.addEventListener("click", calculateMonthlyExpenseSum);
+

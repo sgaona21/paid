@@ -163,7 +163,7 @@ main {
     margin-left: 4rem;
 }
 
-.monthly-totals div:first-child {
+.monthly-totals-title {
     color: white;
     padding: .25rem;
     border: 1px grey solid;
@@ -172,8 +172,9 @@ main {
     border-top-right-radius: 5px;
 } 
 
-.monthly-totals input[type=text] {
+.total-monthly-amount {
     background-color: lightgray;
+    color: black;
     text-align: center;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -181,9 +182,11 @@ main {
     width: 100%;
     border: none;
     padding: .25rem;
-
-    
+    font-size: .9rem;
+    height: 1.75rem;
   }
+
+
 
 
 

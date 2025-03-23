@@ -135,6 +135,13 @@ class Expense {
   }
 }
 
+
+
+
+
+
+
+
 // Load expenses on page load
 window.addEventListener("DOMContentLoaded", () => {
   Expense.loadExpenseValuesFromDatabase();

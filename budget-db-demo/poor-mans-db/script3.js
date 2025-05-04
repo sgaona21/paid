@@ -1,5 +1,6 @@
 const expenseInputcontainer = document.querySelector('.expense-input-container');
 const addButton = document.getElementById('add-button');
+let database = [];
 
 function createNewExpenserow() {
     console.log(expenseInputcontainer.children.length)
@@ -35,8 +36,26 @@ function createNewExpenserow() {
     userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer);
     expenseInputcontainer.appendChild(userInputExpenses);
 
+    let row = {};
+    expenseInput.addEventListener('input', () => {
+        console.log(expenseInput.value)
+        row.expense = expenseInput.value;
+        console.log(row);
+    })
+    amountInput.addEventListener('input', () => {
+        row.amount = amountInput.value;
+        console.log(row)
+    })
+    checkBoxInput.addEventListener('change', () => {
+        row.isChecked = checkBoxInput.checked
+        console.log(row)
+    })
+
+
 }
 
 addButton.addEventListener('click', () => {
     createNewExpenserow();
-})
+});
+
+

@@ -82,14 +82,7 @@ getTransactions()
 
 
 
-/******************** GLOBAL VARIABLES ********************/
 
-const plusButton = document.getElementById("initial-add");
-const expenseSection = document.querySelector(".section-two");
-const expenseInput = document.querySelector(".expense-input");
-const expenseInputContainer = document.querySelector(".expense-input-container");
-const expenseAmountInput = document.querySelector(".expense-amount-input");
-const userInputExpenses = document.querySelector(".user-input-expenses");
 
 
 

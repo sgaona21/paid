@@ -74,11 +74,14 @@ addButton.addEventListener('click', () => {
 
 fetch('./data.txt')
 .then(response => response.json())
-.then(data => console.log(data[0].name))
+.then(data => console.log(data))
 
-fetch('./data.txt')
-.then(response => response.json())
-.then(data => loadFromPoorDatabase(data))
+fetch('http://localhost:3000/read')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(item => loadFromPoorDatabase(item));
+  });
+
 
 
 function loadFromPoorDatabase(data) {

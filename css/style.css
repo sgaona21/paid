@@ -96,6 +96,7 @@ main {
 
 .user-input-expenses {
     display: grid;
+    position: relative;
     margin: 1rem;
     margin-top: 0;
     margin-bottom: 0;
@@ -184,6 +185,17 @@ main {
     padding: .25rem;
     font-size: .9rem;
     height: 1.75rem;
+  }
+
+  .delete {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    visibility: hidden;
+  }
+
+  .delete:hover {
+    cursor: pointer;
   }
 
 

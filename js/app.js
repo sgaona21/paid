@@ -29,13 +29,18 @@ function createNewExpenserow() {
     checkBoxInput.type = 'checkbox';
     checkBoxInput.classList.add('checked');
 
+    let deleteButton = document.createElement('div');
+    deleteButton.classList.add('delete');
+    deleteButton.textContent = '❌';
+
     expenseContainer.appendChild(expenseInput);
     amountcontainer.appendChild(amountInput);
     checkBoxContainer.appendChild(checkBoxInput);
-    userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer);
+    userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
     expenseInputcontainer.appendChild(userInputExpenses);
 
     let row = {};
+    row.index = userInputExpenses.dataset.index;
     expenseInput.addEventListener('input', () => {
         console.log(expenseInput.value)
         row.expense = expenseInput.value;
@@ -48,6 +53,17 @@ function createNewExpenserow() {
     checkBoxInput.addEventListener('change', () => {
         row.isChecked = checkBoxInput.checked
         console.log(row)
+    })
+
+    deleteButton.addEventListener('click', (e) => {
+        e.target.parentNode.remove();
+    })
+    userInputExpenses.addEventListener('mouseover', () => {
+        deleteButton.style.visibility = 'visible';
+    })
+
+    userInputExpenses.addEventListener('mouseleave', () => {
+        deleteButton.style.visibility = 'hidden';
     })
 }
 
@@ -97,13 +113,19 @@ function loadFromPoorDatabase(data) {
     checkBoxInput.classList.add('checked');
     checkBoxInput.checked = data[0].paid;
 
+    let deleteButton = document.createElement('div');
+    deleteButton.classList.add('delete');
+    deleteButton.textContent = '❌';
+
+
     expenseContainer.appendChild(expenseInput);
     amountcontainer.appendChild(amountInput);
     checkBoxContainer.appendChild(checkBoxInput);
-    userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer);
+    userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
     expenseInputcontainer.appendChild(userInputExpenses);
 
     let row = {};
+    row.index = userInputExpenses.dataset.index;
     expenseInput.addEventListener('blur', () => {
         console.log(expenseInput.value)
         row.expense = expenseInput.value;
@@ -119,6 +141,17 @@ function loadFromPoorDatabase(data) {
         row.isChecked = checkBoxInput.checked
         console.log(row);
         saveToDatabase(row);
+    })
+
+    deleteButton.addEventListener('click', (e) => {
+        e.target.parentNode.remove();
+    })
+    userInputExpenses.addEventListener('mouseover', () => {
+        deleteButton.style.visibility = 'visible';
+    })
+
+    userInputExpenses.addEventListener('mouseleave', () => {
+        deleteButton.style.visibility = 'hidden';
     })
 }
 

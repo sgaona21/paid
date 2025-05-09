@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "index": 3,
+        "expense" : "Rent",
+        "amount" : 1250,
+        "isPaid" : false
+    }, 
+
+    {
+        "index": 3,
+        "expense" : "Car",
+        "amount" : 340,
+        "isPaid" : false
+    },
+
+    {
+        "index": 1,
+        "expense" : "Phone",
+        "amount" : 85,
+        "isPaid" : true
+    }
+]

@@ -1,0 +1,16 @@
+{
+  "name": "paid",
+  "version": "1.0.0",
+  "description": "A finance tracker that keeps track of monthly bills, subscriptions, and total debt",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

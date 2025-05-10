@@ -72,16 +72,17 @@ addButton.addEventListener('click', () => {
 });
 
 
-fetch('./data.txt')
+fetch('/data.txt')
 .then(response => response.json())
 .then(data => console.log(data.length))
+
+
 
 fetch('./data.txt')
   .then(response => response.json())
   .then(data => {
     sortByIndex(data)
     loadFromPoorDatabase(data)
-    
   });
 
 

@@ -78,7 +78,7 @@ fetch('/data.txt')
 
 
 
-fetch('./data.txt')
+fetch('/data.txt')
   .then(response => response.json())
   .then(data => {
     sortByIndex(data)
@@ -93,7 +93,6 @@ function loadFromPoorDatabase(data) {
         let userInputExpenses = document.createElement('div');
         userInputExpenses.classList.add('user-input-expenses');
         userInputExpenses.dataset.index = data[i].index
-        console.log('new data set index: ' + userInputExpenses.dataset.index)
 
         let expenseContainer = document.createElement('div');
         

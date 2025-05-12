@@ -1,14 +1,18 @@
 const expenseInputcontainer = document.querySelector('.expense-input-container');
 const addButton = document.getElementById('add-button');
+let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
 
 function createNewExpenserow() {
+    let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}
     console.log(expenseInputcontainer.children.length)
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 
     let userInputExpenses = document.createElement('div');
     userInputExpenses.classList.add('user-input-expenses');
-    userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1)
-    console.log('new data set index: ' + userInputExpenses.dataset.index)
+    userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
+    console.log('new data set index: ' + userInputExpenses.dataset.index);
+    newRow.index = Number(currentNumberOfChildren + 1);
+    console.log(newRow)
 
     let expenseContainer = document.createElement('div');
     
@@ -39,25 +43,40 @@ function createNewExpenserow() {
     userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
     expenseInputcontainer.appendChild(userInputExpenses);
 
-    let row = {};
-    row.index = userInputExpenses.dataset.index;
-    expenseInput.addEventListener('input', () => {
-        console.log(expenseInput.value)
-        row.expense = expenseInput.value;
-        console.log(row);
-    })
-    amountInput.addEventListener('input', () => {
-        row.amount = amountInput.value;
-        console.log(row)
-    })
-    checkBoxInput.addEventListener('change', () => {
-        row.isChecked = checkBoxInput.checked
-        console.log(row)
-    })
+    
+
+        userInputExpenses.addEventListener('input', (e) => {
+            let updatedRow = rowTemplate;
+            console.log(updatedRow)
+            updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
+            updatedRow.expense = expenseInput.value;
+            updatedRow.amount = Number(amountInput.value);
+            updatedRow.isPaid = checkBoxInput.checked;
+            console.log(updatedRow)
+        fetch('/update-row', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedRow)
+        });
+        })
 
     deleteButton.addEventListener('click', (e) => {
-        e.target.parentNode.remove();
-    })
+            let deletedIndex = e.target.parentNode.dataset.index;
+            console.log('deleted index: ', deletedIndex);
+            e.target.parentNode.remove();
+            fetch('/index', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ deletedIndex })
+            });
+            
+        })
+
+
     userInputExpenses.addEventListener('mouseover', () => {
         deleteButton.style.visibility = 'visible';
     })
@@ -65,10 +84,25 @@ function createNewExpenserow() {
     userInputExpenses.addEventListener('mouseleave', () => {
         deleteButton.style.visibility = 'hidden';
     })
+
+    addButton.addEventListener('click', () => {
+        
+    });
+
+    return newRow
 }
 
 addButton.addEventListener('click', () => {
-    createNewExpenserow();
+    let brandNewRow = createNewExpenserow();
+
+    fetch('/new-row', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(brandNewRow)
+        });
+
 });
 
 
@@ -129,7 +163,17 @@ function loadFromPoorDatabase(data) {
         expenseInputcontainer.appendChild(userInputExpenses);
 
         deleteButton.addEventListener('click', (e) => {
+            let deletedIndex = e.target.parentNode.dataset.index;
+            console.log('deleted index: ', deletedIndex);
             e.target.parentNode.remove();
+            fetch('/index', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ deletedIndex })
+            });
+            
         })
 
         userInputExpenses.addEventListener('mouseover', () => {
@@ -139,6 +183,25 @@ function loadFromPoorDatabase(data) {
         userInputExpenses.addEventListener('mouseleave', () => {
             deleteButton.style.visibility = 'hidden';
         })
+
+        let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
+        userInputExpenses.addEventListener('input', (e) => {
+            let updatedRow = rowTemplate;
+            console.log(updatedRow)
+            updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
+            updatedRow.expense = expenseInput.value;
+            updatedRow.amount = Number(amountInput.value);
+            updatedRow.isPaid = checkBoxInput.checked;
+            console.log(updatedRow)
+        fetch('/update-row', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedRow)
+        });
+        })
+
     }
     
 }

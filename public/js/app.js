@@ -46,7 +46,8 @@ function createNewExpenserow() {
     
 
         userInputExpenses.addEventListener('input', (e) => {
-            let updatedRow = rowTemplate;
+            let updatedRow = { ...rowTemplate };
+
             console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
@@ -186,7 +187,7 @@ function loadFromPoorDatabase(data) {
 
         let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
         userInputExpenses.addEventListener('input', (e) => {
-            let updatedRow = rowTemplate;
+            let updatedRow = { ...rowTemplate };
             console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;

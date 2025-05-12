@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json()); // This is crucial. Without it, req.body = undefined sadness.
 
-app.use(express.static('public'));
+
 
 app.post('/index', (req, res) => {
   const deletedIndex = Number(req.body.deletedIndex);
@@ -28,11 +28,11 @@ app.post('/index', (req, res) => {
     console.log(filteredData);
 
     fs.writeFile('public/data.txt', JSON.stringify(filteredData, null, 2), (err) => {
-  
+      res.sendStatus(204)
     });
 
   })
-  res.sendStatus(204)
+  
 });
 
 app.post('/update-row', (req, res) => {

@@ -11,7 +11,7 @@ function createNewExpenserow() {
     userInputExpenses.classList.add('user-input-expenses');
     userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
     console.log('new data set index: ' + userInputExpenses.dataset.index);
-    newRow.index = userInputExpenses.dataset.index
+    newRow.index = Number(userInputExpenses.dataset.index)
     console.log(newRow)
 
     let expenseContainer = document.createElement('div');
@@ -64,9 +64,15 @@ function createNewExpenserow() {
         })
 
     deleteButton.addEventListener('click', (e) => {
+        
             let deletedIndex = e.target.parentNode.dataset.index;
             console.log('deleted index: ', deletedIndex);
             e.target.parentNode.remove();
+
+            for (let i = 0; i < expenseInputcontainer.children.length; i++) {
+                expenseInputcontainer.children[i].dataset.index = i + 1;
+            }
+            
             fetch('/index', {
                 method: 'POST',
                 headers: {
@@ -74,6 +80,8 @@ function createNewExpenserow() {
             },
             body: JSON.stringify({ deletedIndex })
             });
+
+            
             
         })
 
@@ -105,6 +113,7 @@ addButton.addEventListener('click', () => {
         });
 
 });
+
 
 
 fetch('/data.txt')
@@ -167,6 +176,10 @@ function loadFromPoorDatabase(data) {
             let deletedIndex = e.target.parentNode.dataset.index;
             console.log('deleted index: ', deletedIndex);
             e.target.parentNode.remove();
+
+            for (let i = 0; i < expenseInputcontainer.children.length; i++) {
+                expenseInputcontainer.children[i].dataset.index = i + 1;
+            }
             fetch('/index', {
                 method: 'POST',
                 headers: {

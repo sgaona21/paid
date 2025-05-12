@@ -11,7 +11,7 @@ function createNewExpenserow() {
     userInputExpenses.classList.add('user-input-expenses');
     userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
     console.log('new data set index: ' + userInputExpenses.dataset.index);
-    newRow.index = Number(currentNumberOfChildren + 1);
+    newRow.index = userInputExpenses.dataset.index
     console.log(newRow)
 
     let expenseContainer = document.createElement('div');

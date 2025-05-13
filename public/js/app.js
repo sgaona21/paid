@@ -116,13 +116,13 @@ addButton.addEventListener('click', () => {
 
 
 
-fetch('database/demo/data.txt')
+fetch('/data')
 .then(response => response.json())
 .then(data => console.log(data.length))
 
 
 
-fetch('database/demo/data.txt')
+fetch('/data')
   .then(response => response.json())
   .then(data => {
     sortByIndex(data)

@@ -9,6 +9,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 
+app.get('/data', (req, res) => {
+  const filePath = path.join(__dirname, 'database', 'demo', 'data.txt');
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('😭 Failed to read data.txt:', err);
+      return res.sendStatus(500);
+    }
+
+    try {
+      const json = JSON.parse(data);
+      res.json(json);
+    } catch (parseErr) {
+      console.error('💀 Invalid JSON in data.txt:', parseErr);
+      res.sendStatus(500);
+    }
+  });
+
+})
 
 app.post('/index', (req, res) => {
   const deletedIndex = Number(req.body.deletedIndex);

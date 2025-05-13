@@ -1,20 +1,128 @@
 [
   {
     "index": 1,
-    "expense": "Rent",
-    "amount": 1250,
+    "expense": "dfd",
+    "amount": 0,
     "isPaid": false
   },
   {
     "index": 2,
-    "expense": "Car",
-    "amount": 340,
+    "expense": "fdf",
+    "amount": 0,
     "isPaid": false
   },
   {
     "index": 3,
-    "expense": "Phone",
-    "amount": 85,
+    "expense": "dfd",
+    "amount": 0,
+    "isPaid": false
+  },
+  {
+    "index": 1,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 2,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 3,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 1,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 2,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 3,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 4,
+    "expense": "fdf",
+    "amount": 0,
+    "isPaid": false
+  },
+  {
+    "index": 1,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 2,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 3,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 4,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 5,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 1,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 2,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 3,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 4,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 5,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 6,
+    "expense": "",
+    "amount": "",
     "isPaid": false
   }
 ]

@@ -173,7 +173,7 @@ main {
     border-top-right-radius: 5px;
 } 
 
-.total-monthly-amount {
+.total-monthly-amount, .remaining-amount {
     background-color: lightgray;
     color: black;
     text-align: center;

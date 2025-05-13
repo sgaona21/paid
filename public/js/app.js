@@ -2,6 +2,7 @@ const expenseInputcontainer = document.querySelector('.expense-input-container')
 const addButton = document.getElementById('add-button');
 let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
 const totalMonthlyAmount = document.querySelector('.total-monthly-amount');
+const remainingAmount = document.querySelector('.remaining-amount');
 
 function createNewExpenserow() {
     let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}
@@ -44,7 +45,7 @@ function createNewExpenserow() {
 
     
 
-        userInputExpenses.addEventListener('input', (e) => {
+        userInputExpenses.addEventListener('focusout', (e) => {
             let updatedRow = { ...rowTemplate };
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
@@ -60,6 +61,7 @@ function createNewExpenserow() {
         body: JSON.stringify(updatedRow)
         });
         monthlySum();
+        monthlyRemaining();
         })
 
     deleteButton.addEventListener('click', (e) => {
@@ -78,6 +80,7 @@ function createNewExpenserow() {
             body: JSON.stringify({ deletedIndex })
             });
             monthlySum();
+            monthlyRemaining();
         })
 
 
@@ -89,9 +92,14 @@ function createNewExpenserow() {
         deleteButton.style.visibility = 'hidden';
     })
 
+    checkBoxInput.addEventListener('change', () => {
+        monthlyRemaining();
+    })
+
     addButton.addEventListener('click', () => {
         
     });
+
 
     return newRow
 }
@@ -123,6 +131,7 @@ fetch('/data')
     sortByIndex(data)
     loadFromPoorDatabase(data)
     monthlySum();
+    monthlyRemaining()
   });
 
 
@@ -183,6 +192,7 @@ function loadFromPoorDatabase(data) {
             body: JSON.stringify({ deletedIndex })
             });
             monthlySum();
+            monthlyRemaining();
             
         })
 
@@ -194,8 +204,12 @@ function loadFromPoorDatabase(data) {
             deleteButton.style.visibility = 'hidden';
         })
 
+        checkBoxInput.addEventListener('change', () => {
+            monthlyRemaining();
+        })
+
         let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
-        userInputExpenses.addEventListener('input', (e) => {
+        userInputExpenses.addEventListener('focusout', (e) => {
             let updatedRow = { ...rowTemplate };
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
@@ -211,6 +225,7 @@ function loadFromPoorDatabase(data) {
         body: JSON.stringify(updatedRow)
         });
         monthlySum();
+        monthlyRemaining();
         })
     }
 }
@@ -229,6 +244,26 @@ function monthlySum() {
     });
 
     totalMonthlyAmount.textContent = '$' + sum;
-    console.log('hey lol')
+    return sum;
 }
+
+function monthlyRemaining() {
+    let total = monthlySum();
+    let rows = document.querySelectorAll('.expense-input-container');
+    let checkboxes = rows[0].querySelectorAll('.checked');
+    let amountInputs = rows[0].querySelectorAll('.expense-amount-input')
+    let totalPaid = 0;
+
+    rows.forEach(row => {
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                totalPaid += Number(amountInputs[i].value)
+            }
+        }
+    })
+    let difference = total - totalPaid;
+    remainingAmount.textContent = '$' + difference;
+    return difference;
+}
+
 

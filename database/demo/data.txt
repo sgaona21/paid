@@ -13,14 +13,20 @@
   },
   {
     "index": 3,
-    "expense": "Insurance",
-    "amount": 135,
+    "expense": "Phone ",
+    "amount": 85,
     "isPaid": false
   },
   {
     "index": 4,
-    "expense": "Phone",
-    "amount": 85,
+    "expense": "Isurance",
+    "amount": 135,
+    "isPaid": false
+  },
+  {
+    "index": 5,
+    "expense": "Treehouse",
+    "amount": 49,
     "isPaid": false
   }
 ]

@@ -220,19 +220,6 @@ function loadFromPoorDatabase(data) {
     
 }
 
-function saveToDatabase(row) {
-    fetch('http://localhost:3000/write', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(row)
-    })
-    .then(res => res.json())
-    .then(data => console.log('Saved:', data))
-    .catch(err => console.error('Save error:', err));
-}
-
 function sortByIndex(expenses) {
     return expenses.sort((a, b) => a.index - b.index);
 }

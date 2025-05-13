@@ -1,6 +1,7 @@
 const expenseInputcontainer = document.querySelector('.expense-input-container');
 const addButton = document.getElementById('add-button');
 let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
+const totalMonthlyAmount = document.querySelector('.total-monthly-amount');
 
 function createNewExpenserow() {
     let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}
@@ -58,6 +59,7 @@ function createNewExpenserow() {
         },
         body: JSON.stringify(updatedRow)
         });
+        monthlySum();
         })
 
     deleteButton.addEventListener('click', (e) => {
@@ -75,6 +77,7 @@ function createNewExpenserow() {
             },
             body: JSON.stringify({ deletedIndex })
             });
+            monthlySum();
         })
 
 
@@ -119,6 +122,7 @@ fetch('/data')
   .then(data => {
     sortByIndex(data)
     loadFromPoorDatabase(data)
+    monthlySum();
   });
 
 
@@ -178,6 +182,7 @@ function loadFromPoorDatabase(data) {
             },
             body: JSON.stringify({ deletedIndex })
             });
+            monthlySum();
             
         })
 
@@ -205,6 +210,7 @@ function loadFromPoorDatabase(data) {
         },
         body: JSON.stringify(updatedRow)
         });
+        monthlySum();
         })
     }
 }
@@ -212,3 +218,17 @@ function loadFromPoorDatabase(data) {
 function sortByIndex(expenses) {
     return expenses.sort((a, b) => a.index - b.index);
 }
+
+
+function monthlySum() {
+    const amountInputs = document.querySelectorAll('.expense-amount-input');
+    let sum = 0;
+
+    amountInputs.forEach(input => {
+        sum += Number(input.value);
+    });
+
+    totalMonthlyAmount.textContent = '$' + sum;
+    console.log('hey lol')
+}
+

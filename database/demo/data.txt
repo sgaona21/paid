@@ -3,7 +3,7 @@
     "index": 1,
     "expense": "Rent",
     "amount": 1240,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 2,
@@ -27,6 +27,24 @@
     "index": 5,
     "expense": "Treehouse",
     "amount": 49,
+    "isPaid": false
+  },
+  {
+    "index": 6,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 7,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 8,
+    "expense": "",
+    "amount": "",
     "isPaid": false
   }
 ]

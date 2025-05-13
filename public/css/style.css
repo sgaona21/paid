@@ -188,15 +188,20 @@ main {
   }
 
   .delete {
-    position: absolute;
-    right: 3px;
-    top: 3px;
-    visibility: hidden;
-  }
+  position: absolute;
+  right: 3px;
+  top: 7px;
+  visibility: hidden;
+  font-size: 0.65rem;
+  transition: font-size 0.2s ease, top 0.2s ease;
+}
 
-  .delete:hover {
-    cursor: pointer;
-  }
+.delete:hover {
+  cursor: pointer;
+  top: 4px;
+  font-size: 0.9rem;
+}
+
 
 
 

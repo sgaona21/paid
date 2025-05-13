@@ -209,6 +209,7 @@ function loadFromPoorDatabase(data) {
         })
 
         let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
+        
         userInputExpenses.addEventListener('focusout', (e) => {
             let updatedRow = { ...rowTemplate };
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);

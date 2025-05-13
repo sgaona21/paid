@@ -4,13 +4,11 @@ let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
 
 function createNewExpenserow() {
     let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}
-    console.log(expenseInputcontainer.children.length)
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 
     let userInputExpenses = document.createElement('div');
     userInputExpenses.classList.add('user-input-expenses');
     userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
-    console.log('new data set index: ' + userInputExpenses.dataset.index);
     newRow.index = Number(userInputExpenses.dataset.index)
     console.log(newRow)
 
@@ -47,15 +45,12 @@ function createNewExpenserow() {
 
         userInputExpenses.addEventListener('input', (e) => {
             let updatedRow = { ...rowTemplate };
-
-            console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
             if (amountInput.value != '') {
                 updatedRow.amount = Number(amountInput.value);
             }
             updatedRow.isPaid = checkBoxInput.checked;
-            console.log(updatedRow)
         fetch('/update-row', {
             method: 'POST',
             headers: {
@@ -66,9 +61,7 @@ function createNewExpenserow() {
         })
 
     deleteButton.addEventListener('click', (e) => {
-        
             let deletedIndex = e.target.parentNode.dataset.index;
-            console.log('deleted index: ', deletedIndex);
             e.target.parentNode.remove();
 
             for (let i = 0; i < expenseInputcontainer.children.length; i++) {
@@ -82,9 +75,6 @@ function createNewExpenserow() {
             },
             body: JSON.stringify({ deletedIndex })
             });
-
-            
-            
         })
 
 
@@ -176,7 +166,6 @@ function loadFromPoorDatabase(data) {
 
         deleteButton.addEventListener('click', (e) => {
             let deletedIndex = e.target.parentNode.dataset.index;
-            console.log('deleted index: ', deletedIndex);
             e.target.parentNode.remove();
 
             for (let i = 0; i < expenseInputcontainer.children.length; i++) {
@@ -203,14 +192,12 @@ function loadFromPoorDatabase(data) {
         let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
         userInputExpenses.addEventListener('input', (e) => {
             let updatedRow = { ...rowTemplate };
-            console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
             if (amountInput.value != '') {
                 updatedRow.amount = Number(amountInput.value);
             }
             updatedRow.isPaid = checkBoxInput.checked;
-            console.log(updatedRow)
         fetch('/update-row', {
             method: 'POST',
             headers: {
@@ -219,9 +206,7 @@ function loadFromPoorDatabase(data) {
         body: JSON.stringify(updatedRow)
         });
         })
-
     }
-    
 }
 
 function sortByIndex(expenses) {

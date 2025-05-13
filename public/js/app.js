@@ -51,7 +51,9 @@ function createNewExpenserow() {
             console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
-            updatedRow.amount = Number(amountInput.value);
+            if (amountInput.value != '') {
+                updatedRow.amount = Number(amountInput.value);
+            }
             updatedRow.isPaid = checkBoxInput.checked;
             console.log(updatedRow)
         fetch('/update-row', {
@@ -204,7 +206,9 @@ function loadFromPoorDatabase(data) {
             console.log(updatedRow)
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
-            updatedRow.amount = Number(amountInput.value);
+            if (amountInput.value != '') {
+                updatedRow.amount = Number(amountInput.value);
+            }
             updatedRow.isPaid = checkBoxInput.checked;
             console.log(updatedRow)
         fetch('/update-row', {

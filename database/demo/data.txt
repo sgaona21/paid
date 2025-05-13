@@ -1,14 +1,26 @@
 [
   {
     "index": 1,
-    "expense": "car",
-    "amount": 0,
+    "expense": "Rent",
+    "amount": 1240,
     "isPaid": false
   },
   {
     "index": 2,
-    "expense": "phone",
-    "amount": 0,
+    "expense": "Car",
+    "amount": 340,
+    "isPaid": false
+  },
+  {
+    "index": 3,
+    "expense": "Phone",
+    "amount": 85,
+    "isPaid": false
+  },
+  {
+    "index": 4,
+    "expense": "Insurance",
+    "amount": 135,
     "isPaid": false
   }
 ]

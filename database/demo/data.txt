@@ -2,49 +2,55 @@
   {
     "index": 1,
     "expense": "Rent",
-    "amount": 1240,
+    "amount": 1242,
     "isPaid": true
   },
   {
     "index": 2,
-    "expense": "Car",
-    "amount": 340,
+    "expense": "Car Payment",
+    "amount": 338,
     "isPaid": false
   },
   {
     "index": 3,
     "expense": "Phone ",
     "amount": 85,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 4,
-    "expense": "Isurance",
+    "expense": "Car Insurance",
     "amount": 135,
     "isPaid": false
   },
   {
     "index": 5,
-    "expense": "Treehouse",
-    "amount": 49,
-    "isPaid": false
+    "expense": "Fuel 1",
+    "amount": 50,
+    "isPaid": true
   },
   {
     "index": 6,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
+    "expense": "Fuel 2",
+    "amount": 50,
+    "isPaid": true
   },
   {
     "index": 7,
-    "expense": "",
-    "amount": "",
+    "expense": "Fuel 3",
+    "amount": 50,
     "isPaid": false
   },
   {
     "index": 8,
-    "expense": "",
-    "amount": "",
+    "expense": "Fuel 4",
+    "amount": 50,
+    "isPaid": false
+  },
+  {
+    "index": 9,
+    "expense": "Gym",
+    "amount": 26,
     "isPaid": false
   }
 ]

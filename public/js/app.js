@@ -12,7 +12,6 @@ function createNewExpenserow() {
     userInputExpenses.classList.add('user-input-expenses');
     userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
     newRow.index = Number(userInputExpenses.dataset.index)
-    console.log(newRow)
 
     let expenseContainer = document.createElement('div');
     
@@ -121,7 +120,7 @@ addButton.addEventListener('click', () => {
 
 fetch('/data')
 .then(response => response.json())
-.then(data => console.log(data.length))
+.then(data => console.log(data))
 
 
 
@@ -209,7 +208,7 @@ function loadFromPoorDatabase(data) {
         })
 
         let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
-        
+
         userInputExpenses.addEventListener('focusout', (e) => {
             let updatedRow = { ...rowTemplate };
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);

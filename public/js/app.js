@@ -1,8 +1,3 @@
-const expenseInputcontainer = document.querySelector('.expense-input-container');
-const addButton = document.getElementById('add-button');
-let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false}
-const totalMonthlyAmount = document.querySelector('.total-monthly-amount');
-const remainingAmount = document.querySelector('.remaining-amount');
 
 function createNewExpenserow() {
     let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}

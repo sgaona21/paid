@@ -1,6 +1,6 @@
 
 function createNewExpenserow() {
-    let newRow = {"index": null, "expense": '', "amount": '', "isPaid": false}
+    let newRow = rowTemplate;
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 
     let userInputExpenses = document.createElement('div');
@@ -38,9 +38,8 @@ function createNewExpenserow() {
     expenseInputcontainer.appendChild(userInputExpenses);
 
     
-
-        userInputExpenses.addEventListener('focusout', (e) => {
-            let updatedRow = { ...rowTemplate };
+    userInputExpenses.addEventListener('focusout', (e) => {
+            let updatedRow = rowTemplate
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
             if (amountInput.value != '') {
@@ -100,7 +99,6 @@ function createNewExpenserow() {
 
 addButton.addEventListener('click', () => {
     let brandNewRow = createNewExpenserow();
-
     fetch('/new-row', {
         method: 'POST',
         headers: {
@@ -110,14 +108,6 @@ addButton.addEventListener('click', () => {
         });
 
 });
-
-
-
-fetch('/data')
-.then(response => response.json())
-.then(data => console.log(data))
-
-
 
 fetch('/data')
   .then(response => response.json())

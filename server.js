@@ -73,7 +73,6 @@ app.post('/update-row', (req, res) => {
   })
 
 
-  // Do whatever: update your data.txt, yell at it, validate it, sacrifice it to the file system
   res.send('Received your updatedRow, it has been judged.');
 });
 
@@ -93,7 +92,6 @@ app.post('/new-row', (req, res) => {
 
   })
 
-  // Do whatever: update your data.txt, yell at it, validate it, sacrifice it to the file system
   res.send('Received your updatedRow, it has been judged.');
 });
 

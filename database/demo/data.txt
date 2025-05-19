@@ -45,30 +45,12 @@
     "index": 8,
     "expense": "Fuel 4",
     "amount": 50,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 9,
     "expense": "Gym",
     "amount": 26,
-    "isPaid": false
-  },
-  {
-    "index": 10,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 11,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 12,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
+    "isPaid": true
   }
 ]

@@ -10,3 +10,4 @@ const remainingAmount = document.querySelector('.remaining-amount');
 
 // ******************* OBJECTS ************************ //
 let rowTemplate = {"index": null, "expense": '', "amount": '', "isPaid": false};
+

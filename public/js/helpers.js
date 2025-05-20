@@ -16,7 +16,7 @@ async function loadData() {
 
 
 function createNewExpenserow() {
-    let newRow = rowTemplate;
+    let newRow = structuredClone(rowTemplate);
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 
     let userInputExpenses = document.createElement('div');
@@ -54,7 +54,7 @@ function createNewExpenserow() {
     expenseInputcontainer.appendChild(userInputExpenses);
 
     userInputExpenses.addEventListener('focusout', (e) => {
-        let updatedRow = rowTemplate;
+        let updatedRow = structuredClone(rowTemplate);
         updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
         updatedRow.expense = expenseInput.value;
         if (amountInput.value != '') {
@@ -75,7 +75,7 @@ function createNewExpenserow() {
     })
 
     userInputExpenses.addEventListener('change', (e) => {
-        let updatedRow = rowTemplate;
+        let updatedRow = structuredClone(rowTemplate);
         updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
         updatedRow.expense = expenseInput.value;
         if (amountInput.value != '') {
@@ -93,7 +93,6 @@ function createNewExpenserow() {
 
         monthlySum();
         monthlyRemaining();
-        console.log('hey lol')
     })
 
     
@@ -207,7 +206,7 @@ function loadFromPoorDatabase(data) {
         })
 
         userInputExpenses.addEventListener('focusout', (e) => {
-            let updatedRow = rowTemplate;
+            let updatedRow = structuredClone(rowTemplate);
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
             if (amountInput.value != '') {
@@ -226,7 +225,7 @@ function loadFromPoorDatabase(data) {
         })
 
         userInputExpenses.addEventListener('change', (e) => {
-            let updatedRow = rowTemplate;
+            let updatedRow = structuredClone(rowTemplate);
             updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
             updatedRow.expense = expenseInput.value;
             if (amountInput.value != '') {

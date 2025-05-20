@@ -38,7 +38,6 @@ function createNewExpenserow() {
     userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
     expenseInputcontainer.appendChild(userInputExpenses);
 
-
     userInputExpenses.addEventListener('focusout', (e) => {
         let updatedRow = rowTemplate;
         updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
@@ -60,9 +59,30 @@ function createNewExpenserow() {
         monthlyRemaining();
     })
 
+    userInputExpenses.addEventListener('change', (e) => {
+        let updatedRow = rowTemplate;
+        updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
+        updatedRow.expense = expenseInput.value;
+        if (amountInput.value != '') {
+                updatedRow.amount = Number(amountInput.value);
+        }
+        updatedRow.isPaid = checkBoxInput.checked;
+
+        fetch('/update-row', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRow)
+        });
+
+        monthlySum();
+        monthlyRemaining();
+        console.log('hey lol')
+    })
+
     
-
-
+    
 
     deleteButton.addEventListener('click', (e) => {
         let deletedIndex = e.target.parentNode.dataset.index;
@@ -99,3 +119,4 @@ function createNewExpenserow() {
 
     return newRow
 }
+

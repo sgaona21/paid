@@ -6,9 +6,7 @@ const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use(express.json());
-
 
 app.get('/data', (req, res) => {
   const filePath = path.join(__dirname, 'database', 'demo', 'data.txt');

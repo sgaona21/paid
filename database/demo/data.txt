@@ -9,7 +9,7 @@
     "index": 2,
     "expense": "Car Payment",
     "amount": 338,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 3,
@@ -21,7 +21,7 @@
     "index": 4,
     "expense": "Car Insurance",
     "amount": 135,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 5,
@@ -33,7 +33,7 @@
     "index": 6,
     "expense": "Fuel 2",
     "amount": 50,
-    "isPaid": true
+    "isPaid": false
   },
   {
     "index": 7,
@@ -45,12 +45,12 @@
     "index": 8,
     "expense": "Fuel 4",
     "amount": 50,
-    "isPaid": true
+    "isPaid": false
   },
   {
     "index": 9,
     "expense": "Gym",
     "amount": 26,
-    "isPaid": true
+    "isPaid": false
   }
 ]

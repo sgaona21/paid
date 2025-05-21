@@ -22,5 +22,17 @@
     "expense": "Gym",
     "amount": 26,
     "isPaid": false
+  },
+  {
+    "index": 5,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
+  },
+  {
+    "index": 6,
+    "expense": "",
+    "amount": "",
+    "isPaid": false
   }
 ]

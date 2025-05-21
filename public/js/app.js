@@ -2,7 +2,7 @@
 loadData();
 
 addButton.addEventListener('click', () => {
-    let brandNewRow = createNewExpenserow(rowTemplate);
+    let brandNewRow = renderExpenseRow(rowTemplate);
     fetch('/new-row', {
         method: 'POST',
         headers: {

@@ -16,12 +16,11 @@ async function loadData() {
 
 function loadFromDB(dbData) {
     dbData.forEach(item => {
-        console.log(item)
-        createNewExpenserow(item);
+        renderExpenseRow(item);
     })
 }
 
-function createNewExpenserow(template) {
+function renderExpenseRow(template) {
     let newRow = structuredClone(template);
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 

@@ -25,7 +25,7 @@ nav {
 
 main {
     display: grid;
-    grid-template-rows: 15% 85%;
+    grid-template-rows: 10% 90%;
 }
 
 .section-one {
@@ -133,7 +133,7 @@ main {
     border-bottom-left-radius: 5px;
 }
 
-.user-input-expenses:last-child div:last-child {
+.user-input-expenses:last-child .check {
     border-bottom-right-radius: 5px;
 }
 

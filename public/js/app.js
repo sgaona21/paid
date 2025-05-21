@@ -10,5 +10,4 @@ addButton.addEventListener('click', () => {
         },
         body: JSON.stringify(brandNewRow)
     });
-
 });

@@ -3,7 +3,7 @@
     "index": 1,
     "expense": "Rent",
     "amount": 1240,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 2,
@@ -19,20 +19,8 @@
   },
   {
     "index": 4,
-    "expense": "Gym",
-    "amount": 26,
-    "isPaid": false
-  },
-  {
-    "index": 5,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 6,
-    "expense": "",
-    "amount": "",
+    "expense": "Phone",
+    "amount": 85,
     "isPaid": false
   }
 ]

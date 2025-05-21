@@ -2,79 +2,25 @@
   {
     "index": 1,
     "expense": "Rent",
-    "amount": 1242,
-    "isPaid": true
+    "amount": 1240,
+    "isPaid": false
   },
   {
     "index": 2,
-    "expense": "Car Payment",
-    "amount": 338,
+    "expense": "Car",
+    "amount": 340,
     "isPaid": false
   },
   {
     "index": 3,
-    "expense": "Phone ",
-    "amount": 85,
-    "isPaid": true
+    "expense": "Car Insurance",
+    "amount": 135,
+    "isPaid": false
   },
   {
     "index": 4,
-    "expense": "Car Insurance",
-    "amount": 135,
-    "isPaid": true
-  },
-  {
-    "index": 5,
-    "expense": "Fuel 1",
-    "amount": 50,
-    "isPaid": true
-  },
-  {
-    "index": 6,
-    "expense": "Fuel 2",
-    "amount": 50,
-    "isPaid": true
-  },
-  {
-    "index": 7,
-    "expense": "Fuel 3",
-    "amount": 50,
-    "isPaid": true
-  },
-  {
-    "index": 8,
-    "expense": "Fuel 4",
-    "amount": 50,
-    "isPaid": false
-  },
-  {
-    "index": 9,
     "expense": "Gym",
     "amount": 26,
-    "isPaid": true
-  },
-  {
-    "index": 10,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 11,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 12,
-    "expense": "",
-    "amount": "",
-    "isPaid": false
-  },
-  {
-    "index": 13,
-    "expense": "",
-    "amount": "",
     "isPaid": false
   }
 ]

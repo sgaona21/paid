@@ -3,10 +3,10 @@
 async function loadData() {
   try {
     const response = await fetch('/data');
-    const data = await response.json();
+    data = await response.json();
 
     sortByIndex(data);
-    loadFromPoorDatabase(data);
+    loadFromDB(data);
     monthlySum();
     monthlyRemaining();
   } catch (error) {
@@ -14,21 +14,28 @@ async function loadData() {
   }
 }
 
+function loadFromDB(dbData) {
+    dbData.forEach(item => {
+        console.log(item)
+        createNewExpenserow(item);
+    })
+}
 
-function createNewExpenserow() {
-    let newRow = structuredClone(rowTemplate);
+function createNewExpenserow(template) {
+    let newRow = structuredClone(template);
     let currentNumberOfChildren = expenseInputcontainer.children.length;
 
     let userInputExpenses = document.createElement('div');
     userInputExpenses.classList.add('user-input-expenses');
     userInputExpenses.dataset.index = Number(currentNumberOfChildren + 1);
-    newRow.index = Number(userInputExpenses.dataset.index)
+    newRow.index = Number(userInputExpenses.dataset.index);
 
     let expenseContainer = document.createElement('div');
     
     let expenseInput = document.createElement('input');
     expenseInput.type = 'text';
     expenseInput.classList.add('expense-input');
+    expenseInput.value = template.expense || '';
 
     let amountcontainer = document.createElement('div');
     amountcontainer.classList.add('amount');
@@ -36,12 +43,14 @@ function createNewExpenserow() {
     let amountInput = document.createElement('input');
     amountInput.type = 'text';
     amountInput.classList.add('expense-amount-input');
+    amountInput.value = template.amount || '';
 
     let checkBoxContainer = document.createElement('div');
     checkBoxContainer.classList.add('check')
     let checkBoxInput = document.createElement('input');
     checkBoxInput.type = 'checkbox';
     checkBoxInput.classList.add('checked');
+    checkBoxInput.checked = template.isPaid || false;
 
     let deleteButton = document.createElement('div');
     deleteButton.classList.add('delete');
@@ -58,7 +67,7 @@ function createNewExpenserow() {
         updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
         updatedRow.expense = expenseInput.value;
         if (amountInput.value != '') {
-                updatedRow.amount = Number(amountInput.value);
+            updatedRow.amount = Number(amountInput.value);
         }
         updatedRow.isPaid = checkBoxInput.checked;
 
@@ -95,9 +104,6 @@ function createNewExpenserow() {
         monthlyRemaining();
     })
 
-    
-    
-
     deleteButton.addEventListener('click', (e) => {
         let deletedIndex = e.target.parentNode.dataset.index;
         e.target.parentNode.remove();
@@ -118,7 +124,6 @@ function createNewExpenserow() {
             monthlyRemaining();
         })
 
-
     userInputExpenses.addEventListener('mouseover', () => {
         deleteButton.style.visibility = 'visible';
     })
@@ -134,123 +139,9 @@ function createNewExpenserow() {
     return newRow
 }
 
-function loadFromPoorDatabase(data) {
-    for (let i = 0; i < data.length; i++) {
-        let userInputExpenses = document.createElement('div');
-        userInputExpenses.classList.add('user-input-expenses');
-        userInputExpenses.dataset.index = data[i].index
-
-        let expenseContainer = document.createElement('div');
-        
-        let expenseInput = document.createElement('input');
-        expenseInput.type = 'text';
-        expenseInput.classList.add('expense-input');
-        expenseInput.value = data[i].expense;
-
-        let amountcontainer = document.createElement('div');
-        amountcontainer.classList.add('amount');
-
-        let amountInput = document.createElement('input');
-        amountInput.type = 'text';
-        amountInput.classList.add('expense-amount-input');
-        amountInput.value = data[i].amount;
-
-        let checkBoxContainer = document.createElement('div');
-        checkBoxContainer.classList.add('check')
-
-        let checkBoxInput = document.createElement('input');
-        checkBoxInput.type = 'checkbox';
-        checkBoxInput.classList.add('checked');
-        checkBoxInput.checked = data[i].isPaid;
-
-        let deleteButton = document.createElement('div');
-        deleteButton.classList.add('delete');
-        deleteButton.textContent = '❌';
-
-
-        expenseContainer.appendChild(expenseInput);
-        amountcontainer.appendChild(amountInput);
-        checkBoxContainer.appendChild(checkBoxInput);
-        userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
-        expenseInputcontainer.appendChild(userInputExpenses);
-
-        deleteButton.addEventListener('click', (e) => {
-            let deletedIndex = e.target.parentNode.dataset.index;
-            e.target.parentNode.remove();
-
-            for (let i = 0; i < expenseInputcontainer.children.length; i++) {
-                expenseInputcontainer.children[i].dataset.index = i + 1;
-            }
-            fetch('/index', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ deletedIndex })
-            });
-            monthlySum();
-            monthlyRemaining();
-            
-        })
-
-        userInputExpenses.addEventListener('mouseover', () => {
-            deleteButton.style.visibility = 'visible';
-        })
-
-        userInputExpenses.addEventListener('mouseleave', () => {
-            deleteButton.style.visibility = 'hidden';
-        })
-
-        checkBoxInput.addEventListener('change', () => {
-            monthlyRemaining();
-        })
-
-        userInputExpenses.addEventListener('focusout', (e) => {
-            let updatedRow = structuredClone(rowTemplate);
-            updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
-            updatedRow.expense = expenseInput.value;
-            if (amountInput.value != '') {
-                updatedRow.amount = Number(amountInput.value);
-            }
-            updatedRow.isPaid = checkBoxInput.checked;
-        fetch('/update-row', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedRow)
-        });
-        monthlySum();
-        monthlyRemaining();
-        })
-
-        userInputExpenses.addEventListener('change', (e) => {
-            let updatedRow = structuredClone(rowTemplate);
-            updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
-            updatedRow.expense = expenseInput.value;
-            if (amountInput.value != '') {
-                updatedRow.amount = Number(amountInput.value);
-            }
-            updatedRow.isPaid = checkBoxInput.checked;
-
-            fetch('/update-row', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedRow)
-            });
-
-            monthlySum();
-            monthlyRemaining();
-        })
-    }
-}
-
 function sortByIndex(expenses) {
     return expenses.sort((a, b) => a.index - b.index);
 }
-
 
 function monthlySum() {
     const amountInputs = document.querySelectorAll('.expense-amount-input');
@@ -268,13 +159,13 @@ function monthlyRemaining() {
     let total = monthlySum();
     let rows = document.querySelectorAll('.expense-input-container');
     let checkboxes = rows[0].querySelectorAll('.checked');
-    let amountInputs = rows[0].querySelectorAll('.expense-amount-input')
+    let amountInputs = rows[0].querySelectorAll('.expense-amount-input');
     let totalPaid = 0;
 
     rows.forEach(row => {
         for (let i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
-                totalPaid += Number(amountInputs[i].value)
+                totalPaid += Number(amountInputs[i].value);
             }
         }
     })

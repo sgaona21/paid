@@ -69,7 +69,7 @@ function renderExpenseRow(template) {
                 updatedRow.amount = Number(amountInput.value);
         }
         updatedRow.isPaid = checkBoxInput.checked;
-
+        // UPDATER //
         fetch('/update-row', {
             method: 'POST',
             headers: {
@@ -92,7 +92,7 @@ function renderExpenseRow(template) {
         for (let i = 0; i < expenseInputcontainer.children.length; i++) {
             expenseInputcontainer.children[i].dataset.index = i + 1;
         }
-            
+        // DELETE //    
         fetch('/index', {
             method: 'POST',
             headers: {

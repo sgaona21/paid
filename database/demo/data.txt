@@ -9,7 +9,7 @@
     "index": 2,
     "expense": "Car",
     "amount": 340,
-    "isPaid": true
+    "isPaid": false
   },
   {
     "index": 3,

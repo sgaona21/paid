@@ -61,28 +61,7 @@ function renderExpenseRow(template) {
     userInputExpenses.append(expenseContainer, amountcontainer, checkBoxContainer, deleteButton);
     expenseInputcontainer.appendChild(userInputExpenses);
 
-    userInputExpenses.addEventListener('focusout', (e) => {
-        let updatedRow = structuredClone(rowTemplate);
-        updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
-        updatedRow.expense = expenseInput.value;
-        if (amountInput.value != '') {
-            updatedRow.amount = Number(amountInput.value);
-        }
-        updatedRow.isPaid = checkBoxInput.checked;
-
-        fetch('/update-row', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedRow)
-        });
-
-        monthlySum();
-        monthlyRemaining();
-    })
-
-    userInputExpenses.addEventListener('change', (e) => {
+    function updateRowChanges(e) {
         let updatedRow = structuredClone(rowTemplate);
         updatedRow.index = Number(e.target.parentNode.parentNode.dataset.index);
         updatedRow.expense = expenseInput.value;
@@ -101,7 +80,10 @@ function renderExpenseRow(template) {
 
         monthlySum();
         monthlyRemaining();
-    })
+    }
+
+    userInputExpenses.addEventListener('focusout', updateRowChanges);
+    userInputExpenses.addEventListener('change', updateRowChanges);
 
     deleteButton.addEventListener('click', (e) => {
         let deletedIndex = e.target.parentNode.dataset.index;

@@ -9,18 +9,18 @@
     "index": 2,
     "expense": "Car",
     "amount": 340,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 3,
     "expense": "Car Insurance",
     "amount": 135,
-    "isPaid": false
+    "isPaid": true
   },
   {
     "index": 4,
     "expense": "Phone",
     "amount": 85,
-    "isPaid": false
+    "isPaid": true
   }
 ]

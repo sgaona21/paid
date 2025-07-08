@@ -25,7 +25,7 @@ nav {
 
 main {
     display: grid;
-    grid-template-rows: 15% 85%;
+    grid-template-rows: 10% 90%;
 }
 
 .section-one {
@@ -96,6 +96,7 @@ main {
 
 .user-input-expenses {
     display: grid;
+    position: relative;
     margin: 1rem;
     margin-top: 0;
     margin-bottom: 0;
@@ -132,7 +133,7 @@ main {
     border-bottom-left-radius: 5px;
 }
 
-.user-input-expenses:last-child div:last-child {
+.user-input-expenses:last-child .check {
     border-bottom-right-radius: 5px;
 }
 
@@ -172,7 +173,7 @@ main {
     border-top-right-radius: 5px;
 } 
 
-.total-monthly-amount {
+.total-monthly-amount, .remaining-amount {
     background-color: lightgray;
     color: black;
     text-align: center;
@@ -185,6 +186,22 @@ main {
     font-size: .9rem;
     height: 1.75rem;
   }
+
+  .delete {
+  position: absolute;
+  right: 3px;
+  top: 7px;
+  visibility: hidden;
+  font-size: 0.65rem;
+  transition: font-size 0.2s ease, top 0.2s ease;
+}
+
+.delete:hover {
+  cursor: pointer;
+  top: 4px;
+  font-size: 0.9rem;
+}
+
 
 
 

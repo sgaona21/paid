@@ -1,11 +1,10 @@
-import './css/expensepage.css'
+import '../css/expensepage.css'
+import Nav from './Nav';
 
 const ExpensePage = () => {
     return (
         <div id="page-layout">
-        <nav>
-            <h1 id="dashboard-header">Paid.com</h1>
-        </nav>
+        <Nav />
 
         <main>
             <section className="section-one">

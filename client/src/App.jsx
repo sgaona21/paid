@@ -1,10 +1,11 @@
-import ExpensePage from './components/ExpensePage'
+import ExpensePage from './components/ExpensePage';
+import Layout from './components/Layout';
 
 
 function App() {
 
   return (
-    <ExpensePage />
+    <Layout />
   )
 }
 

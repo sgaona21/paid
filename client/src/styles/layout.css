@@ -6,6 +6,7 @@
     font-family: 'Nunito', sans-serif;
 }
 
+/* GRID LAYOUT */
 body {
     background-color: #474e5a;
 }
@@ -45,8 +46,83 @@ body {
     grid-row-start: 2;
     grid-row-end: 2;
     display: flex;
-    /* justify-content: space-between; */
     border-radius: 10px;
     background-color: #15191f;
     margin: .5rem 1rem 1rem .5rem;
 }
+
+/* CONTENT SECTION */
+.expense-content-container {
+    color: whitesmoke;
+    width: 100%;
+}
+
+.expense-table-container {
+    width: 50%;
+    margin: 1rem;
+}
+
+.expense-table-headers {
+    display: flex;
+    justify-content: space-around;
+}
+
+.expense-table-headers li {
+    flex: 1;
+    border: 1px solid gray;
+    padding: .25rem;
+    text-align: center;
+}
+
+.expense-table-headers > :first-child {
+    border-top-left-radius: 5px;
+}
+
+.expense-table-headers > :last-child {
+    border-top-right-radius: 5px;
+}
+
+.expense-row-container {
+    display: flex;
+    /* background-color: lightgray; */
+}
+
+.expense-row-inputs {
+    flex: 1;
+    align-content: center;
+}
+
+
+.expense-row-container input[type=text], .expense-row-container input[type=number], .expense-row-container input[type=checkbox] {
+    border: none;
+    width: 100%;
+    background-color: lightgray;
+    padding: .25rem;
+    text-align: center;
+}
+
+.expense-row-container > :first-child input[type=text]{
+    border-bottom-left-radius: 5px;
+}
+
+.expense-row-container > :nth-child(2) input[type=number]{
+    border-left: 2px solid black;
+    border-right: 1px solid black;
+}
+
+.expense-row-container > :last-child input[type=checkbox]{
+    border-left: 1px solid black;
+    border-bottom-right-radius: 5px;
+}
+
+.expense-row-container > :last-child {
+    background-color: lightgray;
+    border-left: 1px solid black;
+    border-bottom-right-radius: 5px;
+}
+
+
+
+
+
+

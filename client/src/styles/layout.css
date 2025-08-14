@@ -55,10 +55,11 @@ body {
 .expense-content-container {
     color: whitesmoke;
     width: 100%;
+    display: flex;
 }
 
 .expense-table-container {
-    width: 50%;
+    width: 35%;
     margin: 1rem; 
     max-height: 84vh;
     overflow-y: auto;
@@ -142,13 +143,31 @@ input[type="number"]::-webkit-inner-spin-button {
     border-left: none;
 }
 
-/* .expense-rows-container > :last-child > :first-child input[type=text] {
-    border-bottom-left-radius: 5px;
+.monthly-total-container, .monthly-remaining-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px gray solid;
+    align-self: flex-start;
+    margin: 1rem;
+    align-items: center;
+    border-radius: 5px;
+    width: 20%;
 }
 
-.expense-rows-container > :last-child > :last-child {
+.monthly-total-label, .monthly-remaining-label {
+    padding: .25rem;
+}
+
+.monthly-total-amount, .monthly-remaining-amount {
+    width: 100%;
+    background-color: lightgray;
+    text-align: center;
+    color: black;
+    padding: .25rem;
+    border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-} */
+}
+
 
 
 

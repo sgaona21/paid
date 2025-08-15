@@ -1,0 +1,202 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* GRID LAYOUT */
+body {
+    background-color: #474e5a;
+}
+
+.layout-container {
+    display: grid;
+    grid-template-columns: minmax(300px, 15%) minmax(600px, auto);
+    grid-template-rows: minmax(90px, 10%) auto;
+    height: 100vh;
+}
+
+.dashboard {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    background-color: #15191f;
+    border-radius: 10px;
+    margin: 1rem .5rem 1rem 1rem;
+}
+
+.header {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    background-color: #15191f;
+    border-radius: 10px;
+    margin: 1rem 1rem .5rem .5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    display: flex;
+    border-radius: 10px;
+    background-color: #15191f;
+    margin: .5rem 1rem 1rem .5rem;
+}
+
+/* CONTENT SECTION */
+.expense-content-container {
+    color: whitesmoke;
+    width: 100%;
+    display: flex;
+}
+
+.expense-table-container {
+    width: 35%;
+    margin: 1rem; 
+    max-height: 84vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-radius: 5px;
+}
+
+.expense-table-headers {
+    display: flex;
+    justify-content: space-around;
+}
+
+.expense-table-headers li {
+    flex: 1;
+    border: 1px solid gray;
+    border-bottom: none;
+    padding: .25rem;
+    text-align: center;
+}
+
+.expense-table-headers > :first-child {
+    border-top-left-radius: 5px;
+    border-right: none;
+}
+
+.expense-table-headers > :nth-child(2) {
+    border-right: none;
+}
+
+.expense-table-headers > :last-child {
+    border-top-right-radius: 5px;
+}
+
+.expense-row-container {
+    display: flex;
+    position: relative;
+
+}
+
+.expense-row-container > :last-child {
+    background-color: lightgray;
+    border-right: gray;
+}
+
+.expense-row-inputs {
+    display: flex;
+    flex: 1;
+    border: 1px black solid;
+    border-bottom: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+
+.expense-row-container input[type=text], .expense-row-container input[type=number] {
+    background-color: lightgrey;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    padding: .25rem;
+    outline: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.expense-row-container > :first-child {
+    border-left: none;
+    border-right: none;
+}
+
+.expense-row-container > :nth-child(2) {
+    border-left: 1px solid black
+}
+
+.expense-row-container > :last-child{
+    border-left: none;
+}
+
+.monthly-total-container, .monthly-remaining-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px gray solid;
+    align-self: flex-start;
+    margin: 1rem;
+    align-items: center;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.monthly-total-label, .monthly-remaining-label {
+    padding: .25rem;
+}
+
+.monthly-total-amount, .monthly-remaining-amount {
+    width: 100%;
+    background-color: lightgray;
+    text-align: center;
+    color: black;
+    padding: .25rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.delete-row {
+  position: absolute;
+  right: 1rem;
+  font-size:x-small;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-in, visibility 0s linear 0.2s; /* wait 0.2s before hiding */
+}
+
+.expense-row-container:hover 
+  .expense-row-inputs:last-of-type 
+  .delete-row {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s; /* show immediately */
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+

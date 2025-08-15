@@ -26,6 +26,7 @@ const Expenses = () => {
           <li>Paid</li>
         </ul>
         <ExpenseRow  handleRowChange={handleRowChange}/>
+        <div className="add-row">+</div>
       </div>
 
      <div className="monthly-total-container">

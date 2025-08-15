@@ -12,6 +12,7 @@ const ExpenseRow = () => {
                 </div>
                 <div className="expense-row-inputs">
                     <input type="checkbox" name="expense-paid"></input>
+                    <div className="delete-row">❌</div>
                 </div>
             </div>
 

@@ -3,12 +3,18 @@ import { useState } from "react";
 import ExpenseRow from "./ExpenseRow";
 
 const Expenses = () => {
-  const [rows, setRows] = useState([{ name: "", amount: "", paid: false }]);
+  const [rows, setRows] = useState([{ id: crypto.randomUUID(), name: "", amount: "", paid: false }]);
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
     updated[index][field] = value;
     setRows(updated);
+  };
+
+  const addRow = () => {
+    const newRow = { id: crypto.randomUUID(), name: "", amount: "", paid: false };
+    setRows((prevRows) => [...prevRows, newRow]);
+    console.log('hey lol')
   };
 
   const total = rows.reduce(
@@ -18,18 +24,23 @@ const Expenses = () => {
 
   return (
     <div className="expense-content-container">
-
       <div className="expense-table-container">
         <ul className="expense-table-headers">
           <li>Expense</li>
           <li>Amount</li>
           <li>Paid</li>
         </ul>
-        <ExpenseRow  handleRowChange={handleRowChange}/>
-        <div className="add-row">+</div>
+
+        {rows.map((row) => (
+          <ExpenseRow key={row.id}/>
+        ))}
+
+        <div className="add-row" onClick={addRow}>
+          +
+        </div>
       </div>
 
-     <div className="monthly-total-container">
+      <div className="monthly-total-container">
         <div className="monthly-total-label">Total Expenses</div>
         <div className="monthly-total-amount">{total}</div>
       </div>
@@ -38,8 +49,6 @@ const Expenses = () => {
         <div className="monthly-remaining-label">Remaining Expenses</div>
         <div className="monthly-remaining-amount">0</div>
       </div>
-
-
     </div>
   );
 };

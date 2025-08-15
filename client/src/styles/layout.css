@@ -174,7 +174,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .delete-row {
   position: absolute;
   right: .5rem;
-  font-size:x-small;
+  font-size: x-small;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.2s ease-in, visibility 0s linear 0.2s;

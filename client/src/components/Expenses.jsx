@@ -14,8 +14,11 @@ const Expenses = () => {
   const addRow = () => {
     const newRow = { id: crypto.randomUUID(), name: "", amount: "", paid: false };
     setRows((prevRows) => [...prevRows, newRow]);
-    console.log('hey lol')
   };
+
+  const deleteRow = (idToDelete) => {
+    setRows(prevRows => prevRows.filter(row => row.id !== idToDelete));
+  }
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),
@@ -31,8 +34,13 @@ const Expenses = () => {
           <li>Paid</li>
         </ul>
 
-        {rows.map((row) => (
-          <ExpenseRow key={row.id}/>
+        {rows.map((row, index) => (
+          <ExpenseRow 
+          key={row.id} 
+          row={row}
+          index={index}
+          deleteRow={() => deleteRow(row.id)} 
+          handleRowChange={handleRowChange}/>
         ))}
 
         <div className="add-row" onClick={addRow}>

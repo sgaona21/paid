@@ -3,7 +3,13 @@ import { useState } from "react";
 import ExpenseRow from "./ExpenseRow";
 
 const Expenses = () => {
-  const [rows, setRows] = useState([{ id: crypto.randomUUID(), name: "", amount: "", paid: false }]);
+  const [rows, setRows] = useState([
+    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
+    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
+    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
+    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
+    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
+  ]);
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -12,13 +18,18 @@ const Expenses = () => {
   };
 
   const addRow = () => {
-    const newRow = { id: crypto.randomUUID(), name: "", amount: "", paid: false };
+    const newRow = {
+      id: crypto.randomUUID(),
+      name: "",
+      amount: "",
+      paid: false,
+    };
     setRows((prevRows) => [...prevRows, newRow]);
   };
 
   const deleteRow = (idToDelete) => {
-    setRows(prevRows => prevRows.filter(row => row.id !== idToDelete));
-  }
+    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
+  };
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),
@@ -35,12 +46,13 @@ const Expenses = () => {
         </ul>
 
         {rows.map((row, index) => (
-          <ExpenseRow 
-          key={row.id} 
-          row={row}
-          index={index}
-          deleteRow={() => deleteRow(row.id)} 
-          handleRowChange={handleRowChange}/>
+          <ExpenseRow
+            key={row.id}
+            row={row}
+            index={index}
+            deleteRow={() => deleteRow(row.id)}
+            handleRowChange={handleRowChange}
+          />
         ))}
 
         <div className="add-row" onClick={addRow}>

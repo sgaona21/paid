@@ -13,6 +13,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
+const userRoutes = require('./routes/users');
+const expenseRoutes = require('./routes/expense');
+app.use('/api/users', userRoutes);
+app.use('/api/expense', expenseRoutes);
+
+
 //test db connection
 (async () => {
   try {

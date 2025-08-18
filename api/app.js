@@ -15,8 +15,8 @@ app.use(morgan("dev"));
 
 const userRoutes = require('./routes/users');
 const expenseRoutes = require('./routes/expense');
-app.use('/api/users', userRoutes);
-app.use('/api/expense', expenseRoutes);
+app.use('/users', userRoutes);
+app.use('/expense', expenseRoutes);
 
 
 //test db connection
@@ -31,7 +31,7 @@ app.use('/api/expense', expenseRoutes);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Hello from the API',
+    message: 'API connection successfull',
   });
 });
 

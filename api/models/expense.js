@@ -15,9 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Expense.init({
     name: DataTypes.STRING,
-    amount: DataTypes.INTEGER,
-    isPaid: DataTypes.BOOLEAN,
-    date: DataTypes.DATE
+    amount: DataTypes.DECIMAL(10, 2),
+    isPaid: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Expense',

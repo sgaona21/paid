@@ -1,6 +1,8 @@
 import '../styles/layout.css';
+import { Link, Outlet } from "react-router-dom";
 
 import Expenses from './Expenses';
+
 
 const Layout = () => {
     return (
@@ -10,7 +12,7 @@ const Layout = () => {
             <section className='header'></section>
 
             <section className='content'>
-                <Expenses />
+                <Outlet />
             </section>
         </main>
     )

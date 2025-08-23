@@ -1,14 +1,12 @@
 import { useState, useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 
-
-
-const UserSignUp = () => {
+const LogIn = () => {
     const navigate = useNavigate();
     const [newUser, setNewUser] = useState({
         firstName: '',
         lastName: '',
-        email: '',
+        emailAddress: '',
         password: ''
     }); //creates object with all needed user info to create new user
     const [errors, setErrors] = useState([]);
@@ -66,32 +64,11 @@ const UserSignUp = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <h2>Create Account</h2>
+          <h2>Log In</h2>
         </div>
 
         <div className="signup-content">
           <form className="signup-form" onSubmit={submitNewUser}>
-            <label htmlFor="firstName">First Name</label>
-            <div>
-              <input
-                id="firstName"
-                name="firstName"
-                type="text"
-                value={newUser.firstName}
-                onChange={handleChange}
-              />
-            </div>
-
-            <label htmlFor="lastName">Last Name</label>
-            <div>
-              <input
-                id="lastName"
-                name="lastName"
-                type="text"
-                value={newUser.lastName}
-                onChange={handleChange}
-              />
-            </div>
 
             <label htmlFor="emailAddress">Email Address</label>
             <div>
@@ -116,14 +93,14 @@ const UserSignUp = () => {
             </div>
 
             <button className="signup-button" type="submit">
-                Sign Up
+                Log In
             </button>
 
           </form>
 
           <p>
-            Already have a user account? Click here to{" "}
-            <NavLink to="/login">Log In</NavLink>!
+            Dont have a user account? Click here to{" "}
+            <NavLink to="/sign-up">Sign Up</NavLink>!
           </p>
         </div>
       </div>
@@ -131,4 +108,4 @@ const UserSignUp = () => {
 
 }
 
-export default UserSignUp;
+export default LogIn;

@@ -37,7 +37,7 @@ body {
     border-radius: 10px;
     margin: 1rem 1rem .5rem .5rem;
     display: flex;
-    justify-content: center;
+    position: relative;
 }
 
 .content {
@@ -292,6 +292,48 @@ a {
     color: rgba(144, 238, 144, 0.892);
     text-decoration: none;
 }
+
+
+
+
+
+/* DASHBOARD SECTION */
+
+.dashboard > h2 {
+    text-align: center;
+    padding: 1rem;
+    color: rgba(245, 245, 245, 0.806);
+    font-weight: 500;
+}
+
+
+
+
+
+
+/* HEADER SECTION */
+.header > h2 {
+    align-self: center;
+    color: rgba(245, 245, 245, 0.836);
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* true horizontal center */
+    
+}
+
+.logged-in {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: rgba(245, 245, 245, 0.836);
+}
+
+.logout {
+    margin: 1rem;
+}
+
+
 
 
 

@@ -30,7 +30,7 @@ const LogIn = () => {
       e.preventDefault();
 
       try {
-        const response = await fetch("http://localhost:5001/api/users", {
+        const response = await fetch("http://localhost:3000/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,12 +54,6 @@ const LogIn = () => {
         navigate("/error");
       }
     };
-
-    const handleCancel = () => {
-      //allows user to exit the sign up form and return to courses page 
-      navigate('/')
-    }
-
 
     return (
       <div className="signup-container">

@@ -6,8 +6,7 @@ const { User } = require('../models');
 exports.authenticateUser = async (req, res, next) => {
     let message;
     const credentials = auth(req);
-    console.log(req.headers.authorization)
-
+    
      if (credentials) {
         const user = await User.findOne({ where: {email: credentials.name} });
         if (user) {

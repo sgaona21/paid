@@ -189,8 +189,6 @@ input[type="number"]::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
-
-
 .add-row {
     display: inline-block;
     font-size: x-large;
@@ -202,6 +200,103 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
     color: white;
 }
+
+
+
+
+
+
+/* SIGNUP FORM */
+.signup-container {
+    display: grid;
+    grid-template-rows: 10% 90%;
+    height: 100vh;
+}
+
+.signup-header {
+    color: whitesmoke;
+    background-color: #15191f;
+    margin: 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+}
+
+
+.signup-content {
+    background-color: #15191f;
+    margin: 0 1rem 1rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-form {
+    margin: 2rem;
+    color: whitesmoke;
+    width: 100%;
+    max-width: 450px;
+}
+
+.signup-form label {
+    font-size: medium;
+    font-weight: 100;
+}
+
+.signup-form div {
+    margin-top: .25rem;
+    margin-bottom: 1.25rem;
+}
+
+.signup-form input {
+    width: 100%;
+    background-color: rgba(211, 211, 211, 0.879);
+    border: none;
+    border-radius: 8px;
+    height: 2.25rem;
+    font-size: large;
+    padding-left: .5rem;
+    border: solid 1px lightgray;
+}
+
+.signup-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.signup-button {
+    margin-top: 1rem;
+    font-size: large;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 10px;
+    padding: .65rem 4rem .65rem 4rem;
+    background: linear-gradient(135deg, #16a050df, #79e835);
+    border: none;
+    color: rgba(0, 0, 0, 0.718);
+}
+
+.signup-button:hover {
+    cursor: pointer;
+}
+
+.signup-content p {
+    color: rgba(245, 245, 245, 0.85);
+    font-size: large;
+}
+
+
+a {
+    color: rgba(144, 238, 144, 0.892);
+    text-decoration: none;
+}
+
+
+
+
 
 
 

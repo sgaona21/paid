@@ -14,7 +14,7 @@ const UserSignUp = () => {
     const [errors, setErrors] = useState([]);
 
     const credentials = {
-      emailAddress: newUser.emailAddress,
+      emailAddress: newUser.email,
       password: newUser.password
     }
 
@@ -32,7 +32,7 @@ const UserSignUp = () => {
       e.preventDefault();
 
       try {
-        const response = await fetch("http://localhost:5001/api/users", {
+        const response = await fetch("http://localhost:3000/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const UserSignUp = () => {
         if (response.status === 201) {
           console.log("New User Account successfully created!");
           await context.actions.signIn(credentials);
-          navigate('/courses');
+          navigate('/');
         } else if (response.status === 400) {
           const data = await response.json();
           setErrors(data.errors)
@@ -56,11 +56,6 @@ const UserSignUp = () => {
         navigate("/error");
       }
     };
-
-    const handleCancel = () => {
-      //allows user to exit the sign up form and return to courses page 
-      navigate('/')
-    }
 
 
     return (
@@ -97,9 +92,9 @@ const UserSignUp = () => {
             <div>
               <input
                 id="emailAddress"
-                name="emailAddress"
+                name="email"
                 type="email"
-                value={newUser.emailAddress}
+                value={newUser.email}
                 onChange={handleChange}
               />
             </div>

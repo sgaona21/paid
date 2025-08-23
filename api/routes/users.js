@@ -1,12 +1,12 @@
 const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
-const { authorizeUser, authenticateUser } = require('../middleware/authorize');
+const { authenticateUser } = require('../middleware/authorize');
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
-// GET a user from the db
+// GET a user from db
 router.get('/', authenticateUser, asyncHandler(async (req, res) => {
   const user = req.currentUser;
 

@@ -1,25 +1,16 @@
-import { useState, useContext } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 
 const UserSignUp = () => {
-    const navigate = useNavigate();
     const [newUser, setNewUser] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: ''
-    }); //creates object with all needed user info to create new user
-    const [errors, setErrors] = useState([]);
-
-    const credentials = {
-      emailAddress: newUser.email,
-      password: newUser.password
-    }
+    });
 
     const handleChange = (e) => {
-      //allows for real time form input 
       const { name, value } = e.target;
       setNewUser((prevData) => ({
         ...prevData,
@@ -28,7 +19,6 @@ const UserSignUp = () => {
     };
 
     const submitNewUser = async (e) => {
-      //submit new user data to db and checks for errors, signs user in and navigates to courses page upon successful user creation
       e.preventDefault();
 
       try {
@@ -42,18 +32,15 @@ const UserSignUp = () => {
 
         if (response.status === 201) {
           console.log("New User Account successfully created!");
-          await context.actions.signIn(credentials);
-          navigate('/');
         } else if (response.status === 400) {
           const data = await response.json();
-          setErrors(data.errors)
-          console.log(data)
         } else {
           throw new Error();
         }
       } catch (error) {
         console.log(error);
-        navigate("/error");
+      } finally {
+        setNewUser((prev) => ({ ...prev, password: "" }));
       }
     };
 
@@ -118,12 +105,11 @@ const UserSignUp = () => {
 
           <p>
             Already have a user account? Click here to{" "}
-            <NavLink to="/login">Log In</NavLink>!
+            <NavLink to="/login">Log In</NavLink>
           </p>
         </div>
       </div>
     );
-
 }
 
 export default UserSignUp;

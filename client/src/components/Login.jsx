@@ -1,57 +1,32 @@
 import { useState, useContext } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
+
+import UserContext from "../auth/UserContext";
 
 const LogIn = () => {
-    const navigate = useNavigate();
-    const [newUser, setNewUser] = useState({
-        firstName: '',
-        lastName: '',
-        emailAddress: '',
-        password: ''
-    }); //creates object with all needed user info to create new user
-    const [errors, setErrors] = useState([]);
-
-    const credentials = {
-      emailAddress: newUser.emailAddress,
-      password: newUser.password
-    }
+  const context = useContext(UserContext);
+    const [loginInfo, setLoginInfo] = useState({
+      email: '',
+      password: ''
+    });
 
     const handleChange = (e) => {
-      //allows for real time form input 
       const { name, value } = e.target;
-      setNewUser((prevData) => ({
+      setLoginInfo((prevData) => ({
         ...prevData,
         [name]: value,
       }));
     };
 
-    const submitNewUser = async (e) => {
-      //submit new user data to db and checks for errors, signs user in and navigates to courses page upon successful user creation
+    const handleSubmit = async (e) => {
       e.preventDefault();
-
       try {
-        const response = await fetch("http://localhost:3000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-
-        if (response.status === 201) {
-          console.log("New User Account successfully created!");
-          await context.actions.signIn(credentials);
-          navigate('/courses');
-        } else if (response.status === 400) {
-          const data = await response.json();
-          setErrors(data.errors)
-          console.log(data)
-        } else {
-          throw new Error();
+        const user = await context.actions.signIn(loginInfo);
+        if (user) {
+          console.log(`Success! ${user.email} was successfully signed in!`);
         }
       } catch (error) {
-        console.log(error);
-        navigate("/error");
+        console.log(error)
       }
     };
 
@@ -62,15 +37,15 @@ const LogIn = () => {
         </div>
 
         <div className="signup-content">
-          <form className="signup-form" onSubmit={submitNewUser}>
+          <form className="signup-form" onSubmit={handleSubmit}>
 
-            <label htmlFor="emailAddress">Email Address</label>
+            <label htmlFor="email">Email Address</label>
             <div>
               <input
-                id="emailAddress"
-                name="emailAddress"
+                id="email"
+                name="email"
                 type="email"
-                value={newUser.emailAddress}
+                value={loginInfo.email}
                 onChange={handleChange}
               />
             </div>
@@ -81,7 +56,7 @@ const LogIn = () => {
                 id="password"
                 name="password"
                 type="password"
-                value={newUser.password}
+                value={loginInfo.password}
                 onChange={handleChange}
               />
             </div>
@@ -94,12 +69,11 @@ const LogIn = () => {
 
           <p>
             Dont have a user account? Click here to{" "}
-            <NavLink to="/sign-up">Sign Up</NavLink>!
+            <NavLink to="/sign-up">Sign Up</NavLink>
           </p>
         </div>
       </div>
     );
-
 }
 
 export default LogIn;

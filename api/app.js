@@ -3,13 +3,14 @@ const morgan = require("morgan");
 const { sequelize } = require('./models');
 const cors = require('cors');
 
-
-
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 

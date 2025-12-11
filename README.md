@@ -8,6 +8,11 @@ Tech Stack:
 - Express
 - MySQL
 
+Deployment:
+
+This project is deployed via Railway:
+https://www.paidbudget.com/
+
 Installation & Setup:
 
 1. Clone the repository
@@ -40,10 +45,7 @@ cd client
 npm run dev
 ```
 
-Deployment
 
-This project is deployed via Railway:
-https://www.paidbudget.com/
 
 
 

@@ -7,31 +7,41 @@ Tech Stack: React • Node.js • Express • MySQL
 Installation & Setup:
 
 1. Clone the repository
-'''   
+```
 git clone https://github.com/sgaona21/paid.git
-'''
+```
 
 3. Install server dependencies
+```
 cd api
 npm install
+```
 
-4. Install client dependencies
+5. Install client dependencies
+```
 cd client
 npm install
+```
 
-5. Start development servers
+7. Start development servers
 Backend
+```
 cd api
 npm run dev
+```
 
 Frontend
+```
 cd client
 npm run dev
+```
 
 Deployment
 
 This project is deployed via Railway:
 https://www.paidbudget.com/
+
+
 
 
 

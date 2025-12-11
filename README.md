@@ -7,17 +7,19 @@ Tech Stack: React • Node.js • Express • MySQL
 Installation & Setup:
 
 1. Clone the repository
+'''   
 git clone https://github.com/sgaona21/paid.git
+'''
 
-2. Install server dependencies
+3. Install server dependencies
 cd api
 npm install
 
-3. Install client dependencies
+4. Install client dependencies
 cd client
 npm install
 
-4. Start development servers
+5. Start development servers
 Backend
 cd api
 npm run dev

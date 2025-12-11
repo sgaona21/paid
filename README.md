@@ -1,6 +1,6 @@
-PAID — Monthly Budgeting Web Application
+Paid — Monthly Budgeting Web Application
 
-PAID is a full-stack budgeting application that helps users track monthly expenses, monitor expendable income, and visualize their finances. Built with React, Node, Express, and MySQL, PAID provides a clean, fast, and intuitive interface for managing personal finances.
+Paid is a full-stack budgeting application that helps users track monthly expenses, monitor expendable income, and visualize their finances. Built with React, Node, Express, and MySQL, PAID provides a clean, fast, and intuitive interface for managing personal finances.
 
 Live Site: https://paidbudget.com
 Tech Stack: React • Node.js • Express • MySQL

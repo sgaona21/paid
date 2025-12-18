@@ -20,9 +20,11 @@ const UserSignUp = () => {
 
     const submitNewUser = async (e) => {
       e.preventDefault();
+      const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
       try {
-        const response = await fetch("http://localhost:3000/users", {
+        const response = await fetch(`${API_BASE}/users`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

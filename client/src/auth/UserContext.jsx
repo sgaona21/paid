@@ -8,9 +8,10 @@ export const UserProvider = (props) => {
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
 
     const signIn = async (credentials) => {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
         try {
-        const response = await fetch("http://localhost:3000/users/auth", {
+        const response = await fetch(`${API_BASE}/users/auth`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },

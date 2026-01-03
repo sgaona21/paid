@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
-import {  NavLink } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 
 import UserContext from "../auth/UserContext";
 
 const LogIn = () => {
+  const navigate = useNavigate();
   const context = useContext(UserContext);
     const [loginInfo, setLoginInfo] = useState({
       email: '',
@@ -24,6 +25,7 @@ const LogIn = () => {
         const user = await context.actions.signIn(loginInfo);
         if (user) {
           console.log(`Success! ${user.email} was successfully signed in!`);
+          navigate('/');
         }
       } catch (error) {
         console.log(error)

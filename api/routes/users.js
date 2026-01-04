@@ -2,6 +2,7 @@ const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -18,7 +19,25 @@ router.post("/auth", asyncHandler(async (req, res) => {
       const isAuth = await bcrypt.compare(password, user.passwordHash);
       if (!isAuth) return res.status(401).json({ message: "Invalid email or password" });
 
-      res.status(200).json({ id: user.id, email: user.email, name: user.firstName });
+      const token = jwt.sign(
+        { userId: user.id},
+        process.env.JWT_SECRET,
+        { expiresIn: "15m"}
+      );
+
+      res.cookie("auth", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 15 * 60 * 1000
+      })
+
+      res.status(200).json({
+        id: user.id,
+        email: user.email,
+        name: user.firstName,
+      })
+
     } catch (error) {
       console.log(error)
     }

@@ -26,7 +26,7 @@
 
 .signup-content {
     background-color: #15191f;
-    margin: .5rem;
+    margin: 0 .5rem .5rem .5rem;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -100,6 +100,15 @@ a {
 /* BREAKPOINTS */
 
 /* Tablet */
+@media (min-width: 720px) {
 
+    .signup-header {
+        margin: 1rem;
+    }
+
+    .signup-content {
+        margin: 0 1rem 1rem 1rem;
+    }
+}
 
 

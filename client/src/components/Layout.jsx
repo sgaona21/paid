@@ -8,7 +8,7 @@ const Layout = () => {
     return (
         <main className='layout-container'>
             <section className='dashboard'>
-                <h2>Paid.com</h2>
+                <h2>Paid</h2>
             </section>
 
             <section className='header'>

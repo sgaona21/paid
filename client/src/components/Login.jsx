@@ -36,7 +36,7 @@ const LogIn = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <h2>Log In</h2>
+          <h2>Sign In</h2>
         </div>
 
         <div className="signup-content">
@@ -65,13 +65,13 @@ const LogIn = () => {
             </div>
 
             <button className="signup-button" type="submit">
-                Log In
+                Sign In
             </button>
 
           </form>
 
           <p>
-            Don't have an account? Click here to{" "}
+            Click here to{" "}
             <NavLink to="/sign-up">Sign Up</NavLink>
           </p>
         </div>

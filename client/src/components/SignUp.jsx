@@ -79,7 +79,7 @@ const UserSignUp = () => {
               />
             </div>
 
-            <label htmlFor="emailAddress">Email Address</label>
+            <label htmlFor="emailAddress">Email</label>
             <div>
               <input
                 id="emailAddress"
@@ -109,7 +109,7 @@ const UserSignUp = () => {
 
           <p>
             Click here to{" "}
-            <NavLink to="/login">Log In</NavLink>
+            <NavLink to="/login">Sign In</NavLink>
           </p>
         </div>
       </div>

@@ -42,7 +42,7 @@ const LogIn = () => {
         <div className="signup-content">
           <form className="signup-form" onSubmit={handleSubmit}>
 
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">Email</label>
             <div>
               <input
                 id="email"

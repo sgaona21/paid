@@ -108,7 +108,7 @@ const UserSignUp = () => {
           </form>
 
           <p>
-            Already have a user account? Click here to{" "}
+            Click here to{" "}
             <NavLink to="/login">Log In</NavLink>
           </p>
         </div>

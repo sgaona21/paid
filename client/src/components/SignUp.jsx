@@ -52,7 +52,7 @@ const UserSignUp = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <h2>Create Account</h2>
+          <h2>Paid</h2>
         </div>
 
         <div className="signup-content">

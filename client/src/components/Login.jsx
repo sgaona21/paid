@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import {  NavLink, useNavigate } from "react-router-dom";
+import '../styles/login.css';
 
 import UserContext from "../auth/UserContext";
 
@@ -70,7 +71,7 @@ const LogIn = () => {
           </form>
 
           <p>
-            Dont have a user account? Click here to{" "}
+            Don't have an account? Click here to{" "}
             <NavLink to="/sign-up">Sign Up</NavLink>
           </p>
         </div>

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import '../styles/login.css';
+
 
 const UserSignUp = () => {
     const [newUser, setNewUser] = useState({

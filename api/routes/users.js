@@ -8,7 +8,6 @@ const router = express.Router();
 
 //Authorize user
 router.post("/auth", asyncHandler(async (req, res) => {
-    try {
       const { email, password } = req.body || {};
       const user = await User.findOne({
         where: { email: email.toLowerCase() },
@@ -38,9 +37,6 @@ router.post("/auth", asyncHandler(async (req, res) => {
         name: user.firstName,
       })
 
-    } catch (error) {
-      console.log(error)
-    }
   })
 );
 

@@ -41,7 +41,8 @@ export const UserProvider = (props) => {
             authUser,
             currentUser,
             actions: {
-                signIn
+                signIn,
+                setCurrentUser
             }
         }} >
             {props.children}

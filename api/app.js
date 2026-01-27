@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require("morgan");
 const { sequelize } = require('./models');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
 
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
@@ -13,6 +14,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(morgan("dev"));
+
+app.use(cookieParser());
 
 const userRoutes = require('./routes/users');
 const expenseRoutes = require('./routes/expense');

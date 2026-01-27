@@ -62,5 +62,24 @@ router.post('/', asyncHandler(async (req, res) => {
   }
 }));
 
+//Persist Refresh 
+router.get('/refresh', asyncHandler(async (req, res) => {
+  const token = req.cookies.auth;
+
+  if (!token) {
+    return res.status(401).json({ message: "Not Authenticated"});
+  }
+  
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  req.userId = decoded.userId;
+  
+  const user = await User.findByPk(req.userId, {
+    attributes: ["id", "email", "firstName"],
+  })
+
+    res.json(user);
+  
+}));
+
 
 module.exports = router;

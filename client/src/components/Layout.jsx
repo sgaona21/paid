@@ -9,8 +9,6 @@ import UserContext from "../auth/UserContext";
 const Layout = () => {
     const context = useContext(UserContext);
     const [checkingAuth, setCheckingAuth] = useState(true);
-    console.log(context.currentUser)
-
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {

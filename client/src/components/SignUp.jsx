@@ -15,8 +15,6 @@ const UserSignUp = () => {
         password: ''
     });
 
-    
-
     const handleChange = (e) => {
       const { name, value } = e.target;
       setNewUser((prevData) => ({
@@ -41,6 +39,8 @@ const UserSignUp = () => {
 
         if (response.status === 201) {
           console.log("New User Account successfully created!");
+          context.actions.signIn(newUser);
+          navigate('/');
         } else if (response.status === 400) {
           const data = await response.json();
         } else {

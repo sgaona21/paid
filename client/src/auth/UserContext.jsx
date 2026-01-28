@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import Cookies from 'js-cookie';
+
 
 const UserContext = createContext(null);
 
@@ -20,6 +20,7 @@ export const UserProvider = (props) => {
         if (response.status === 200) {
             const user = await response.json();
             setCurrentUser(user);
+            
             return user
         } else if (response.status === 401) {
             return null

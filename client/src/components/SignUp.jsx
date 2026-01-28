@@ -1,16 +1,21 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import '../styles/login.css';
+import UserContext from "../auth/UserContext";
 
 
 const UserSignUp = () => {
+  const navigate = useNavigate();
+  const context = useContext(UserContext);
     const [newUser, setNewUser] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: ''
     });
+
+    
 
     const handleChange = (e) => {
       const { name, value } = e.target;

@@ -26,17 +26,13 @@ const Layout = () => {
           setCheckingAuth(false)
         } catch {
           context.actions.setCurrentUser(null);
+        } finally {
+            setCheckingAuth(false);
         }
       }
 
       loadMe();
     }, [API_BASE]);
-
-    if (checkingAuth) return <div>Loading...</div>;
-
-    if (context.currentUser === null) {
-        return <Navigate to="/login" replace />
-    }
 
     async function signOut() {
         await fetch(`${API_BASE}/users/signout`, {
@@ -47,6 +43,14 @@ const Layout = () => {
         context.actions.setCurrentUser(null);
         navigate('/login');
     }
+
+    if (checkingAuth) return <div>Loading...</div>;
+
+    if (context.currentUser === null) {
+        return <Navigate to="/login" replace />
+    }
+
+    
 
     return (
         

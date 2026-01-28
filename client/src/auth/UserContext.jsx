@@ -4,8 +4,6 @@ import Cookies from 'js-cookie';
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
-    const cookie = Cookies.get('authUser');
-    const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
     const [currentUser, setCurrentUser] = useState(null)
 
     const signIn = async (credentials) => {
@@ -22,8 +20,6 @@ export const UserProvider = (props) => {
         if (response.status === 200) {
             const user = await response.json();
             setCurrentUser(user);
-            setAuthUser(user);
-            Cookies.set("authUser", JSON.stringify(user), {expires: 1});
             return user
         } else if (response.status === 401) {
             return null
@@ -38,7 +34,6 @@ export const UserProvider = (props) => {
     
     return (
         <UserContext.Provider value={{
-            authUser,
             currentUser,
             actions: {
                 signIn,

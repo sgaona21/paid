@@ -1,5 +1,5 @@
 import '../styles/layout.css';
-import { Link, Outlet, Navigate } from "react-router-dom";
+import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 
 import Expenses from './Expenses';
@@ -8,6 +8,7 @@ import UserContext from "../auth/UserContext";
 
 const Layout = () => {
     const context = useContext(UserContext);
+    const navigate = useNavigate();
     const [checkingAuth, setCheckingAuth] = useState(true);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -37,8 +38,14 @@ const Layout = () => {
         return <Navigate to="/login" replace />
     }
 
-    function signOut() {
-        
+    async function signOut() {
+        await fetch(`${API_BASE}/users/signout`, {
+            method: "POST",
+            credentials: "include"
+        })
+
+        context.actions.setCurrentUser(null);
+        navigate('/login');
     }
 
     return (

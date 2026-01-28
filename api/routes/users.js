@@ -81,5 +81,16 @@ router.get('/refresh', asyncHandler(async (req, res) => {
   
 }));
 
+//Sign Out
+router.post('/signout', asyncHandler(async (req, res) => {
+  res.clearCookie("auth", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+  })
+
+  return res.status(204).send();
+}))
+
 
 module.exports = router;

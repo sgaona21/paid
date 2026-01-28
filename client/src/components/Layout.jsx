@@ -37,6 +37,10 @@ const Layout = () => {
         return <Navigate to="/login" replace />
     }
 
+    function signOut() {
+        
+    }
+
     return (
         
         <main className='layout-container'>
@@ -48,7 +52,7 @@ const Layout = () => {
                 <h2>Monthly Expenses</h2>
                 <div className='logged-in'>
                     <div className='welcome'>Welcome, {context.currentUser.firstName}</div>
-                    <div className='logout'>Log Out</div>
+                    <div className='logout' onClick={signOut}>Sign Out</div>
                 </div>
             </section>
 

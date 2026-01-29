@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 
 import ExpenseRow from "./ExpenseRow";
+import UserContext from "../auth/UserContext";
+
 
 const Expenses = () => {
+  const context = useContext(UserContext);
   const [rows, setRows] = useState([
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
@@ -11,6 +14,12 @@ const Expenses = () => {
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
   ]);
+  const [newExpense, setNewExpense] = useState({
+    name: '',
+    amount: '',
+    isPaid: false,
+    userId: context?.currentUser?.id,
+  }); 
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];

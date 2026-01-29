@@ -39,8 +39,13 @@ const UserSignUp = () => {
 
         if (response.status === 201) {
           console.log("New User Account successfully created!");
-          context.actions.signIn(newUser);
-          navigate('/');
+          const user = await context.actions.signIn({
+            email: newUser.email,
+            password: newUser.password,
+          });
+          if (user) {
+            navigate('/');
+          }
         } else if (response.status === 400) {
           const data = await response.json();
         } else {

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect} from "react";
 
 
 import ExpenseRow from "./ExpenseRow";
@@ -7,6 +7,7 @@ import UserContext from "../auth/UserContext";
 
 const Expenses = () => {
   const context = useContext(UserContext);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
@@ -14,12 +15,20 @@ const Expenses = () => {
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
     { id: crypto.randomUUID(), name: "", amount: "", paid: false },
   ]);
+
   const [newExpense, setNewExpense] = useState({
+    clientId: crypto.randomUUID(),
     name: '',
     amount: '',
-    isPaid: false,
+    paid: false,
     userId: context?.currentUser?.id,
   }); 
+
+  useEffect(() => {
+    fetch(`${API_BASE}/expense`)
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }, [])
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];

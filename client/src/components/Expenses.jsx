@@ -8,14 +8,7 @@ import UserContext from "../auth/UserContext";
 const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
-  const [rows, setRows] = useState([
-    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
-    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
-    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
-    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
-    { id: crypto.randomUUID(), name: "", amount: "", paid: false },
-  ]);
-
+  const [rows, setRows] = useState([]);
   const [newExpense, setNewExpense] = useState({
     clientId: crypto.randomUUID(),
     name: '',
@@ -27,8 +20,25 @@ const Expenses = () => {
   useEffect(() => {
     fetch(`${API_BASE}/expense`)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      if (data.length === 0) {
+        setRows(createStarterRows());
+      } else {
+        setRows(data);
+      }
+    })
   }, [])
+
+  function createStarterRows() {
+    return Array.from({ length: 3 }, () => ({
+      clientId: crypto.randomUUID(),
+      id: null,
+      name: "",
+      amount: "",
+      paid: false,
+    }));
+  }
+
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -66,7 +76,7 @@ const Expenses = () => {
 
         {rows.map((row, index) => (
           <ExpenseRow
-            key={row.id}
+            key={row.clientId ?? row.id}
             row={row}
             index={index}
             deleteRow={() => deleteRow(row.id)}

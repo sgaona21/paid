@@ -36,6 +36,7 @@ const Expenses = () => {
       name: "",
       amount: "",
       paid: false,
+      userId: context?.currentUser?.id,
     }));
   }
 
@@ -48,16 +49,18 @@ const Expenses = () => {
 
   const addRow = () => {
     const newRow = {
-      id: crypto.randomUUID(),
+      clientId: crypto.randomUUID(),
+      id: null,
       name: "",
       amount: "",
       paid: false,
+      userId: context?.currentUser?.id,
     };
     setRows((prevRows) => [...prevRows, newRow]);
   };
 
   const deleteRow = (idToDelete) => {
-    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
+    setRows((prevRows) => prevRows.filter((row) => row.clientId !== idToDelete));
   };
 
   const total = rows.reduce(
@@ -79,7 +82,7 @@ const Expenses = () => {
             key={row.clientId ?? row.id}
             row={row}
             index={index}
-            deleteRow={() => deleteRow(row.id)}
+            deleteRow={() => deleteRow(row.clientId)}
             handleRowChange={handleRowChange}
           />
         ))}

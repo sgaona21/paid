@@ -9,13 +9,6 @@ const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
-  const [newExpense, setNewExpense] = useState({
-    clientId: crypto.randomUUID(),
-    name: '',
-    amount: '',
-    paid: false,
-    userId: context?.currentUser?.id,
-  }); 
 
   useEffect(() => {
     fetch(`${API_BASE}/expense`)
@@ -23,14 +16,27 @@ const Expenses = () => {
     .then(data => {
       if (data.length === 0) {
         setRows(createStarterRows());
+        addStartersToDb();
+        console.log(data)
       } else {
         setRows(data);
       }
     })
+    .then(console.log(rows))
   }, [])
 
+function addStartersToDb() {
+  fetch(`${API_BASE}/expense/starters`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(rows)
+  })
+}
+
   function createStarterRows() {
-    return Array.from({ length: 3 }, () => ({
+    return Array.from({ length: 10 }, () => ({
       clientId: crypto.randomUUID(),
       id: null,
       name: "",
@@ -39,7 +45,6 @@ const Expenses = () => {
       userId: context?.currentUser?.id,
     }));
   }
-
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -57,6 +62,7 @@ const Expenses = () => {
       userId: context?.currentUser?.id,
     };
     setRows((prevRows) => [...prevRows, newRow]);
+    console.log(rows)
   };
 
   const deleteRow = (idToDelete) => {

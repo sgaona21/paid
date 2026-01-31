@@ -21,14 +21,14 @@ router.post("/auth", asyncHandler(async (req, res) => {
       const token = jwt.sign(
         { userId: user.id},
         process.env.JWT_SECRET,
-        { expiresIn: "15m"}
+        { expiresIn: "30m"}
       );
 
       res.cookie("auth", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 15 * 60 * 1000
+        maxAge: 30 * 60 * 1000
       })
 
       res.status(200).json({

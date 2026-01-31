@@ -17,7 +17,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
                     type="number" 
                     name="expense-amount"
                     value={row?.amount ?? ""}
-                    onChange={(e) => handleRowChange(index, "amount", e.target.value)}
+                    onChange={(e) => handleRowChange(index, "amount", Number(e.target.value))}
                     ></input>
                 </div>
                 <div className="expense-row-inputs">

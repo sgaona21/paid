@@ -2,6 +2,8 @@ const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
 const { Expense } = require('../models');
 const { User } = require('../models');
+const jwt = require('jsonwebtoken');
+
 
 const router = express.Router();
 
@@ -28,6 +30,7 @@ router.post('/starters', asyncHandler(async (req, res) => {
   } catch (error) {
     if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       const errors = error.errors.map(err => err.message);
+      console.log("ERRORS", errors)
       res.status(400).json({ errors });   
     } else {
       throw error;

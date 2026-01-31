@@ -16,22 +16,23 @@ const Expenses = () => {
     .then(data => {
       if (data.length === 0) {
         setRows(createStarterRows());
-        addStartersToDb();
-        console.log(data)
       } else {
         setRows(data);
       }
     })
-    .then(console.log(rows))
   }, [])
 
-function addStartersToDb() {
+
+
+
+
+function addStartersToDb(starterRows) {
   fetch(`${API_BASE}/expense/starters`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(rows)
+    body: JSON.stringify(starterRows)
   })
 }
 
@@ -40,7 +41,7 @@ function addStartersToDb() {
       clientId: crypto.randomUUID(),
       id: null,
       name: "",
-      amount: "",
+      amount: null,
       paid: false,
       userId: context?.currentUser?.id,
     }));
@@ -57,7 +58,7 @@ function addStartersToDb() {
       clientId: crypto.randomUUID(),
       id: null,
       name: "",
-      amount: "",
+      amount: null,
       paid: false,
       userId: context?.currentUser?.id,
     };

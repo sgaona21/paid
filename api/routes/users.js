@@ -79,6 +79,7 @@ router.post('/signup', asyncHandler(async (req, res) => {
   }
 }));
 
+
 //RESTORE
 //Restores currentUser state to persist after a page refresh
 router.get("/restore", authJwt, asyncHandler(async (req, res) => {
@@ -86,9 +87,10 @@ router.get("/restore", authJwt, asyncHandler(async (req, res) => {
     attributes: ["id", "email", "firstName"],
   });
 
-  if (!user) return res.status(401).json({ message: "Unauthorized" });
+  if (!user) return res.status(204).end();
   res.json(user);
 }));
+
 
 
 

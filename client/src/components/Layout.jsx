@@ -10,30 +10,23 @@ const Layout = () => {
     const context = useContext(UserContext);
     const navigate = useNavigate();
     const [checkingAuth, setCheckingAuth] = useState(true);
+    const [authLoading, setAuthLoading] = useState(true);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
-      async function loadMe() {
-        try {
-          const res = await fetch(`${API_BASE}/users/restore`, {
-            credentials: "include",
-          });
+      fetch(`${API_BASE}/users/restore`, { credentials: "include" })
+        .then(async (res) => {
+          if (res.status === 204) return null;
+          if (!res.ok) return null;
+          return res.json();
+        })
+        .then((data) => {
+          if (data) context.actions.setCurrentUser(data);
+        })
+        .finally(() => setAuthLoading(false));
+    }, []);
 
-          if (!res.ok) throw new Error("Not logged in");
-
-          const user = await res.json();
-          context.actions.setCurrentUser(user);
-          setCheckingAuth(false)
-        } catch {
-          context.actions.setCurrentUser(null);
-        } finally {
-            setCheckingAuth(false);
-        }
-      }
-
-      loadMe();
-    }, [API_BASE]);
-
+    
     async function signOut() {
       await fetch(`${API_BASE}/users/signout`, {
         method: "POST",
@@ -44,13 +37,15 @@ const Layout = () => {
       navigate("/login");
     }
 
-    if (checkingAuth) return <div>Loading...</div>;
 
-    if (context.currentUser === null) {
-        return <Navigate to="/login" replace />
+    if (authLoading) {
+      return <div>Loading...</div>
     }
 
-    
+    if (!context.currentUser) {
+      return <Navigate to="/login" replace />;
+    }
+
 
     return (
         

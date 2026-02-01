@@ -3,44 +3,13 @@ const { asyncHandler } = require('../middleware/async-handler');
 const { authJwt } = require('../middleware/auth-jwt');
 const { Expense } = require('../models');
 const { User } = require('../models');
-
 const router = express.Router();
-
-//ADD STARTER ROWS
-router.post('/seed', authJwt, asyncHandler(async (req, res) => {
-  const userId = req.currentUser.id;
-
-  const expenses = await Expense.sequelize.transaction(async (t) => {
-    const count = await Expense.count({
-      where: { userId },
-      transaction: t
-    });
-
-    if (count === 0) {
-      const starters = [
-        { userId, name: 'Rent', amount: 0, isPaid: false },
-        { userId, name: 'Car Payment', amount: 0, isPaid: false },
-        // ... 8 more
-      ];
-
-      await Expense.bulkCreate(starters, { transaction: t });
-    }
-
-    return Expense.findAll({
-      where: { userId },
-      attributes: ['id', 'name', 'amount', 'isPaid', 'userId'],
-      order: [['createdAt', 'ASC']],
-      transaction: t
-    });
-  });
-
-  res.status(200).json(expenses);
-}));
 
 
 //GET EXPENSES 
 router.get('/', authJwt, asyncHandler(async (req, res) => {
-  const userId = req.currentUser.userId;
+  const userId = req.currentUser.id;
+  console.log("THE USER ID", userId)
 
     const expenses = await Expense.findAll({
       where: { userId },
@@ -50,26 +19,8 @@ router.get('/', authJwt, asyncHandler(async (req, res) => {
         attributes: ['id', 'firstName', 'lastName', 'email']
       }]
     })
-
+    console.log('BUUUUUT DID WE MAKE IT HERE')
     res.status(200).json(expenses);
-}));
-
-//ADD STARTER ROWS TO DB
-router.post('/starters', asyncHandler(async (req, res) => {
-  try {
-    const starters = req.body;
-    console.log("body:", starters)
-    await Expense.bulkCreate(starters);
-    res.status(201).end();
-  } catch (error) {
-    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
-      const errors = error.errors.map(err => err.message);
-      console.log("ERRORS", errors)
-      res.status(400).json({ errors });   
-    } else {
-      throw error;
-    }
-  }
 }));
 
 //Add new expense

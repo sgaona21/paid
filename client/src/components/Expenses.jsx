@@ -1,6 +1,4 @@
 import { useState, useContext, useEffect} from "react";
-
-
 import ExpenseRow from "./ExpenseRow";
 import UserContext from "../auth/UserContext";
 
@@ -10,59 +8,11 @@ const Expenses = () => {
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
 
-//   useEffect(() => {
-//   const initExpenses = async () => {
-//     const res = await fetch(`${API_BASE}/expense`);
-//     const data = await res.json();
-
-//     if (data.length === 0) {
-//       const starterRows = createStarterRows();
-
-//       setRows(starterRows);
-//       await addStartersToDb(starterRows);
-//     } else {
-//       setRows(data);
-//     }
-//   };
-
-//   initExpenses();
-// }, []);
-
 useEffect(() => {
-  const init = async () => {
-    const res = await fetch(`${API_BASE}/expense/seed`, {
-      method: 'POST',
-      credentials: 'include',
-    });
-    const data = await res.json();
-    setRows(data);
-  };
-
-  init();
+  fetch(`${API_BASE}/expense`, { credentials: "include" })
+    .then((res) => res.json())
+    .then((data) => setRows(data));
 }, []);
-
-
-
-function addStartersToDb(starterRows) {
-  fetch(`${API_BASE}/expense/starters`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(starterRows)
-  })
-}
-
-  function createStarterRows() {
-    return Array.from({ length: 10 }, () => ({
-      clientId: crypto.randomUUID(),
-      id: null,
-      name: "",
-      amount: null,
-      paid: false,
-      userId: context?.currentUser?.id,
-    }));
-  }
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];

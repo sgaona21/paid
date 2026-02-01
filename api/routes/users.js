@@ -1,10 +1,11 @@
 const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
 const { User } = require('../models');
+const { Expense, sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-
 const router = express.Router();
+
 
 //Authorize user
 router.post("/auth", asyncHandler(async (req, res) => {
@@ -40,22 +41,37 @@ router.post("/auth", asyncHandler(async (req, res) => {
   })
 );
 
-
-// CREATE a new user 
-router.post('/', asyncHandler(async (req, res) => {
+//SIGNUP 
+router.post('/signup', asyncHandler(async (req, res) => {
   try {
-    const user = req.body;
-
-    if (user.password) {
-      user.passwordHash = await bcrypt.hash(user.password, 10);
-      delete user.password;
+    const userData = { ...req.body };
+    console.log(userData)
+    if (userData.password) {
+      userData.passwordHash = await bcrypt.hash(userData.password, 10);
+      delete userData.password;
     }
-    await User.create(user);
+
+    await sequelize.transaction(async (t) => {
+      const createdUser = await User.create(userData, { transaction: t });
+
+      const starters = Array.from({ length: 10 }, () => ({
+        name: "",
+        amount: null,
+        paid: false,
+        userId: createdUser.id
+      }));
+
+      await Expense.bulkCreate(starters, { transaction: t });
+    });
+
     res.status(201).end();
   } catch (error) {
-    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       const errors = error.errors.map(err => err.message);
-      res.status(400).json({ errors });   
+      res.status(400).json({ errors });
     } else {
       throw error;
     }

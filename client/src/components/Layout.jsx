@@ -9,7 +9,6 @@ import UserContext from "../auth/UserContext";
 const Layout = () => {
     const context = useContext(UserContext);
     const navigate = useNavigate();
-    const [checkingAuth, setCheckingAuth] = useState(true);
     const [authLoading, setAuthLoading] = useState(true);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 

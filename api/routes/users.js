@@ -8,7 +8,8 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 
-//Authorize user
+// AUTHENTICATE
+// Authenticates user and creates JWT
 router.post("/auth", asyncHandler(async (req, res) => {
       const { email, password } = req.body || {};
       const user = await User.findOne({
@@ -42,7 +43,8 @@ router.post("/auth", asyncHandler(async (req, res) => {
   })
 );
 
-//SIGNUP && CREATES 10 STARTER ROWS FOR NEW USER
+// SIGNUP
+// Creates new user and creates 10 starter expense rows in the db
 router.post('/signup', asyncHandler(async (req, res) => {
   try {
     const userData = { ...req.body };
@@ -80,8 +82,8 @@ router.post('/signup', asyncHandler(async (req, res) => {
 }));
 
 
-//RESTORE
-//Restores currentUser state to persist after a page refresh
+// RESTORE
+// Restores currentUser state to persist after a page refresh
 router.get("/restore", authJwt, asyncHandler(async (req, res) => {
   const user = await User.findByPk(req.currentUser.id, {
     attributes: ["id", "email", "firstName"],
@@ -92,10 +94,8 @@ router.get("/restore", authJwt, asyncHandler(async (req, res) => {
 }));
 
 
-
-
-
-//Sign Out
+// SIGN OUT
+// Deletes cookie and ends user session
 router.post('/signout', asyncHandler(async (req, res) => {
   res.clearCookie("auth", {
     httpOnly: true,

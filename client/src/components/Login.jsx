@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {  NavLink, useNavigate } from "react-router-dom";
 import '../styles/login.css';
 
@@ -7,6 +7,7 @@ import UserContext from "../auth/UserContext";
 const LogIn = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
     const [loginInfo, setLoginInfo] = useState({
       email: '',
       password: ''
@@ -32,6 +33,20 @@ const LogIn = () => {
         console.log(error)
       }
     };
+
+    useEffect(() => {
+      fetch(`${API_BASE}/users/restore`, { credentials: "include" })
+        .then(async (res) => {
+          if (res.status === 204) return null;
+          if (!res.ok) return null;
+          return res.json();
+        })
+        .then((data) => {
+          if (data) {
+            navigate('/')
+          } 
+        })
+    }, []);
 
     return (
       <div className="signup-container">

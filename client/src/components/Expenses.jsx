@@ -10,19 +10,36 @@ const Expenses = () => {
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    fetch(`${API_BASE}/expense`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.length === 0) {
-        setRows(createStarterRows());
-      } else {
-        setRows(data);
-      }
-    })
-  }, [])
+//   useEffect(() => {
+//   const initExpenses = async () => {
+//     const res = await fetch(`${API_BASE}/expense`);
+//     const data = await res.json();
 
+//     if (data.length === 0) {
+//       const starterRows = createStarterRows();
 
+//       setRows(starterRows);
+//       await addStartersToDb(starterRows);
+//     } else {
+//       setRows(data);
+//     }
+//   };
+
+//   initExpenses();
+// }, []);
+
+useEffect(() => {
+  const init = async () => {
+    const res = await fetch(`${API_BASE}/expense/seed`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+    const data = await res.json();
+    setRows(data);
+  };
+
+  init();
+}, []);
 
 
 

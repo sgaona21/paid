@@ -19,6 +19,7 @@ export const UserProvider = (props) => {
         if (response.status === 200) {
             const user = await response.json();
             setCurrentUser(user);
+            console.log("here is the USER:", user)
             
             return user
         } else if (response.status === 401) {

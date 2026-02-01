@@ -3,11 +3,6 @@ const { User } = require("../models");
 
 // verifies user by validating JWT
 exports.authJwt = async (req, res, next) => {
-  console.log("cookies:", req.cookies);
-console.log("token:", req.cookies?.auth);
-console.log(req.cookies); 
-
-
   try {
     const token = req.cookies?.auth;
     if (!token) return res.status(401).json({ message: "Unauthorized" });

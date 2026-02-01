@@ -15,7 +15,7 @@ const Layout = () => {
     useEffect(() => {
       async function loadMe() {
         try {
-          const res = await fetch(`${API_BASE}/users/refresh`, {
+          const res = await fetch(`${API_BASE}/users/restore`, {
             credentials: "include",
           });
 
@@ -35,13 +35,13 @@ const Layout = () => {
     }, [API_BASE]);
 
     async function signOut() {
-        await fetch(`${API_BASE}/users/signout`, {
-            method: "POST",
-            credentials: "include"
-        })
+      await fetch(`${API_BASE}/users/signout`, {
+        method: "POST",
+        credentials: "include",
+      });
 
-        context.actions.setCurrentUser(null);
-        navigate('/login');
+      context.actions.setCurrentUser(null);
+      navigate("/login");
     }
 
     if (checkingAuth) return <div>Loading...</div>;

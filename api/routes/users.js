@@ -1,5 +1,6 @@
 const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
+const { authJwt } = require('../middleware/auth-jwt');
 const { User } = require('../models');
 const { Expense, sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
@@ -78,24 +79,19 @@ router.post('/signup', asyncHandler(async (req, res) => {
   }
 }));
 
-//Persist Refresh 
-router.get('/refresh', asyncHandler(async (req, res) => {
-  const token = req.cookies.auth;
-
-  if (!token) {
-    return res.status(401).json({ message: "Not Authenticated"});
-  }
-  
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  req.userId = decoded.userId;
-  
-  const user = await User.findByPk(req.userId, {
+//RESTORE
+//Restores currentUser state to persist after a page refresh
+router.get("/restore", authJwt, asyncHandler(async (req, res) => {
+  const user = await User.findByPk(req.currentUser.id, {
     attributes: ["id", "email", "firstName"],
-  })
+  });
 
-    res.json(user);
-  
+  if (!user) return res.status(401).json({ message: "Unauthorized" });
+  res.json(user);
 }));
+
+
+
 
 //Sign Out
 router.post('/signout', asyncHandler(async (req, res) => {

@@ -41,7 +41,7 @@ router.post("/auth", asyncHandler(async (req, res) => {
   })
 );
 
-//SIGNUP 
+//SIGNUP && CREATES 10 STARTER ROWS FOR NEW USER
 router.post('/signup', asyncHandler(async (req, res) => {
   try {
     const userData = { ...req.body };

@@ -9,10 +9,27 @@ const Expenses = () => {
   const [rows, setRows] = useState([]);
 
 useEffect(() => {
-  fetch(`${API_BASE}/expense`, { credentials: "include" })
-    .then((res) => res.json())
-    .then((data) => setRows(data));
+  updateUI()
 }, []);
+
+const updateUI = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/expense`, {
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      console.warn("updateUI failed:", res.status);
+      return;
+    }
+
+    const data = await res.json();
+    setRows(data);
+  } catch (err) {
+    console.error("updateUI crashed:", err);
+  }
+};
+
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -33,14 +50,15 @@ useEffect(() => {
     addRowToDb(newRow);
   };
 
-  function addRowToDb(row) {
-    fetch(`${API_BASE}/expense/add`, {
+  const addRowToDb = async (row) => {
+    await fetch(`${API_BASE}/expense/add`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(row)
-    }
-  )}
+      body: JSON.stringify(row),
+    });
+    updateUI();
+  };
 
   const deleteRow = (idToDelete) => {
     setRows((prevRows) => prevRows.filter((row) => row.clientId !== idToDelete));
@@ -55,16 +73,7 @@ useEffect(() => {
     }
   )}
 
-  const updateUI = async () => {
-    const res = await fetch(`${API_BASE}/expense`, {
-      credentials: "include",
-    });
 
-    if (!res.ok) return;
-
-    const data = await res.json();
-    setRows(data);
-  };
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),

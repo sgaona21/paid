@@ -23,7 +23,8 @@ router.get('/', authJwt, asyncHandler(async (req, res) => {
     res.status(200).json(expenses);
 }));
 
-//Add new expense
+// ADD 
+// Adds new expense row to db
 router.post('/add', asyncHandler(async (req, res) => {
   try {
     const expense = req.body;
@@ -37,6 +38,21 @@ router.post('/add', asyncHandler(async (req, res) => {
       throw error;
     }
   }
+}));
+
+
+// DELETE 
+// Deletes expense row from db
+router.delete('/:id', asyncHandler(async (req, res) => {
+  const userId = req.currentUser.id;
+  const expenseId = req.params.id;
+
+  const deleted = await Expense.destroy({
+    where: { id: expenseId, userId }
+  });
+  console.log('ROW YEEETED')
+  if (!deleted) return res.status(404).json({ message: "Not found" });
+  res.status(204).end();
 }));
 
 

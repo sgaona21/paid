@@ -26,7 +26,7 @@ useEffect(() => {
       id: null,
       name: "",
       amount: null,
-      paid: false,
+      isPaid: false,
       userId: context?.currentUser?.id,
     };
     setRows((prevRows) => [...prevRows, newRow]);
@@ -44,16 +44,27 @@ useEffect(() => {
 
   const deleteRow = (idToDelete) => {
     setRows((prevRows) => prevRows.filter((row) => row.clientId !== idToDelete));
+    deleteRowFromDb(idToDelete)
   };
 
-  function deleteRowFromDb(row) {
-    fetch(`${API_BASE}/expense/add`, {
-      method: "POST",
+  function deleteRowFromDb(rowId) {
+    fetch(`${API_BASE}/expense/${rowId}`, {
+      method: "DELETE",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(row)
     }
   )}
+
+  const updateUI = async () => {
+    const res = await fetch(`${API_BASE}/expense`, {
+      credentials: "include",
+    });
+
+    if (!res.ok) return;
+
+    const data = await res.json();
+    setRows(data);
+  };
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),

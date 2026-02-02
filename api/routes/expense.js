@@ -26,8 +26,8 @@ router.get('/', authJwt, asyncHandler(async (req, res) => {
 //Add new expense
 router.post('/add', asyncHandler(async (req, res) => {
   try {
-    const expense = await Expense.create(req.body);
-    // res.location(`/api/courses/${course.id}`);
+    const expense = req.body;
+    await Expense.create(expense);
     res.status(201).end();
   } catch (error) {
     if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {

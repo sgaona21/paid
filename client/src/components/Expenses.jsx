@@ -30,12 +30,30 @@ useEffect(() => {
       userId: context?.currentUser?.id,
     };
     setRows((prevRows) => [...prevRows, newRow]);
-    console.log(rows)
+    addRowToDb(newRow);
   };
+
+  function addRowToDb(row) {
+    fetch(`${API_BASE}/expense/add`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(row)
+    }
+  )}
 
   const deleteRow = (idToDelete) => {
     setRows((prevRows) => prevRows.filter((row) => row.clientId !== idToDelete));
   };
+
+  function deleteRowFromDb(row) {
+    fetch(`${API_BASE}/expense/add`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(row)
+    }
+  )}
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),

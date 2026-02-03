@@ -60,7 +60,7 @@ router.post('/signup', asyncHandler(async (req, res) => {
       const starters = Array.from({ length: 10 }, () => ({
         name: "",
         amount: null,
-        paid: false,
+        isPaid: false,
         userId: createdUser.id
       }));
 

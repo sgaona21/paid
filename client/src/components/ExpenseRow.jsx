@@ -24,7 +24,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
                     <input 
                     type="checkbox" 
                     name="expense-paid"
-                    checked={!!row?.paid}
+                    checked={!!row?.isPaid}
                     onChange={(e) => handleRowChange(index, "paid", e.target.checked)}
                     ></input>
                     <div className="delete-row" onClick={deleteRow} >❌</div>

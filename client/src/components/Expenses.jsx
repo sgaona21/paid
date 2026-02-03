@@ -112,6 +112,14 @@ async function deleteRowFromDb(rowId) {
     0
   );
 
+  const totalPaid = rows.reduce((sum, row) => {
+    if (!row.isPaid) return sum;
+
+    const amount = parseFloat(row.amount);
+    return sum + (isNaN(amount) ? 0 : amount);
+  }, 0);
+
+
   return (
     <div className="expense-content-container">
       <div className="expense-table-container">
@@ -144,7 +152,7 @@ async function deleteRowFromDb(rowId) {
 
       <div className="monthly-remaining-container">
         <div className="monthly-remaining-label">Remaining Expenses</div>
-        <div className="monthly-remaining-amount">0</div>
+        <div className="monthly-remaining-amount">{total - totalPaid}</div>
       </div>
     </div>
   );

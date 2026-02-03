@@ -1,6 +1,6 @@
 
 
-const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
+const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
     return (
         <div className="expense-rows-container">
             <div className="expense-row-container">
@@ -10,6 +10,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
                     name="expense-name"
                     value={row?.name ?? ""}
                     onChange={(e) => handleRowChange(index, "name", e.target.value)}
+                    onBlur={() => saveRow(row)}
                      ></input>
                 </div>
                 <div className="expense-row-inputs">
@@ -18,6 +19,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
                     name="expense-amount"
                     value={row?.amount ?? ""}
                     onChange={(e) => handleRowChange(index, "amount", Number(e.target.value))}
+                    onBlur={() => saveRow(row)}
                     ></input>
                 </div>
                 <div className="expense-row-inputs">
@@ -25,7 +27,11 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow }) => {
                     type="checkbox" 
                     name="expense-paid"
                     checked={!!row?.isPaid}
-                    onChange={(e) => handleRowChange(index, "isPaid", e.target.checked)}
+                    onChange={(e) =>  {
+                        handleRowChange(index, "isPaid", e.target.checked);
+                        saveRow({ ...row, isPaid: e.target.checked });
+                    }}
+                    onBlur={() => saveRow(row)}
                     ></input>
                     <div className="delete-row" onClick={deleteRow} >❌</div>
                 </div>

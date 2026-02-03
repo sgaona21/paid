@@ -39,6 +39,27 @@ router.post('/add', asyncHandler(async (req, res) => {
   }
 }));
 
+// UPDATE
+// Updates row inputs and saves to db
+router.put("/:id", authJwt, asyncHandler(async (req, res) => {
+  const userId = req.currentUser.id;
+  const { id } = req.params;
+
+  const [updatedCount] = await Expense.update(
+    {
+      name: req.body.name,
+      amount: req.body.amount,
+      isPaid: req.body.isPaid,
+    },
+    { where: { id, userId } }
+  );
+
+  if (updatedCount === 0) return res.status(404).json({ message: "Not found" });
+
+  res.status(204).end();
+}));
+
+
 
 // DELETE 
 // Deletes expense row from db

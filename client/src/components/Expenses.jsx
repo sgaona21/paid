@@ -60,6 +60,27 @@ const updateUI = async () => {
     updateUI();
   };
 
+  async function saveRowToDb(row) {
+  const res = await fetch(`${API_BASE}/expense/${row.id}`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: row.name,
+      amount: row.amount,
+      isPaid: row.isPaid,
+    }),
+  });
+
+  if (!res.ok) {
+    console.warn("Save failed:", res.status);
+    return;
+  }
+
+  updateUI();
+}
+
+
   const deleteRow = (idToDelete) => {
     setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
     deleteRowFromDb(idToDelete)
@@ -107,6 +128,7 @@ async function deleteRowFromDb(rowId) {
             index={index}
             deleteRow={() => deleteRow(row.id)}
             handleRowChange={handleRowChange}
+            saveRow={saveRowToDb}
           />
         ))}
 

@@ -61,17 +61,28 @@ const updateUI = async () => {
   };
 
   const deleteRow = (idToDelete) => {
-    setRows((prevRows) => prevRows.filter((row) => row.clientId !== idToDelete));
+    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
     deleteRowFromDb(idToDelete)
   };
 
-  function deleteRowFromDb(rowId) {
-    fetch(`${API_BASE}/expense/${rowId}`, {
+async function deleteRowFromDb(rowId) {
+  try {
+    const res = await fetch(`${API_BASE}/expense/${rowId}`, {
       method: "DELETE",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      console.warn("Delete failed:", res.status);
+      return;
     }
-  )}
+
+    updateUI();
+  } catch (err) {
+    console.error("deleteRowFromDb crashed:", err);
+  }
+}
 
 
 
@@ -94,7 +105,7 @@ const updateUI = async () => {
             key={row.clientId ?? row.id}
             row={row}
             index={index}
-            deleteRow={() => deleteRow(row.clientId)}
+            deleteRow={() => deleteRow(row.id)}
             handleRowChange={handleRowChange}
           />
         ))}

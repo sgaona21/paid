@@ -302,8 +302,16 @@ input[type="number"]::-webkit-inner-spin-button {
     #dashboard-header {
         display: none;
     }
+
     #dashboard-title-mobile {
         display: block;
+    }
+
+    /* CONTENT */
+
+    .expense-content-container {
+        display: flex;
+        flex-direction: column;
     }
 
 

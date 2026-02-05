@@ -261,7 +261,26 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 
+/* MEDIA  */
 
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .layout-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dashboard {
+        display: none;
+    }
+
+    .header {
+        padding: 1rem;
+    }
+
+}
 
 
 

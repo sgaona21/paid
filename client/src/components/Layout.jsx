@@ -4,6 +4,8 @@ import { useState, useContext, useEffect } from "react";
 
 import Expenses from './Expenses';
 import UserContext from "../auth/UserContext";
+import paidLogo from '../assets/paid-logo.png'
+import hamburger from '../assets/hamburger.png'
 
 
 const Layout = () => {
@@ -50,11 +52,14 @@ const Layout = () => {
         
         <main className='layout-container'>
             <section className='dashboard'>
-                <h2>Paid</h2>
+                <h2 id='dashboard-header'>Dashboard</h2>
+                <h2 id='dashboard-title-mobile'>Paid</h2>
             </section>
 
             <section className='header'>
-                <h2>Monthly Expenses</h2>
+                <div className='hamburger'><img src={hamburger} alt="hamburger menu icon" /></div>
+                <div className='logo'><img src={paidLogo} alt="site logo" /></div>
+                
                 <div className='logged-in'>
                     <div className='welcome'>Welcome, {context.currentUser.firstName}</div>
                     <div className='logout' onClick={signOut}>Sign Out</div>

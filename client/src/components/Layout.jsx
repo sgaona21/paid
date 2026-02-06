@@ -6,6 +6,7 @@ import Expenses from './Expenses';
 import UserContext from "../auth/UserContext";
 import paidLogo from '../assets/paid-logo.png'
 import hamburger from '../assets/hamburger.png'
+import userIcon from '../assets/user-icon.svg'
 
 
 const Layout = () => {
@@ -53,7 +54,6 @@ const Layout = () => {
         <main className='layout-container'>
             <section className='dashboard'>
                 <h2 id='dashboard-header'>Dashboard</h2>
-                <h2 id='dashboard-title-mobile'>Paid</h2>
             </section>
 
             <section className='header'>
@@ -61,9 +61,12 @@ const Layout = () => {
                 <div className='logo'><img src={paidLogo} alt="site logo" /></div>
                 
                 <div className='logged-in'>
-                    <div className='welcome'>Welcome, {context.currentUser.firstName}</div>
+                  <div className='user-icon'><img src={userIcon} alt="" /></div>
+                    <div className='welcome'>{context.currentUser.firstName}</div>
                     <div className='logout' onClick={signOut}>Sign Out</div>
+                    
                 </div>
+                
             </section>
 
             <section className='content'>

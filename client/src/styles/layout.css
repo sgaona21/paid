@@ -231,7 +231,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .hamburger {
-    width: 30px; 
+    width: 40px; 
 }
 
 .hamburger:hover {
@@ -241,6 +241,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .hamburger img {
     width: 100%;
     filter: invert(1);
+    padding: .35rem
 }
 
 .logo img {
@@ -263,6 +264,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .logged-in {
     display: flex;
     color: rgba(245, 245, 245, 0.836);
+    align-items: center;
 }
 
 .welcome {
@@ -279,6 +281,12 @@ input[type="number"]::-webkit-inner-spin-button {
     border-radius: 25px;
     color: whitesmoke;
 }
+
+.user-icon img {
+    width: 40px;
+}
+
+
 
 
 

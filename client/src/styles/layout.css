@@ -323,18 +323,15 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
 
-
-
-
-
     /* HEADER */
     .header {
         display: flex;
-        flex-direction: column;
         padding: 1rem;
     }
 
-
+    .logo {
+        display: none;
+    }
 
 
 }

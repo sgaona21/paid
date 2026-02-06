@@ -307,7 +307,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     /* DASHBOARD */
-    #dashboard-header {
+    .dashboard {
         display: none;
     }
 

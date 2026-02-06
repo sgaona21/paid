@@ -64,7 +64,6 @@ const Layout = () => {
                   <div className='user-icon'><img src={userIcon} alt="" /></div>
                     <div className='welcome'>{context.currentUser.firstName}</div>
                     <div className='logout' onClick={signOut}>Sign Out</div>
-                    
                 </div>
                 
             </section>

@@ -4,9 +4,9 @@ import { useState, useContext, useEffect } from "react";
 
 import Expenses from './Expenses';
 import UserContext from "../auth/UserContext";
-import paidLogo from '../assets/paid-logo.png'
-import hamburger from '../assets/hamburger.png'
-import userIcon from '../assets/user-icon.svg'
+import paidLogo from '../assets/paid-logo.png';
+import hamburger from '../assets/hamburger.png';
+import userIcon from '../assets/user-icon.svg';
 
 
 const Layout = () => {

@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import '../styles/login.css';
 import UserContext from "../auth/UserContext";
+import paidLogo from '../assets/paid-logo.png';
+
 
 
 const UserSignUp = () => {
@@ -78,7 +80,8 @@ const UserSignUp = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <h2>Paid</h2>
+          {/* <h2>Paid</h2> */}
+          <div className='logo'><img src={paidLogo} alt="site logo" /></div>
         </div>
 
         <div className="signup-content">

@@ -244,15 +244,15 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: .35rem
 }
 
-.logo img {
+.logo img, .signup-logo img {
     width: 100%;
 }
 
-.logo {
+.logo, .signup-logo {
     width: 40px;
 }
 
-.logo:hover {
+.logo:hover, .signup-logo:hover {
     cursor: pointer;
 }
 

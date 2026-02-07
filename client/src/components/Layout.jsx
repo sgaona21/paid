@@ -60,6 +60,7 @@ const Layout = () => {
                 <div className='hamburger'><img src={hamburger} alt="hamburger menu icon" /></div>
                 <div className='logo'><img src={paidLogo} alt="site logo" /></div>
                 
+                
                 <div className='logged-in'>
                   <div className='user-icon'><img src={userIcon} alt="" /></div>
                     <div className='welcome'>{context.currentUser.firstName}</div>

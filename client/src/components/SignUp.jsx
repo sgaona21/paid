@@ -82,6 +82,7 @@ const UserSignUp = () => {
         <div className="signup-header">
           {/* <h2>Paid</h2> */}
           <div className='logo'><img src={paidLogo} alt="site logo" /></div>
+          <div className='signup-logo'><img src={paidLogo} alt="site logo" /></div>
         </div>
 
         <div className="signup-content">

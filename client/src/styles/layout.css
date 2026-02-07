@@ -11,12 +11,21 @@ body {
     background-color: #474e5a;
 }
 
-.layout-container {
+.layout-container.dash {
     display: grid;
     grid-template-columns: minmax(250px, 10%) minmax(600px, auto);
     grid-template-rows: minmax(90px, 10%) auto;
     height: 100vh;
 }
+
+.layout-container.no-dash {
+    display: grid;
+    grid-template-columns: minmax(0, 0) minmax(600px, auto);
+    grid-template-rows: minmax(90px, 10%) auto;
+    margin-left: .5rem;
+    height: 100vh;
+}
+
 
 .dashboard {
     grid-column-start: 1;
@@ -211,6 +220,8 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 1rem;
     color: rgba(245, 245, 245, 0.806);
     font-weight: 500;
+    font-size: larger;
+    margin-top: .5rem;
 }
 
 #dashboard-title-mobile {
@@ -232,10 +243,15 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .hamburger {
     width: 40px; 
+    display: flex;
+    align-self: center;
 }
 
 .hamburger:hover {
     cursor: pointer;
+    background-color: rgba(211, 211, 211, 0.105);
+    border-radius: 25px;
+
 }
 
 .logo {
@@ -287,6 +303,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .user-icon img {
     width: 40px;
+    display: flex;
+    align-self: center;
 }
 
 

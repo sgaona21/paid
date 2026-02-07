@@ -13,6 +13,7 @@ const Layout = () => {
     const context = useContext(UserContext);
     const navigate = useNavigate();
     const [authLoading, setAuthLoading] = useState(true);
+    const [isDashOpen, setIsDashOpen] = useState(true);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
@@ -40,6 +41,8 @@ const Layout = () => {
     }
 
 
+
+
     if (authLoading) {
       return <div>Loading...</div>
     }
@@ -51,13 +54,15 @@ const Layout = () => {
 
     return (
         
-        <main className='layout-container'>
+        <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
             <section className='dashboard'>
                 <h2 id='dashboard-header'>Dashboard</h2>
             </section>
 
             <section className='header'>
-                <div className='hamburger'><img src={hamburger} alt="hamburger menu icon" /></div>
+                <div className='hamburger' onClick={() => setIsDashOpen((v) => !v)} >
+                  <img src={hamburger} alt="hamburger menu icon" />
+                </div>
                 <div className='logo'><img src={paidLogo} alt="site logo" /></div>
                 
                 

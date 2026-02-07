@@ -317,16 +317,48 @@ input[type="number"]::-webkit-inner-spin-button {
 
     /* CONTENT */
 
+    .content {
+        margin: 1rem;
+        min-width: 300px;
+    }
+
     .expense-content-container {
         display: flex;
         flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+        min-width: 300px;
     }
+
+    .expense-table-container {
+        /* width: auto;
+        max-width: 400px;
+        min-width: 300px; */
+        width: 100%;
+        max-width: 400px;
+        min-width: 250px;
+        margin: 0 auto;
+    }
+
+    .monthly-total-container, .monthly-remaining-container {
+        width: 100%;
+        max-width: 400px;
+        min-width: 250px;
+        margin: 1rem auto;
+    }
+
+    .wrapper {
+        padding: 1rem;
+    }
+
+
 
 
     /* HEADER */
     .header {
         display: flex;
-        padding: 1rem;
+        margin: 1rem;
+        min-width: 300px;
     }
 
     .logo {

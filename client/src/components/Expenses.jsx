@@ -8,28 +8,27 @@ const Expenses = () => {
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
 
-useEffect(() => {
-  updateUI()
-}, []);
+  useEffect(() => {
+    updateUI();
+  }, []);
 
-const updateUI = async () => {
-  try {
-    const res = await fetch(`${API_BASE}/expense`, {
-      credentials: "include",
-    });
+  const updateUI = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
 
-    if (!res.ok) {
-      console.warn("updateUI failed:", res.status);
-      return;
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      setRows(data);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
     }
-
-    const data = await res.json();
-    setRows(data);
-  } catch (err) {
-    console.error("updateUI crashed:", err);
-  }
-};
-
+  };
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -61,55 +60,52 @@ const updateUI = async () => {
   };
 
   async function saveRowToDb(row) {
-  const res = await fetch(`${API_BASE}/expense/${row.id}`, {
-    method: "PUT",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: row.name,
-      amount: row.amount,
-      isPaid: row.isPaid,
-    }),
-  });
-
-  if (!res.ok) {
-    console.warn("Save failed:", res.status);
-    return;
-  }
-
-  updateUI();
-}
-
-
-  const deleteRow = (idToDelete) => {
-    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
-    deleteRowFromDb(idToDelete)
-  };
-
-async function deleteRowFromDb(rowId) {
-  try {
-    const res = await fetch(`${API_BASE}/expense/${rowId}`, {
-      method: "DELETE",
+    const res = await fetch(`${API_BASE}/expense/${row.id}`, {
+      method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: row.name,
+        amount: row.amount,
+        isPaid: row.isPaid,
+      }),
     });
 
     if (!res.ok) {
-      console.warn("Delete failed:", res.status);
+      console.warn("Save failed:", res.status);
       return;
     }
 
     updateUI();
-  } catch (err) {
-    console.error("deleteRowFromDb crashed:", err);
   }
-}
 
+  const deleteRow = (idToDelete) => {
+    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
+    deleteRowFromDb(idToDelete);
+  };
 
+  async function deleteRowFromDb(rowId) {
+    try {
+      const res = await fetch(`${API_BASE}/expense/${rowId}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        console.warn("Delete failed:", res.status);
+        return;
+      }
+
+      updateUI();
+    } catch (err) {
+      console.error("deleteRowFromDb crashed:", err);
+    }
+  }
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),
-    0
+    0,
   );
 
   const totalPaid = rows.reduce((sum, row) => {
@@ -118,7 +114,6 @@ async function deleteRowFromDb(rowId) {
     const amount = parseFloat(row.amount);
     return sum + (isNaN(amount) ? 0 : amount);
   }, 0);
-
 
   return (
     <div className="expense-content-container">

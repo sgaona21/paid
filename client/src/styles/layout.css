@@ -238,6 +238,9 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
+.logo {
+    display: none;
+}
 .hamburger img {
     width: 100%;
     filter: invert(1);
@@ -352,8 +355,6 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
 
-
-
     /* HEADER */
     .header {
         display: flex;
@@ -364,7 +365,6 @@ input[type="number"]::-webkit-inner-spin-button {
     .logo {
         display: none;
     }
-
 
 }
 

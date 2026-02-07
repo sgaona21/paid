@@ -322,15 +322,47 @@ input[type="number"]::-webkit-inner-spin-button {
 
 @media (max-width: 768px) {
 
+    /* .layout-container.no-dash {
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+    } */
+
     .layout-container.no-dash {
         display: flex;
         flex-direction: column;
+        height: 100vh;
+        margin-left: auto;
+        
+
     }
 
-    /* DASHBOARD */
-    .dashboard {
-        display: none;
+    .layout-container.dash {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
     }
+
+    .header {
+        order: -1;
+    }
+
+    .dashboard {
+        margin: 1rem;
+        min-width: 300px;
+    }
+
+    .content {
+        margin-top: 600px;
+    }
+
+
+
+
+    /* DASHBOARD */
+    /* .dashboard {
+        display: none;
+    } */
 
     #dashboard-title-mobile {
         display: block;

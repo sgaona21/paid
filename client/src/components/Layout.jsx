@@ -53,32 +53,40 @@ const Layout = () => {
 
 
     return (
-        
-        <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
-            <section className='dashboard'>
-                <h2 id='dashboard-header'>Dashboard</h2>
-            </section>
+      <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
+        {/* <section className="dashboard">
+          <h2 id="dashboard-header">Dashboard</h2>
+        </section> */}
+        {isDashOpen && (
+          <section className="dashboard">
+            <h2 id="dashboard-header">Dashboard</h2>
+          </section>  
+        )}
 
-            <section className='header'>
-                <div className='hamburger' onClick={() => setIsDashOpen((v) => !v)} >
-                  <img src={hamburger} alt="hamburger menu icon" />
-                </div>
-                <div className='logo'><img src={paidLogo} alt="site logo" /></div>
-                
-                
-                <div className='logged-in'>
-                  <div className='user-icon'><img src={userIcon} alt="" /></div>
-                    <div className='welcome'>{context.currentUser.firstName}</div>
-                    <div className='logout' onClick={signOut}>Sign Out</div>
-                </div>
-                
-            </section>
+        <section className="header">
+          <div className="hamburger" onClick={() => setIsDashOpen((v) => !v)}>
+            <img src={hamburger} alt="hamburger menu icon" />
+          </div>
+          <div className="logo">
+            <img src={paidLogo} alt="site logo" />
+          </div>
 
-            <section className='content'>
-                <Outlet />
-            </section>
-        </main>
-    )
+          <div className="logged-in">
+            <div className="user-icon">
+              <img src={userIcon} alt="" />
+            </div>
+            <div className="welcome">{context.currentUser.firstName}</div>
+            <div className="logout" onClick={signOut}>
+              Sign Out
+            </div>
+          </div>
+        </section>
+
+        <section className="content">
+          <Outlet />
+        </section>
+      </main>
+    );
 }
 
 export default Layout;

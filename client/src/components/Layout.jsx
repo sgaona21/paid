@@ -1,8 +1,8 @@
-import '../styles/layout.css';
+// import '../styles/layout.css';
+import '../styles/layout-mobile-first.css';
 import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 
-import Expenses from './Expenses';
 import UserContext from "../auth/UserContext";
 import paidLogo from '../assets/paid-logo.png';
 import hamburger from '../assets/hamburger.png';
@@ -54,12 +54,14 @@ const Layout = () => {
 
     return (
       <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
-        {/* <section className="dashboard">
-          <h2 id="dashboard-header">Dashboard</h2>
-        </section> */}
         {isDashOpen && (
           <section className="dashboard">
             <h2 id="dashboard-header">Dashboard</h2>
+            <ol>
+              <li>Expenses</li>
+              <li>Income</li>
+              <li>Debt</li>
+            </ol>
           </section>  
         )}
 

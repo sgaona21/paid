@@ -1,5 +1,5 @@
-// import '../styles/layout.css';
-import '../styles/layout-mobile-first.css';
+import '../styles/layout.css';
+// import '../styles/layout-mobile-first.css';
 import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 

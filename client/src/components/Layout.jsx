@@ -9,6 +9,7 @@ import hamburger from '../assets/hamburger.png';
 import userIcon from '../assets/user-icon.svg';
 
 
+
 const Layout = () => {
     const context = useContext(UserContext);
     const navigate = useNavigate();
@@ -60,8 +61,12 @@ const Layout = () => {
       <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
         {isDashOpen && (
           <section className="dashboard">
-            <h2 id="dashboard-header">Dashboard</h2>
-            <ol>
+            <div className='dash-dropdown'>
+              <h2 id="dashboard-header">Dashboard</h2>
+              <div className='dash-arrow-wrapper'></div>
+            </div>
+            
+            <ol className='dash-options'>
               <li>Expenses</li>
               <li>Income</li>
               <li>Debt</li>

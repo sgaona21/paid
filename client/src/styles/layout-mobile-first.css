@@ -68,7 +68,7 @@ body {
     align-items: center;
 }
 
-.user-icon:hover {
+.user-icon:hover, .logout {
     cursor: pointer;
 }
 
@@ -77,6 +77,9 @@ body {
 }
 
 .logout {
-    display: none;
+    padding: .5rem;
+    border-radius: 25px;
+    background-color: rgba(211, 211, 211, 0.105);
+    margin-left: 1rem;
 }
 

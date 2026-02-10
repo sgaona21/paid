@@ -14,6 +14,7 @@ const Layout = () => {
     const navigate = useNavigate();
     const [authLoading, setAuthLoading] = useState(true);
     const [isDashOpen, setIsDashOpen] = useState(true);
+    const [signOutVisible, setSignOutVisible] = useState(false);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
@@ -40,8 +41,8 @@ const Layout = () => {
       navigate("/login");
     }
 
-    function clickIcon() {
-      console.log('hey lol')
+    function toggleSignOutButton() {
+      setSignOutVisible(prev => !prev);
     }
 
 
@@ -81,12 +82,14 @@ const Layout = () => {
 
           <div className="logged-in">
             <div className="user-icon">
-              <img onClick={clickIcon} src={userIcon} alt="" />
+              <img onClick={toggleSignOutButton} src={userIcon} alt="" />
             </div>
             <div className="welcome">{context.currentUser.firstName}</div>
-            <div className="logout" onClick={signOut}>
+            {signOutVisible && (
+              <div className="logout" onClick={signOut}>
               Sign Out
             </div>
+            )}
           </div>
         </section>
 

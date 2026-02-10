@@ -1,5 +1,5 @@
-import '../styles/layout.css';
-// import '../styles/layout-mobile-first.css';
+// import '../styles/layout.css';
+import '../styles/layout-mobile-first.css';
 import { Link, Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 
@@ -40,6 +40,9 @@ const Layout = () => {
       navigate("/login");
     }
 
+    function clickIcon() {
+      console.log('hey lol')
+    }
 
 
 
@@ -69,13 +72,16 @@ const Layout = () => {
           <div className="hamburger" onClick={() => setIsDashOpen((v) => !v)}>
             <img src={hamburger} alt="hamburger menu icon" />
           </div>
-          <div className="logo">
+          {/* <div className="logo">
             <img src={paidLogo} alt="site logo" />
-          </div>
+          </div> */}
+          <Link to="/" className="logo">
+            <img src={paidLogo} alt="Home" />
+          </Link>
 
           <div className="logged-in">
             <div className="user-icon">
-              <img src={userIcon} alt="" />
+              <img onClick={clickIcon} src={userIcon} alt="" />
             </div>
             <div className="welcome">{context.currentUser.firstName}</div>
             <div className="logout" onClick={signOut}>

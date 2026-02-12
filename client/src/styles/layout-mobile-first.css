@@ -86,8 +86,27 @@ body {
 
 .dash-dropdown {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
+.dash-dropdown h2 {
+    color: rgba(245, 245, 245, 0.806);
+    font-size: 1.30rem;
+}
+
+.dash-arrow-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.dash-right-arrow {
+    width: 25px;
+}
+
+
+
+
 
 
 .dash-options {

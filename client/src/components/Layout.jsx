@@ -7,6 +7,7 @@ import UserContext from "../auth/UserContext";
 import paidLogo from '../assets/paid-logo.png';
 import hamburger from '../assets/hamburger.png';
 import userIcon from '../assets/user-icon.svg';
+import rightArrow from '../assets/right-arrow.png';
 
 
 
@@ -63,7 +64,9 @@ const Layout = () => {
           <section className="dashboard">
             <div className='dash-dropdown'>
               <h2 id="dashboard-header">Dashboard</h2>
-              <div className='dash-arrow-wrapper'></div>
+              <div className='dash-arrow-wrapper'>
+                <img src={rightArrow} className='dash-right-arrow' alt="Down arrow icons created by Arkinasi - Flaticon" />
+              </div>
             </div>
             
             <ol className='dash-options'>

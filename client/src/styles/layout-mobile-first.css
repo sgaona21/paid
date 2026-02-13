@@ -90,6 +90,10 @@ body {
     align-items: center;
 }
 
+.dash-dropdown:hover {
+    cursor: pointer;
+}
+
 .dash-dropdown h2 {
     color: rgba(245, 245, 245, 0.806);
     font-size: 1.30rem;
@@ -104,11 +108,25 @@ body {
     width: 25px;
 }
 
-
-
-
-
-
 .dash-options {
-    display: none;
+    /* display: none; */
+}
+
+.dash-options li {
+    color: rgba(245, 245, 245, 0.806);
+    border-radius: 25px;
+    margin: 1rem;
+    padding: 1rem;
+    background-color:#31353a73;
+    text-align: center;
+}
+
+.dash-options li:hover {
+    cursor: pointer;
+    background-color: #474e5a;
+    color: whitesmoke;
+}
+
+.dash-options li:first-child {
+    margin-top: 2rem;
 }

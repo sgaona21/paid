@@ -17,6 +17,7 @@ const Layout = () => {
     const [authLoading, setAuthLoading] = useState(true);
     const [isDashOpen, setIsDashOpen] = useState(true);
     const [signOutVisible, setSignOutVisible] = useState(false);
+    const [mobileDashOpen, setMobileDashOpen] = useState(false);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
@@ -47,6 +48,10 @@ const Layout = () => {
       setSignOutVisible(prev => !prev);
     }
 
+    function toggleMobileDashOpen() {
+      setMobileDashOpen(prev => !prev);
+    }
+
 
 
     if (authLoading) {
@@ -62,18 +67,19 @@ const Layout = () => {
       <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
         {isDashOpen && (
           <section className="dashboard">
-            <div className='dash-dropdown'>
+            <div className='dash-dropdown' onClick={toggleMobileDashOpen}>
               <h2 id="dashboard-header">Dashboard</h2>
               <div className='dash-arrow-wrapper'>
-                <img src={rightArrow} className='dash-right-arrow' alt="Down arrow icons created by Arkinasi - Flaticon" />
+                <img src={rightArrow} className={`dash-right-arrow ${mobileDashOpen ? "open" : ""}`} alt="Down arrow icons created by Arkinasi - Flaticon" />
               </div>
             </div>
-            
-            <ol className='dash-options'>
+            {mobileDashOpen && (
+              <ol className='dash-options'>
               <li>Expenses</li>
               <li>Income</li>
               <li>Debt</li>
             </ol>
+            )}
           </section>  
         )}
 

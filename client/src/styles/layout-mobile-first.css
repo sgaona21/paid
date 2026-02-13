@@ -108,8 +108,8 @@ body {
     width: 25px;
 }
 
-.dash-options {
-    /* display: none; */
+.dash-right-arrow.open {
+    transform: rotate(90deg);
 }
 
 .dash-options li {

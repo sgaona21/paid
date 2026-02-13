@@ -42,9 +42,7 @@ const Layout = () => {
         .finally(() => setAuthLoading(false));
     }, []);
 
-    
 
-    
     async function signOut() {
       await fetch(`${API_BASE}/users/signout`, {
         method: "POST",
@@ -78,20 +76,39 @@ const Layout = () => {
       <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
         {isDashOpen && (
           <section className="dashboard">
-            <div className='dash-dropdown' onClick={toggleMobileDashOpen}>
+            <div className="dash-dropdown" onClick={toggleMobileDashOpen}>
               <h2 id="dashboard-header">Dashboard</h2>
-              <div className='dash-arrow-wrapper'>
-                <img src={rightArrow} className={`dash-right-arrow ${mobileDashOpen ? "open" : ""}`} alt="Down arrow icons created by Arkinasi - Flaticon" />
+              <div className="dash-arrow-wrapper">
+                <img
+                  src={rightArrow}
+                  className={`dash-right-arrow ${mobileDashOpen ? "open" : ""}`}
+                  alt="Down arrow icons created by Arkinasi - Flaticon"
+                />
               </div>
             </div>
             {mobileDashOpen && (
-              <ul className='dash-options'>
-              <li onClick={() => setSelectedMenuItem(MENU.EXPENSES)}>Expenses</li>
-              <li onClick={() => setSelectedMenuItem(MENU.INCOME)}>Income</li>
-              <li onClick={() => setSelectedMenuItem(MENU.DEBT)}>Debt</li>
-            </ul>
+              <ul className="dash-options">
+                <li
+                  className={`expenses-menu-item ${selectedMenuItem === "expenses" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.EXPENSES)}
+                >
+                  Expenses
+                </li>
+                <li
+                  className={`income-menu-item ${selectedMenuItem === "income" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.INCOME)}
+                >
+                  Income
+                </li>
+                <li
+                  className={`debt-menu-item ${selectedMenuItem === "debt" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.DEBT)}
+                >
+                  Debt
+                </li>
+              </ul>
             )}
-          </section>  
+          </section>
         )}
 
         <section className="header">
@@ -112,8 +129,8 @@ const Layout = () => {
             <div className="welcome">{context.currentUser.firstName}</div>
             {signOutVisible && (
               <div className="logout" onClick={signOut}>
-              Sign Out
-            </div>
+                Sign Out
+              </div>
             )}
           </div>
         </section>

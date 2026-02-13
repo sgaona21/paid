@@ -123,10 +123,15 @@ body {
 
 .dash-options li:hover {
     cursor: pointer;
-    background-color: #474e5a;
+    /* background-color: #474e5a; */
     color: whitesmoke;
 }
 
 .dash-options li:first-child {
     margin-top: 2rem;
+}
+
+.expenses-menu-item.selected, .income-menu-item.selected, .debt-menu-item.selected {
+    /* background-color: #474e5a; */
+    border: solid 1px aquamarine;
 }

@@ -8,6 +8,9 @@ import paidLogo from '../assets/paid-logo.png';
 import hamburger from '../assets/hamburger.png';
 import userIcon from '../assets/user-icon.svg';
 import rightArrow from '../assets/right-arrow.png';
+import Expenses from './Expenses';
+import Debt from './Debt';
+import Income from './Income';
 
 
 
@@ -18,6 +21,12 @@ const Layout = () => {
     const [isDashOpen, setIsDashOpen] = useState(true);
     const [signOutVisible, setSignOutVisible] = useState(false);
     const [mobileDashOpen, setMobileDashOpen] = useState(false);
+    const MENU = {
+      EXPENSES: "expenses",
+      INCOME: "income",
+      DEBT: "debt"
+    };
+    const [selectedMenuItem, setSelectedMenuItem] = useState(MENU.EXPENSES);
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
@@ -32,6 +41,8 @@ const Layout = () => {
         })
         .finally(() => setAuthLoading(false));
     }, []);
+
+    
 
     
     async function signOut() {
@@ -74,11 +85,11 @@ const Layout = () => {
               </div>
             </div>
             {mobileDashOpen && (
-              <ol className='dash-options'>
-              <li>Expenses</li>
-              <li>Income</li>
-              <li>Debt</li>
-            </ol>
+              <ul className='dash-options'>
+              <li onClick={() => setSelectedMenuItem(MENU.EXPENSES)}>Expenses</li>
+              <li onClick={() => setSelectedMenuItem(MENU.INCOME)}>Income</li>
+              <li onClick={() => setSelectedMenuItem(MENU.DEBT)}>Debt</li>
+            </ul>
             )}
           </section>  
         )}
@@ -108,7 +119,9 @@ const Layout = () => {
         </section>
 
         <section className="content">
-          <Outlet />
+          {selectedMenuItem === "expenses" && <Expenses />}
+          {selectedMenuItem === "income" && <Income />}
+          {selectedMenuItem === "debt" && <Debt />}
         </section>
       </main>
     );

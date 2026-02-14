@@ -2,7 +2,7 @@
 
 const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
     return (
-        <div className="expense-rows-container">
+        // <div className="expense-rows-container">
             <div className="expense-row-container">
                 <div className="expense-row-inputs">
                     <input 
@@ -36,7 +36,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
                     <div className="delete-row" onClick={deleteRow} >❌</div>
                 </div>
             </div>
-        </div>
+        // </div>
     )
 }
 

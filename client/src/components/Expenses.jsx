@@ -135,10 +135,11 @@ const Expenses = () => {
           />
         ))}
 
-        <div className="add-row" onClick={addRow}>
+        
+      </div>
+      <div className="add-row" onClick={addRow}>
           +
         </div>
-      </div>
 
       <div className="monthly-total-container">
         <div className="monthly-total-label">Total Expenses</div>

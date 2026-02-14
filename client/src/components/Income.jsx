@@ -1,6 +1,11 @@
+import '../styles/income.css';
+
+
 const Income = () => {
     return (
-        <div>Income</div>
+        <div>
+            <h3 className="income-title">Income</h3>
+        </div>
     )
 }
 

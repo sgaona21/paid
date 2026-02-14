@@ -154,10 +154,9 @@ body {
 
 .expense-table-headers {
     display: flex;
-    /* border-top: solid gray 1px;
+    border-top: solid gray 1px;
     border-left: solid gray 1px;
-    border-right: solid gray 1px; */
-    border: 1px solid gray;
+    border-right: solid gray 1px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -175,9 +174,14 @@ body {
     
 }
 
-
 .expense-row-container {
     display: flex;
+    border-top: 1px black solid;
+}
+
+.expense-row-container .expense-row-inputs:nth-child(2) {
+    border-left: black solid 1px;
+    border-right: black solid 1px;
 }
 
 .expense-row-inputs {
@@ -208,6 +212,8 @@ body {
 .expense-row-container:last-of-type > .expense-row-inputs:last-child {
     border-bottom-right-radius: 5px;
 }
+
+
 
 
 

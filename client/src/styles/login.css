@@ -8,7 +8,7 @@
 
 .signup-container {
     display: grid;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 75px auto;
     height: 100vh;
 }
 

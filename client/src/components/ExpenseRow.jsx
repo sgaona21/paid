@@ -21,7 +21,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           onBlur={() => saveRow(row)}
         ></input>
       </div>
-      <div className="expense-row-inputs">
+      <div className="expense-row-inputs checkbox-container">
         <input
           type="checkbox"
           name="expense-paid"

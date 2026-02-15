@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect} from "react";
+import { useState, useContext, useEffect } from "react";
 import ExpenseRow from "./ExpenseRow";
 import UserContext from "../auth/UserContext";
-
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -134,12 +133,10 @@ const Expenses = () => {
             saveRow={saveRowToDb}
           />
         ))}
-
-        
       </div>
       <div className="add-row" onClick={addRow}>
-          +
-        </div>
+        +
+      </div>
 
       <div className="monthly-total-container">
         <div className="monthly-total-label">Total Expenses</div>

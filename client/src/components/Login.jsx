@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import {  NavLink, useNavigate } from "react-router-dom";
-import '../styles/login.css';
+
+// import '../styles/login.css';
+import '../styles/register-mobile-first.css';
 
 import UserContext from "../auth/UserContext";
 import paidLogo from '../assets/paid-logo.png';
@@ -53,15 +55,18 @@ const LogIn = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          {/* <h2>Paid</h2> */}
-          <div className='logo'><img src={paidLogo} alt="site logo" /></div>
+          <div className="logo">
+            <img src={paidLogo} alt="site logo" />
+          </div>
         </div>
 
         <div className="signup-content">
+          <button className="demo-option">View Demo</button>
+          {/* <p> - or - </p> */}
           <form className="signup-form" onSubmit={handleSubmit}>
-
-            <label htmlFor="email">Email</label>
-            <div>
+            <h2>Sign In</h2>
+            <div className="email-wrapper">
+              <label htmlFor="email">Email</label>
               <input
                 id="email"
                 name="email"
@@ -71,8 +76,8 @@ const LogIn = () => {
               />
             </div>
 
-            <label htmlFor="password">Password</label>
-            <div>
+            <div className="password-wrapper">
+              <label htmlFor="password">Password</label>
               <input
                 id="password"
                 name="password"
@@ -83,14 +88,12 @@ const LogIn = () => {
             </div>
 
             <button className="signup-button" type="submit">
-                Sign In
+              Sign In
             </button>
-
           </form>
 
           <p>
-            Click here to{" "}
-            <NavLink to="/sign-up">Sign Up</NavLink>
+            Click here to <NavLink to="/sign-up">Sign Up</NavLink>
           </p>
         </div>
       </div>

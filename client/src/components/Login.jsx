@@ -63,7 +63,7 @@ const LogIn = () => {
           <button className="demo-option">View Demo</button>
           {/* <p> - or - </p> */}
           <form className="signup-form" onSubmit={handleSubmit}>
-            <h2>Sign In</h2>
+            <h2 className="sign-header">Sign In</h2>
             <div className="email-wrapper">
               <label htmlFor="email">Email</label>
               <input

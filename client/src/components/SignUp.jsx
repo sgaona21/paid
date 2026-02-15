@@ -88,7 +88,7 @@ const UserSignUp = () => {
           <button className="demo-option">View Demo</button>
           {/* <p> - or - </p> */}
           <form className="signup-form" onSubmit={submitNewUser}>
-            <h2>Sign Up</h2>
+            <h2 className="sign-header">Sign Up</h2>
             <div className="form-input-wrapper">
             <label htmlFor="firstName">First Name</label>
               <input

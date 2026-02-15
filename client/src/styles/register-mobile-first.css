@@ -48,6 +48,7 @@
     width: 100%;
     max-width: 400px;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .demo-option:hover {
@@ -106,7 +107,7 @@ h2 {
 
 .signup-content p {
     color: rgba(245, 245, 245, 0.85);
-    font-size: large;
+    font-size: medium;
     display: flex;
     justify-content: center;
 }

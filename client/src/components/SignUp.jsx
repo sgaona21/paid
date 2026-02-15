@@ -140,7 +140,7 @@ const UserSignUp = () => {
           </form>
 
           <p>
-            Click here to{" "}
+            Already have an account?{" "}
             <NavLink to="/login">Sign In</NavLink>
           </p>
         </div>

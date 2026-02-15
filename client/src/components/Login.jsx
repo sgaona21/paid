@@ -92,7 +92,7 @@ const LogIn = () => {
           </form>
 
           <p>
-            Click here to <NavLink to="/sign-up">Sign Up</NavLink>
+            Dont have an account? <NavLink to="/sign-up">Sign Up</NavLink>
           </p>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import ExpenseRow from "./ExpenseRow";
 import UserContext from "../auth/UserContext";
+import { Chart as ChartJS } from "chart.js/auto";
+import { Doughnut, Bar } from 'react-chartjs-2';
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -141,11 +143,37 @@ const Expenses = () => {
       <div className="monthly-total-container">
         <div className="monthly-total-label">Total Expenses</div>
         <div className="monthly-total-amount">{total}</div>
+        <div className="remaining-expense-donut">
+          <Bar 
+            data={{
+              labels: ["Total Expenses", "Remaining Expenses"],
+              datasets: [
+                {
+                  label: "Exp",
+                  data: [`${total}`, `${totalPaid}`],
+                }
+              ]
+            }}
+          />
+        </div>
       </div>
 
       <div className="monthly-remaining-container">
         <div className="monthly-remaining-label">Remaining Expenses</div>
         <div className="monthly-remaining-amount">{total - totalPaid}</div>
+        <div className="remaining-expense-donut">
+          <Doughnut 
+            data={{
+              labels: ["Total Expenses", "Remaining Expenses"],
+              datasets: [
+                {
+                  label: "Exp",
+                  data: [`${total}`, `${totalPaid}`],
+                }
+              ]
+            }}
+          />
+        </div>
       </div>
     </div>
   );

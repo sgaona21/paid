@@ -115,9 +115,6 @@ const Layout = () => {
           <div className="hamburger" onClick={() => setIsDashOpen((v) => !v)}>
             <img src={hamburger} alt="hamburger menu icon" />
           </div>
-          {/* <div className="logo">
-            <img src={paidLogo} alt="site logo" />
-          </div> */}
           <Link to="/" className="logo">
             <img src={paidLogo} alt="Home" />
           </Link>

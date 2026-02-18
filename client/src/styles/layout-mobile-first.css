@@ -300,5 +300,15 @@ body {
     outline: none;
 }
 
+.sheets {
+    display: flex;
+}
+
+.sheets li {
+    padding: 1rem;
+    border: 1px gray solid;
+}
+
+
 
 

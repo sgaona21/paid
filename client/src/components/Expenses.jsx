@@ -177,8 +177,6 @@ const Expenses = () => {
         </div>
       </div>
 
-      
-
       <div className="monthly-total-container">
         <div className="monthly-total-label">Expendable Income</div>
         <div className="monthly-total-amount">{total}</div>
@@ -196,6 +194,18 @@ const Expenses = () => {
           />
         </div>
       </div>
+
+      <div className="sheet-tab-track">
+        <ul className="sheets">
+          <li>January</li>
+          <li>February</li>
+          <li>March</li>
+          <li>April</li>
+          <li>May</li>
+          <li>June</li>
+        </ul>      
+      </div>
+
     </div>
   );
 };

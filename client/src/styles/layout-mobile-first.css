@@ -206,17 +206,12 @@ body {
     background-color: lightgray;
 }
 
-.expense-row-inputs input {
+.expense-row-inputs input, .net-total-container input {
     width: 100%;
     background-color: lightgray;
     border: none;
 }
 
-/* .delete-row {
-    font-size: x-small;
-    position: absolute;
-    right: 5px;
-} */
 
 .delete-row {
   position: absolute;
@@ -271,7 +266,7 @@ body {
     color: white;
 }
 
-.monthly-total-container, .monthly-remaining-container {
+.monthly-total-container, .monthly-remaining-container, .net-monthly-container {
     display: flex;
     flex-direction: column;
     border: 1px gray solid;
@@ -283,7 +278,7 @@ body {
     padding: .25rem;
 }
 
-.monthly-total-amount, .monthly-remaining-amount {
+.monthly-total-amount, .monthly-remaining-amount, .net-total-container {
     width: 100%;
     background-color: lightgray;
     text-align: center;
@@ -291,6 +286,18 @@ body {
     padding: .25rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.net-monthly-container input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: medium;
+}
+
+.net-monthly-container input:focus {
+    outline: none;
 }
 
 

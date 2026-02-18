@@ -8,6 +8,7 @@ const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
+  const [netIncome, setNetIncome] = useState("");
 
   useEffect(() => {
     updateUI();
@@ -140,11 +141,29 @@ const Expenses = () => {
         +
       </div>
 
+      <div className="net-monthly-container">
+        <div className="monthly-total-label">Net Monthly Income</div>
+        <div className="net-total-container">
+          <input
+          type="number"
+          name="net-total"
+          value={netIncome}
+          onChange={(e) => setNetIncome(e.target.value)}
+          // onBlur={}
+        ></input>
+        </div>
+      </div>
+
       <div className="monthly-total-container">
         <div className="monthly-total-label">Total Expenses</div>
         <div className="monthly-total-amount">{total}</div>
+      </div>
+
+      <div className="monthly-remaining-container">
+        <div className="monthly-remaining-label">Remaining Expenses</div>
+        <div className="monthly-remaining-amount">{total - totalPaid}</div>
         <div className="remaining-expense-donut">
-          <Bar 
+          <Doughnut 
             data={{
               labels: ["Total Expenses", "Remaining Expenses"],
               datasets: [
@@ -158,11 +177,13 @@ const Expenses = () => {
         </div>
       </div>
 
-      <div className="monthly-remaining-container">
-        <div className="monthly-remaining-label">Remaining Expenses</div>
-        <div className="monthly-remaining-amount">{total - totalPaid}</div>
+      
+
+      <div className="monthly-total-container">
+        <div className="monthly-total-label">Expendable Income</div>
+        <div className="monthly-total-amount">{total}</div>
         <div className="remaining-expense-donut">
-          <Doughnut 
+          <Bar 
             data={{
               labels: ["Total Expenses", "Remaining Expenses"],
               datasets: [

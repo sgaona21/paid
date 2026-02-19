@@ -3,6 +3,8 @@ import ExpenseRow from "./ExpenseRow";
 import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut, Bar } from 'react-chartjs-2';
+import { sheets as mockSheets } from './mockData'
+import Sheets from "./Sheets.jsx";
 
 import rightArrow from '../assets/right-arrow.png';
 
@@ -11,9 +13,12 @@ const Expenses = () => {
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
   const [netIncome, setNetIncome] = useState("");
+  const [sheets, setSheets] = useState([]);
+  const [sheetLabel, setSheetLabel] = useState([]);
 
   useEffect(() => {
     updateUI();
+    updateSheets();
   }, []);
 
   const updateUI = async () => {
@@ -34,10 +39,34 @@ const Expenses = () => {
     }
   };
 
+    const updateSheets = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      setSheets(mockSheets);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
+
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
     updated[index][field] = value;
     setRows(updated);
+  };
+
+  const handleLabelChange = (index, field, value) => {
+    const updated = [...mockSheets];
+    updated[index][field] = value;
+    setSheets(updated);
   };
 
   const addRow = () => {
@@ -197,25 +226,17 @@ const Expenses = () => {
         </div>
       </div>
 
-      <div className="sheet-tab-track">
-        <ul className="sheets">
-          <li className="add-sheet">+</li>
-          <li className="current-sheet">
-            <div>January</div>
-            <div className="sheet-arrow">
-              <img
-                src={rightArrow}
-                alt="Down arrow icons created by Arkinasi - Flaticon"
-              />
-            </div>
-          </li>
-          {/* <li>February</li>
-          <li>March</li>
-          <li>April</li>
-          <li>May</li>
-          <li>June</li> */}
-        </ul>
+      <div className="sheets-container">
+        {mockSheets.map((sheet, index) => (
+          <Sheets
+            key={sheet.id}
+            index={index}
+            sheet={sheet}
+            handleLabelChange={handleLabelChange}
+          />
+        ))}      
       </div>
+
     </div>
   );
 };

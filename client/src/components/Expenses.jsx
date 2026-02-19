@@ -4,6 +4,8 @@ import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut, Bar } from 'react-chartjs-2';
 
+import rightArrow from '../assets/right-arrow.png';
+
 const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -145,12 +147,12 @@ const Expenses = () => {
         <div className="monthly-total-label">Net Monthly Income</div>
         <div className="net-total-container">
           <input
-          type="number"
-          name="net-total"
-          value={netIncome}
-          onChange={(e) => setNetIncome(e.target.value)}
-          // onBlur={}
-        ></input>
+            type="number"
+            name="net-total"
+            value={netIncome}
+            onChange={(e) => setNetIncome(e.target.value)}
+            // onBlur={}
+          ></input>
         </div>
       </div>
 
@@ -163,15 +165,15 @@ const Expenses = () => {
         <div className="monthly-remaining-label">Remaining Expenses</div>
         <div className="monthly-remaining-amount">{total - totalPaid}</div>
         <div className="remaining-expense-donut">
-          <Doughnut 
+          <Doughnut
             data={{
               labels: ["Total Expenses", "Remaining Expenses"],
               datasets: [
                 {
                   label: "Exp",
                   data: [`${total}`, `${totalPaid}`],
-                }
-              ]
+                },
+              ],
             }}
           />
         </div>
@@ -181,15 +183,15 @@ const Expenses = () => {
         <div className="monthly-total-label">Expendable Income</div>
         <div className="monthly-total-amount">{total}</div>
         <div className="remaining-expense-donut">
-          <Bar 
+          <Bar
             data={{
               labels: ["Total Expenses", "Remaining Expenses"],
               datasets: [
                 {
                   label: "Exp",
                   data: [`${total}`, `${totalPaid}`],
-                }
-              ]
+                },
+              ],
             }}
           />
         </div>
@@ -197,15 +199,23 @@ const Expenses = () => {
 
       <div className="sheet-tab-track">
         <ul className="sheets">
-          <li>January</li>
-          <li>February</li>
+          <li className="add-sheet">+</li>
+          <li className="current-sheet">
+            <div>January</div>
+            <div className="sheet-arrow">
+              <img
+                src={rightArrow}
+                alt="Down arrow icons created by Arkinasi - Flaticon"
+              />
+            </div>
+          </li>
+          {/* <li>February</li>
           <li>March</li>
           <li>April</li>
           <li>May</li>
-          <li>June</li>
-        </ul>      
+          <li>June</li> */}
+        </ul>
       </div>
-
     </div>
   );
 };

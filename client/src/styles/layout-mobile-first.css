@@ -8,6 +8,9 @@
 
 :root {
   --font-primary: rgba(245, 245, 245, 0.806);
+  --background: #474e5a;
+  --foreground: #15191f;
+  --dark-secondary: #31353a73;
 }
 
 /* PAGE LAYOUT */
@@ -302,12 +305,40 @@ body {
 
 .sheets {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 
-.sheets li {
-    padding: 1rem;
-    border: 1px gray solid;
+.add-sheet {
+    display: flex;
+    background-color: var(--dark-secondary);
+    font-size: x-large;
+    padding: .20rem .75rem .35rem .75rem;
+    border-radius: 50%;
 }
+.current-sheet {
+    display: flex;
+    background-color: var(--dark-secondary);
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 2;
+}
+.sheet-arrow {
+    display: flex;
+}
+
+.sheet-arrow img {
+    width: 20px;
+}
+
+
+
+
+
+
 
 
 

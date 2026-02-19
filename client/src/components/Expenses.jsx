@@ -14,7 +14,6 @@ const Expenses = () => {
   const [rows, setRows] = useState([]);
   const [netIncome, setNetIncome] = useState("");
   const [sheets, setSheets] = useState([]);
-  const [sheetLabel, setSheetLabel] = useState([]);
 
   useEffect(() => {
     updateUI();
@@ -40,22 +39,8 @@ const Expenses = () => {
   };
 
     const updateSheets = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/expense`, {
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        console.warn("updateUI failed:", res.status);
-        return;
-      }
-
-      const data = await res.json();
       setSheets(mockSheets);
-    } catch (err) {
-      console.error("updateUI crashed:", err);
-    }
-  };
+    };
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -64,7 +49,7 @@ const Expenses = () => {
   };
 
   const handleLabelChange = (index, field, value) => {
-    const updated = [...mockSheets];
+    const updated = [...sheets];
     updated[index][field] = value;
     setSheets(updated);
   };
@@ -227,7 +212,7 @@ const Expenses = () => {
       </div>
 
       <div className="sheets-container">
-        {mockSheets.map((sheet, index) => (
+        {sheets.map((sheet, index) => (
           <Sheets
             key={sheet.id}
             index={index}

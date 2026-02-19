@@ -1,12 +1,11 @@
-const Sheets = ({ sheet, handleLabelChange, label }) => {
+const Sheets = ({ sheet, handleLabelChange, index }) => {
   return (
     <div className="sheet-input-container">
       <input
         type="text"
         name="sheet"
         value={sheet?.label ?? ""}
-        onChange={(e) => handleLabelChange(e.target.value)}
-        // onBlur={() => saveRow(row)}
+        onChange={(e) => handleLabelChange(index, "label", e.target.value)}
       ></input>
     </div>
   );

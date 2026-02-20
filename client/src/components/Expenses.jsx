@@ -4,9 +4,12 @@ import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { sheets as mockSheets } from './mockData'
+import { mockExpenses as mockData } from './mockExpenses';
 import Sheets from "./Sheets.jsx";
 
 import rightArrow from '../assets/right-arrow.png';
+
+console.log(mockData)
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -14,6 +17,7 @@ const Expenses = () => {
   const [rows, setRows] = useState([]);
   const [netIncome, setNetIncome] = useState("");
   const [sheets, setSheets] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     updateUI();
@@ -39,7 +43,8 @@ const Expenses = () => {
   };
 
     const updateSheets = async () => {
-      setSheets(mockSheets);
+      setSheets(mockData.sheets);
+      setExpenses(mockData.expenses)
     };
 
   const handleRowChange = (index, field, value) => {
@@ -142,7 +147,18 @@ const Expenses = () => {
           <li>Paid</li>
         </ul>
 
-        {rows.map((row, index) => (
+        {/* {rows.map((row, index) => (
+          <ExpenseRow
+            key={row.clientId ?? row.id}
+            row={row}
+            index={index}
+            deleteRow={() => deleteRow(row.id)}
+            handleRowChange={handleRowChange}
+            saveRow={saveRowToDb}
+          />
+        ))} */}
+
+        {expenses.map((row, index) => (
           <ExpenseRow
             key={row.clientId ?? row.id}
             row={row}
@@ -152,6 +168,7 @@ const Expenses = () => {
             saveRow={saveRowToDb}
           />
         ))}
+
       </div>
       <div className="add-row" onClick={addRow}>
         +

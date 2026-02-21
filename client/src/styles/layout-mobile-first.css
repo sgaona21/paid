@@ -45,6 +45,7 @@ body {
 .content {
     background-color: #15191f;
     border-radius: 10px;
+    /* position: relative; */
 }
 
 .hamburger {
@@ -310,48 +311,85 @@ body {
     align-content: center;
 }
 
-.add-sheet-container {
-    min-width: 40px;
-    min-height: 40px;
+.hamburger-sheets-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(211, 211, 211, 0.105);
+    padding: .5rem;
     border-radius: 50%;
+}
+
+.hamburger-sheets-container:hover {
+    cursor: pointer;
+}
+
+.hamburger-sheets-container img {
+    width: 25px;
+    filter: invert();
+}
+
+
+.current-sheet-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     background-color: var(--dark-secondary);
+    border-radius: 10px;
+    padding: .7rem 1rem .7rem 1rem;
+}
+
+.current-sheet-mobile:hover {
+    cursor: pointer;
+}
+
+.sheet-arrow-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.add-sheet {
-    font-size: x-large;
-    transform: translateY(-1px);
+.sheet-arrow-container img {
+    width: 20px;
 }
 
-.add-sheet:hover {
-    cursor: pointer;
-}
-
-
-.sheets {
+.sheet-container {
     display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px rgba(128, 128, 128, 0.255) solid;
+    padding: 1rem;
 }
 
-.sheets:hover {
+.sheet-container:hover {
     cursor: pointer;
-}
-
-.sheet {
     background-color: var(--dark-secondary);
-    padding: .75rem 1rem .75rem 1rem;
-    flex-shrink: 0;
-    white-space: nowrap;
 }
 
-.sheet:hover {
-    background-color: var(--background);
+.sheet-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.34);
+  z-index: 4;
 }
+
+.sheet-overlay {
+    height: 40vh;
+    position: fixed;
+    border-radius: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: var(--foreground);
+    overflow-y: scroll;
+}
+
+
+
+
+
 
 
 

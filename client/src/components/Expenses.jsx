@@ -1,13 +1,15 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import ExpenseRow from "./ExpenseRow";
+import SheetOverlay from "./SheetOverlay.jsx";
 import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { sheets as mockSheets } from './mockData'
 import { mockExpenses as mockData } from './mockExpenses';
+import hamburger from '../assets/hamburger.png';
+import rightArrow from '../assets/right-arrow.png';
 import Sheets from "./Sheets.jsx";
 
-import rightArrow from '../assets/right-arrow.png';
 
 console.log(mockData.sheets)
 
@@ -18,7 +20,8 @@ const Expenses = () => {
   const [netIncome, setNetIncome] = useState("");
   const [sheets, setSheets] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [currentSheet, setCurrentSheet] = useState(null);
+  const [currentSheet, setCurrentSheet] = useState("");
+  const [sheetOverlayVisible, setSheetOverlayVisible] = useState(false);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -47,25 +50,17 @@ const Expenses = () => {
     }
   };
 
-    // const updateSheets = async () => {
-    //   setSheets(mockData.sheets);
-    //   setExpenses(mockData.expenses)
-    //   setUserExpenseData(mockData)
-    // };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUserExpenseData(mockData);
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setUserExpenseData(mockData);
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }, []);
-
-    useEffect(() => {
-      if (userExpenseData?.sheets?.length && !currentSheet) {
-        setCurrentSheet(userExpenseData.sheets[0].id);
+      if (!currentSheet && mockData?.sheets?.length) {
+        setCurrentSheet(mockData.sheets[0]);
       }
-    }, [userExpenseData, currentSheet]);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [currentSheet]);
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -145,6 +140,10 @@ const Expenses = () => {
       console.error("deleteRowFromDb crashed:", err);
     }
   }
+
+  function toggleSheetOverlay() {
+      setSheetOverlayVisible(prev => !prev);
+    }
 
   const total = rows.reduce(
     (sum, row) => sum + (parseFloat(row.amount) || 0),
@@ -249,18 +248,34 @@ const Expenses = () => {
 
       <div className="sheets-container">
         <div className="add-sheet-container">
-          <div className="add-sheet">+</div>
+          <div
+            className="hamburger-sheets-container"
+            onClick={toggleSheetOverlay}
+          >
+            <img
+              src={hamburger}
+              alt="hamburger menu for mobile sheet options"
+            />
+          </div>
         </div>
-        
-        <div className="sheets">
-          {userExpenseData.sheets.map((sheet) => (
-            <div key={sheet.id} className="sheet">
-              {sheet.label}
-            </div>
-          ))}
+
+        <div className="current-sheet-mobile">
+          {currentSheet.label}
+          <div className="sheet-arrow-container">
+            <img src={rightArrow} alt="right arrow" />
+          </div>
         </div>
       </div>
 
+      {sheetOverlayVisible && (
+        <SheetOverlay 
+        userExpenseData={userExpenseData}
+        toggleSheetOverlay={toggleSheetOverlay}
+        currentSheet={currentSheet}
+        setCurrentSheet={setCurrentSheet}
+        setSheetOverlayVisible={setSheetOverlayVisible}
+       />
+      )}  
     </div>
   );
 };

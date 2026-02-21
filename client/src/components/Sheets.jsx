@@ -1,12 +1,13 @@
-const Sheets = ({ sheet, handleLabelChange, index }) => {
+import rightArrow from '../assets/right-arrow.png';
+
+const Sheets = ({ sheet }) => {
   return (
-    <div className="sheet-input-container">
-      <input
-        type="text"
-        name="sheet"
-        value={sheet?.label ?? ""}
-        onChange={(e) => handleLabelChange(index, "label", e.target.value)}
-      ></input>
+    <div className="sheet-container">
+      <div className="sheet-label">{sheet.label}</div>
+
+      <div className="sheet-arrow-container">
+        <img src={rightArrow} alt="right arrow" />
+      </div>
     </div>
   );
 };

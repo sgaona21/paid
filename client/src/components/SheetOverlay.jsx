@@ -5,6 +5,7 @@ const SheetOverlay = ({
   currentSheet,
   setSheetOverlayVisible,
   setCurrentSheet,
+  sheetOverlayVisible
 }) => {
 
   function selectSheet(sheet) {
@@ -14,10 +15,12 @@ const SheetOverlay = ({
 
   return (
     <div
-      className="sheet-overlay-backdrop"
-      onClick={() => toggleSheetOverlay()}
+      className={`sheet-overlay-backdrop ${sheetOverlayVisible ? "show" : ""}`}
+      // onClick={() => toggleSheetOverlay()}
+      onClick={() => setSheetOverlayVisible(false)}
     >
-      <div className="sheet-overlay" onClick={(e) => e.stopPropagation()}>
+      <div className={`sheet-overlay ${sheetOverlayVisible ? "show" : ""}`}
+      onClick={(e) => e.stopPropagation()}>
         {userExpenseData.sheets.map((sheet) => (
           <div
             className="sheet-container"

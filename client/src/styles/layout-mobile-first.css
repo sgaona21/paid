@@ -337,7 +337,7 @@ body {
     width: 100%;
     background-color: var(--dark-secondary);
     border-radius: 10px;
-    padding: .7rem 1rem .7rem 1rem;
+    
 }
 
 .current-sheet-mobile:hover {
@@ -348,10 +348,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: .25rem;
+    margin-right: .5rem;
+    transition: transform 1s ease;
+}
+
+.sheet-arrow-container.rotated {
+    transform: rotate(-90deg);
+}
+
+.sheet-arrow-container:hover {
+    background-color: var(--foreground);
+    border-radius: 50%;
 }
 
 .sheet-arrow-container img {
     width: 20px;
+    transform: translateX(1px);
 }
 
 .sheet-container {
@@ -362,12 +375,16 @@ body {
     padding: 1rem;
 }
 
+.sheet-label {
+    padding: .75rem;
+}
+
 .sheet-container:hover {
     cursor: pointer;
     background-color: var(--dark-secondary);
 }
 
-.sheet-overlay-backdrop {
+.sheet-overlay-backdrop.show {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.34);
@@ -384,6 +401,13 @@ body {
     z-index: 5;
     background-color: var(--foreground);
     overflow-y: scroll;
+
+    transform: translateY(100%);
+    transition: transform 1.5s ease;
+}
+
+.sheet-overlay.show {
+  transform: translateY(0);
 }
 
 

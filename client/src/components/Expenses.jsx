@@ -22,6 +22,7 @@ const Expenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [currentSheet, setCurrentSheet] = useState("");
   const [sheetOverlayVisible, setSheetOverlayVisible] = useState(false);
+  const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -260,22 +261,35 @@ const Expenses = () => {
         </div>
 
         <div className="current-sheet-mobile">
-          {currentSheet.label}
-          <div className="sheet-arrow-container">
+          <div className="sheet-label">{currentSheet.label}</div>
+          <div 
+          className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
+          onClick={() => setSheetMenuVisible(v => !v)}>
             <img src={rightArrow} alt="right arrow" />
           </div>
         </div>
       </div>
 
-      {sheetOverlayVisible && (
+      {/* {sheetOverlayVisible && (
         <SheetOverlay 
         userExpenseData={userExpenseData}
         toggleSheetOverlay={toggleSheetOverlay}
         currentSheet={currentSheet}
         setCurrentSheet={setCurrentSheet}
         setSheetOverlayVisible={setSheetOverlayVisible}
+        sheetOverlayVisible={sheetOverlayVisible}
        />
-      )}  
+      )} */}
+
+        <SheetOverlay 
+        userExpenseData={userExpenseData}
+        toggleSheetOverlay={toggleSheetOverlay}
+        currentSheet={currentSheet}
+        setCurrentSheet={setCurrentSheet}
+        setSheetOverlayVisible={setSheetOverlayVisible}
+        sheetOverlayVisible={sheetOverlayVisible}
+       />
+
     </div>
   );
 };

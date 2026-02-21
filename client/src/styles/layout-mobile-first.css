@@ -309,6 +309,7 @@ body {
     gap: 1rem;
     align-items: center;
     align-content: center;
+    margin-bottom: -1rem;
 }
 
 .hamburger-sheets-container {
@@ -403,7 +404,7 @@ body {
     overflow-y: scroll;
 
     transform: translateY(100%);
-    transition: transform 1.5s ease;
+    transition: transform 1s ease;
 }
 
 .sheet-overlay.show {

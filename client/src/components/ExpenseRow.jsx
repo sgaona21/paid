@@ -6,7 +6,8 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           type="text"
           name="expense-name"
           value={row?.name ?? ""}
-          onChange={(e) => handleRowChange(index, "name", e.target.value)}
+          // onChange={(e) => handleRowChange(index, "name", e.target.value)}
+          onChange={(e) => handleRowChange(row.id, "name", e.target.value)}
           onBlur={() => saveRow(row)}
         ></input>
       </div>
@@ -16,7 +17,8 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           name="expense-amount"
           value={row?.amount ?? ""}
           onChange={(e) =>
-            handleRowChange(index, "amount", Number(e.target.value))
+            // handleRowChange(index, "amount", Number(e.target.value))
+            handleRowChange(row.id, "amount", e.target.value)
           }
           onBlur={() => saveRow(row)}
         ></input>
@@ -27,7 +29,8 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           name="expense-paid"
           checked={!!row?.isPaid}
           onChange={(e) => {
-            handleRowChange(index, "isPaid", e.target.checked);
+            // handleRowChange(index, "isPaid", e.target.checked);
+            handleRowChange(row.id, "isPaid", e.target.checked)
             saveRow({ ...row, isPaid: e.target.checked });
           }}
           onBlur={() => saveRow(row)}

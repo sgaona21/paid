@@ -17,7 +17,6 @@ const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
-  const [netIncome, setNetIncome] = useState("");
   const [sheets, setSheets] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [currentSheet, setCurrentSheet] = useState("");
@@ -63,30 +62,53 @@ const Expenses = () => {
     return () => clearTimeout(timer);
   }, [currentSheet]);
 
-  const handleRowChange = (index, field, value) => {
-    const updated = [...rows];
-    updated[index][field] = value;
-    setRows(updated);
-  };
+  // const handleRowChange = (index, field, value) => {
+  //   const updated = [...rows];
+  //   updated[index][field] = value;
+  //   setRows(updated);
+  // };
 
-  const handleLabelChange = (index, field, value) => {
-    const updated = [...sheets];
-    updated[index][field] = value;
-    setSheets(updated);
-  };
+//   const handleRowChange = (rowKey, field, value) => {
+//   setUserExpenseData((prev) => ({
+//     ...prev,
+//     expenses: prev.expenses.map((e) => {
+//       const key = e.clientId ?? e.id;
+//       return key === rowKey ? { ...e, [field]: value } : e;
+//     }),
+//   }));
+// };
 
-  const addRow = () => {
-    const newRow = {
-      clientId: crypto.randomUUID(),
-      id: null,
-      name: "",
-      amount: null,
-      isPaid: false,
-      userId: context?.currentUser?.id,
-    };
-    setRows((prevRows) => [...prevRows, newRow]);
-    addRowToDb(newRow);
-  };
+function handleRowChange(rowId, field, value) {
+  setUserExpenseData(prev => ({
+    ...prev,
+    expenses: prev.expenses.map(e =>
+      (e.id ?? e.clientId) === rowId ? { ...e, [field]: value } : e
+    )
+  }));
+}
+
+
+  // const addRow = () => {
+  //   const newRow = {
+  //     clientId: crypto.randomUUID(),
+  //     id: null,
+  //     name: "",
+  //     amount: null,
+  //     isPaid: false,
+  //     userId: context?.currentUser?.id,
+  //   };
+  //   setRows((prevRows) => [...prevRows, newRow]);
+  //   addRowToDb(newRow);
+  // };
+
+  function addRow(newRow) {
+    const rowWithSheet = { ...newRow, sheetId: currentSheet.id };
+
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: [...prev.expenses, rowWithSheet],
+    }));
+  }
 
   const addRowToDb = async (row) => {
     await fetch(`${API_BASE}/expense/add`, {
@@ -118,10 +140,28 @@ const Expenses = () => {
     updateUI();
   }
 
-  const deleteRow = (idToDelete) => {
-    setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
-    deleteRowFromDb(idToDelete);
-  };
+  // const deleteRow = (idToDelete) => {
+  //   setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
+  //   deleteRowFromDb(idToDelete);
+  // };
+
+  function deleteRow(rowId) {
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: prev.expenses.filter((e) => (e.id ?? e.clientId) !== rowId),
+    }));
+  }
+
+const handleNetIncomeChange = (value) => {
+  setCurrentSheet((prev) => ({ ...prev, netIncome: value }));
+
+  setUserExpenseData((prev) => ({
+    ...prev,
+    sheets: prev.sheets.map((sheet) =>
+      sheet.id === currentSheet.id ? { ...sheet, netIncome: value } : sheet
+    ),
+  }));
+};
 
   async function deleteRowFromDb(rowId) {
     try {
@@ -178,7 +218,7 @@ const Expenses = () => {
           />
         ))} */}
 
-        {expenses.map((row, index) => (
+        {/* {userExpenseData.expenses.map((row, index) => (
           <ExpenseRow
             key={row.clientId ?? row.id}
             row={row}
@@ -187,7 +227,21 @@ const Expenses = () => {
             handleRowChange={handleRowChange}
             saveRow={saveRowToDb}
           />
-        ))}
+        ))} */}
+
+        {userExpenseData.expenses
+          .filter((expense) => expense.sheetId === currentSheet.id)
+          .map((row, index) => (
+            <ExpenseRow
+              key={row.clientId ?? row.id}
+              row={row}
+              index={index}
+              deleteRow={() => deleteRow(row.id)}
+              handleRowChange={handleRowChange}
+              saveRow={saveRowToDb}
+            />
+          ))}
+
       </div>
       <div className="add-row" onClick={addRow}>
         +
@@ -199,8 +253,8 @@ const Expenses = () => {
           <input
             type="number"
             name="net-total"
-            value={netIncome}
-            onChange={(e) => setNetIncome(e.target.value)}
+            value={currentSheet.netIncome ?? ""}
+            onChange={(e) => handleNetIncomeChange(e.target.value)}
             // onBlur={}
           ></input>
         </div>
@@ -262,9 +316,10 @@ const Expenses = () => {
 
         <div className="current-sheet-mobile">
           <div className="sheet-label">{currentSheet.label}</div>
-          <div 
-          className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
-          onClick={() => setSheetMenuVisible(v => !v)}>
+          <div
+            className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
+            onClick={() => setSheetMenuVisible((v) => !v)}
+          >
             <img src={rightArrow} alt="right arrow" />
           </div>
         </div>
@@ -281,15 +336,14 @@ const Expenses = () => {
        />
       )} */}
 
-        <SheetOverlay 
+      <SheetOverlay
         userExpenseData={userExpenseData}
         toggleSheetOverlay={toggleSheetOverlay}
         currentSheet={currentSheet}
         setCurrentSheet={setCurrentSheet}
         setSheetOverlayVisible={setSheetOverlayVisible}
         sheetOverlayVisible={sheetOverlayVisible}
-       />
-
+      />
     </div>
   );
 };

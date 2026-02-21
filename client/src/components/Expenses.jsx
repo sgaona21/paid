@@ -101,14 +101,20 @@ function handleRowChange(rowId, field, value) {
   //   addRowToDb(newRow);
   // };
 
-  function addRow(newRow) {
-    const rowWithSheet = { ...newRow, sheetId: currentSheet.id };
+function addRow(newRow) {
+  const rowWithSheet = {
+    ...newRow,
+    id: null,
+    sheetId: currentSheet.id,
+    clientId: crypto.randomUUID(),
+    userId: context?.currentUser?.id
+  };
 
-    setUserExpenseData((prev) => ({
-      ...prev,
-      expenses: [...prev.expenses, rowWithSheet],
-    }));
-  }
+  setUserExpenseData((prev) => ({
+    ...prev,
+    expenses: [...prev.expenses, rowWithSheet],
+  }));
+}
 
   const addRowToDb = async (row) => {
     await fetch(`${API_BASE}/expense/add`, {
@@ -241,7 +247,6 @@ const handleNetIncomeChange = (value) => {
               saveRow={saveRowToDb}
             />
           ))}
-
       </div>
       <div className="add-row" onClick={addRow}>
         +
@@ -323,18 +328,12 @@ const handleNetIncomeChange = (value) => {
             <img src={rightArrow} alt="right arrow" />
           </div>
         </div>
-      </div>
 
-      {/* {sheetOverlayVisible && (
-        <SheetOverlay 
-        userExpenseData={userExpenseData}
-        toggleSheetOverlay={toggleSheetOverlay}
-        currentSheet={currentSheet}
-        setCurrentSheet={setCurrentSheet}
-        setSheetOverlayVisible={setSheetOverlayVisible}
-        sheetOverlayVisible={sheetOverlayVisible}
-       />
-      )} */}
+          <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
+            <div className="rename-sheet">Rename</div>
+            <div className="delete-sheet">Delete</div>
+          </div>
+      </div>
 
       <SheetOverlay
         userExpenseData={userExpenseData}

@@ -303,35 +303,54 @@ body {
     outline: none;
 }
 
-.sheets {
+.sheets-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     gap: 1rem;
+    align-items: center;
+    align-content: center;
+}
+
+.add-sheet-container {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    background-color: var(--dark-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .add-sheet {
-    display: flex;
-    background-color: var(--dark-secondary);
     font-size: x-large;
-    padding: .20rem .75rem .35rem .75rem;
-    border-radius: 50%;
-}
-.current-sheet {
-    display: flex;
-    background-color: var(--dark-secondary);
-    padding: .5rem 1rem .5rem 1rem;
-    border-radius: 10px;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 2;
-}
-.sheet-arrow {
-    display: flex;
+    transform: translateY(-1px);
 }
 
-.sheet-arrow img {
-    width: 20px;
+.add-sheet:hover {
+    cursor: pointer;
+}
+
+
+.sheets {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.sheets:hover {
+    cursor: pointer;
+}
+
+.sheet {
+    background-color: var(--dark-secondary);
+    padding: .75rem 1rem .75rem 1rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.sheet:hover {
+    background-color: var(--background);
 }
 
 

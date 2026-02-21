@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import ExpenseRow from "./ExpenseRow";
 import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
@@ -9,7 +9,7 @@ import Sheets from "./Sheets.jsx";
 
 import rightArrow from '../assets/right-arrow.png';
 
-console.log(mockData)
+console.log(mockData.sheets)
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -18,10 +18,15 @@ const Expenses = () => {
   const [netIncome, setNetIncome] = useState("");
   const [sheets, setSheets] = useState([]);
   const [expenses, setExpenses] = useState([]);
+  const [currentSheet, setCurrentSheet] = useState(null);
+  const [userExpenseData, setUserExpenseData] = useState({
+    sheets: [],
+    expenses: [],
+  });
 
   useEffect(() => {
     updateUI();
-    updateSheets();
+    // updateSheets();
   }, []);
 
   const updateUI = async () => {
@@ -42,10 +47,25 @@ const Expenses = () => {
     }
   };
 
-    const updateSheets = async () => {
-      setSheets(mockData.sheets);
-      setExpenses(mockData.expenses)
-    };
+    // const updateSheets = async () => {
+    //   setSheets(mockData.sheets);
+    //   setExpenses(mockData.expenses)
+    //   setUserExpenseData(mockData)
+    // };
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setUserExpenseData(mockData);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+      if (userExpenseData?.sheets?.length && !currentSheet) {
+        setCurrentSheet(userExpenseData.sheets[0].id);
+      }
+    }, [userExpenseData, currentSheet]);
 
   const handleRowChange = (index, field, value) => {
     const updated = [...rows];
@@ -168,7 +188,6 @@ const Expenses = () => {
             saveRow={saveRowToDb}
           />
         ))}
-
       </div>
       <div className="add-row" onClick={addRow}>
         +
@@ -229,14 +248,17 @@ const Expenses = () => {
       </div>
 
       <div className="sheets-container">
-        {sheets.map((sheet, index) => (
-          <Sheets
-            key={sheet.id}
-            index={index}
-            sheet={sheet}
-            handleLabelChange={handleLabelChange}
-          />
-        ))}      
+        <div className="add-sheet-container">
+          <div className="add-sheet">+</div>
+        </div>
+        
+        <div className="sheets">
+          {userExpenseData.sheets.map((sheet) => (
+            <div key={sheet.id} className="sheet">
+              {sheet.label}
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>

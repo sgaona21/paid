@@ -8,8 +8,7 @@ import { sheets as mockSheets } from './mockData'
 import { mockExpenses as mockData } from './mockExpenses';
 import hamburger from '../assets/hamburger.png';
 import rightArrow from '../assets/right-arrow.png';
-import Sheets from "./Sheets.jsx";
-
+import spinner from '../assets/spinner2.png';
 
 console.log(mockData.sheets)
 
@@ -19,6 +18,7 @@ const Expenses = () => {
   const [rows, setRows] = useState([]);
   const [sheets, setSheets] = useState([]);
   const [expenses, setExpenses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentSheet, setCurrentSheet] = useState("");
   const [sheetOverlayVisible, setSheetOverlayVisible] = useState(false);
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
@@ -53,12 +53,14 @@ const Expenses = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     const timer = setTimeout(() => {
       setUserExpenseData(mockData);
 
       if (!currentSheet && mockData?.sheets?.length) {
         setCurrentSheet(mockData.sheets[0]);
       }
+      setIsLoading(false)
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -283,6 +285,11 @@ function deleteSheet(sheetIdToDelete) {
 }
 
 
+  if (isLoading) {
+    return (
+      <div className="spinner"><img src={spinner} alt="loading spinner" /></div>
+    )
+  }
 
   return (
     <div className="expense-content-container">

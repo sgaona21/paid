@@ -488,7 +488,16 @@ body {
     border-color: var(--background);
 }
 
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
 
+.spinner img {
+    max-width: 100px;
+}
 
 
 

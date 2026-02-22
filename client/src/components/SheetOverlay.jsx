@@ -5,7 +5,8 @@ const SheetOverlay = ({
   currentSheet,
   setSheetOverlayVisible,
   setCurrentSheet,
-  sheetOverlayVisible
+  sheetOverlayVisible,
+  addSheet
 }) => {
 
   function selectSheet(sheet) {
@@ -25,14 +26,15 @@ const SheetOverlay = ({
           <div
             className="sheet-container"
             onClick={() => selectSheet(sheet)}
-            key={sheet.id}
+            key={sheet.id ?? sheet.clientId}
             sheet={sheet}
           >
             {sheet.label}
 
-            {sheet.id === currentSheet.id && <div>✅</div>}
+            {(sheet.id ?? sheet.clientId) === (currentSheet.id ?? currentSheet.clientId) && <div>✅</div>}
           </div>
         ))}
+        <button className="add-sheet" onClick={() => addSheet()}>Add Sheet</button>
       </div>
     </div>
   );

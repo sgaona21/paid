@@ -468,12 +468,25 @@ body {
     outline: none;
     background-color: var(--inputBackground);
     border-radius: 5px;
-    border: 1px solid aquamarine;
+    border: none;
     padding: .25rem .5rem .25rem .5rem;
     font-size: .75rem;
 }
 
+.add-sheet {
+    margin: 1rem;
+    padding: .75rem;
+    border-radius: 25px;
+    background-color: var(--dark-secondary);
+    border: solid 1px var(--dark-secondary);
+    color: var(--font-primary);
+    font-size: .9rem;
+}
 
+.add-sheet:hover {
+    cursor: pointer;
+    border-color: var(--background);
+}
 
 
 

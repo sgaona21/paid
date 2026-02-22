@@ -118,6 +118,21 @@ function addRow(newRow) {
   }));
 }
 
+function addSheet() {
+  const newSheet = {
+    id: null,
+    clientId: crypto.randomUUID(),
+    label: "New Sheet",
+    netIncome: null
+  };
+
+  setUserExpenseData((prev) => ({
+    ...prev,
+    sheets: [...prev.sheets, newSheet],
+  }));
+
+}
+
   const addRowToDb = async (row) => {
     await fetch(`${API_BASE}/expense/add`, {
       method: "POST",
@@ -212,17 +227,36 @@ const handleNetIncomeChange = (value) => {
     setSheetMenuVisible((v) => !v);
   }
 
+// function saveRename() {
+//   const next = draftSheetLabel.trim();
+//   if (!next) return;
+
+//   setCurrentSheet((prev) => ({ ...prev, label: next }));
+
+//   setUserExpenseData((prev) => ({
+//     ...prev,
+//     sheets: prev.sheets.map((s) =>
+//       s.id === currentSheet.id ? { ...s, label: next } : s
+//     ),
+//   }));
+
+//   setIsRenamingSheet(false);
+// }
+
 function saveRename() {
   const next = draftSheetLabel.trim();
   if (!next) return;
+
+  const currentKey = currentSheet.id ?? currentSheet.clientId;
 
   setCurrentSheet((prev) => ({ ...prev, label: next }));
 
   setUserExpenseData((prev) => ({
     ...prev,
-    sheets: prev.sheets.map((s) =>
-      s.id === currentSheet.id ? { ...s, label: next } : s
-    ),
+    sheets: prev.sheets.map((s) => {
+      const sheetKey = s.id ?? s.clientId;
+      return sheetKey === currentKey ? { ...s, label: next } : s;
+    }),
   }));
 
   setIsRenamingSheet(false);
@@ -412,6 +446,7 @@ function deleteSheet(sheetIdToDelete) {
         setCurrentSheet={setCurrentSheet}
         setSheetOverlayVisible={setSheetOverlayVisible}
         sheetOverlayVisible={sheetOverlayVisible}
+        addSheet={addSheet}
       />
     </div>
   );

@@ -10,7 +10,6 @@ import hamburger from '../assets/hamburger.png';
 import rightArrow from '../assets/right-arrow.png';
 import spinner from '../assets/spinner2.png';
 
-console.log(mockData.sheets)
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -211,17 +210,27 @@ const handleNetIncomeChange = (value) => {
       setSheetOverlayVisible(prev => !prev);
     }
 
-  const total = rows.reduce(
-    (sum, row) => sum + (parseFloat(row.amount) || 0),
-    0,
-  );
+  const total = userExpenseData.expenses
+    .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
+    .reduce((sum, row) => sum + (parseFloat(row.amount) || 0), 0);
 
-  const totalPaid = rows.reduce((sum, row) => {
-    if (!row.isPaid) return sum;
+  // const totalPaid = rows.reduce((sum, row) => {
+  //   if (!row.isPaid) return sum;
 
-    const amount = parseFloat(row.amount);
-    return sum + (isNaN(amount) ? 0 : amount);
-  }, 0);
+  //   const amount = parseFloat(row.amount);
+  //   return sum + (isNaN(amount) ? 0 : amount);
+  // }, 0);
+
+    const totalPaid = userExpenseData.expenses
+      .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
+      .reduce((sum, row) => {
+      if (!row.isPaid) return sum;
+
+      const amount = parseFloat(row.amount);
+      return sum + (isNaN(amount) ? 0 : amount);
+    }, 0);
+
+
 
   function startRename() {
     setIsRenamingSheet(true);
@@ -229,21 +238,6 @@ const handleNetIncomeChange = (value) => {
     setSheetMenuVisible((v) => !v);
   }
 
-// function saveRename() {
-//   const next = draftSheetLabel.trim();
-//   if (!next) return;
-
-//   setCurrentSheet((prev) => ({ ...prev, label: next }));
-
-//   setUserExpenseData((prev) => ({
-//     ...prev,
-//     sheets: prev.sheets.map((s) =>
-//       s.id === currentSheet.id ? { ...s, label: next } : s
-//     ),
-//   }));
-
-//   setIsRenamingSheet(false);
-// }
 
 function saveRename() {
   const next = draftSheetLabel.trim();
@@ -363,11 +357,17 @@ function deleteSheet(sheetIdToDelete) {
         <div className="remaining-expense-donut">
           <Doughnut
             data={{
-              labels: ["Total Expenses", "Remaining Expenses"],
+              labels: ["Paid", "Unpaid"],
               datasets: [
                 {
-                  label: "Exp",
-                  data: [`${total}`, `${totalPaid}`],
+                  label: "Total",
+                  data: [`${totalPaid}`, `${total - totalPaid}`],
+                  backgroundColor: [
+                    "#26b52174",
+                    "#282f297c"
+                  ],
+                  borderWidth: 2,
+                  borderColor: "gray"
                 },
               ],
             }}
@@ -375,17 +375,22 @@ function deleteSheet(sheetIdToDelete) {
         </div>
       </div>
 
+      
+
       <div className="monthly-total-container">
         <div className="monthly-total-label">Expendable Income</div>
         <div className="monthly-total-amount">{total}</div>
-        <div className="remaining-expense-donut">
+        <div className="expendable-income-bar">
           <Bar
             data={{
-              labels: ["Total Expenses", "Remaining Expenses"],
+              labels: ["Net Income", "Total Expenses"],
               datasets: [
                 {
-                  label: "Exp",
+                  label: "Total",
                   data: [`${total}`, `${totalPaid}`],
+                  backgroundColor: [
+                    "rgba(38, 160, 52, 0.5)"
+                  ]
                 },
               ],
             }}

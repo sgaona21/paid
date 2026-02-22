@@ -422,7 +422,7 @@ body {
     right: 0;
     top: -6.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-
+    visibility: hidden;
     opacity: 0;
     transform: translateY(4px) scale(0.98);
     transition:
@@ -433,6 +433,7 @@ body {
 .sheet-menu.show {
     opacity: 1;
     transform: translateY(0) scale(1);
+    visibility: visible;
 }
 
 .sheet-menu div {
@@ -442,7 +443,7 @@ body {
 
 .sheet-menu div:hover {
     cursor: pointer;
-    background-color: var(--background);
+    /* background-color: var(--background); */
 }
 
 .rename-sheet {
@@ -450,9 +451,17 @@ body {
     border-top-right-radius: 10px;
 }
 
+.rename-sheet:hover {
+    background-color: var(--background);
+}
+
 .delete-sheet {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.delete-sheet:hover {
+    background-color: rgba(255, 0, 0, 0.517);
 }
 
 .sheet-label-input {

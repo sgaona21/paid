@@ -22,6 +22,8 @@ const Expenses = () => {
   const [currentSheet, setCurrentSheet] = useState("");
   const [sheetOverlayVisible, setSheetOverlayVisible] = useState(false);
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
+  const [isRenamingSheet, setIsRenamingSheet] = useState(false);
+  const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -60,7 +62,7 @@ const Expenses = () => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [currentSheet]);
+  }, []);
 
   // const handleRowChange = (index, field, value) => {
   //   const updated = [...rows];
@@ -204,6 +206,48 @@ const handleNetIncomeChange = (value) => {
     return sum + (isNaN(amount) ? 0 : amount);
   }, 0);
 
+  function startRename() {
+    setIsRenamingSheet(true);
+    setDraftSheetLabel(currentSheet.label);
+    setSheetMenuVisible((v) => !v);
+  }
+
+function saveRename() {
+  const next = draftSheetLabel.trim();
+  if (!next) return;
+
+  setCurrentSheet((prev) => ({ ...prev, label: next }));
+
+  setUserExpenseData((prev) => ({
+    ...prev,
+    sheets: prev.sheets.map((s) =>
+      s.id === currentSheet.id ? { ...s, label: next } : s
+    ),
+  }));
+
+  setIsRenamingSheet(false);
+}
+
+function deleteSheet(sheetIdToDelete) {
+  if (userExpenseData.sheets.length <= 1) return;
+  setUserExpenseData((prev) => {
+    const remainingSheets = prev.sheets.filter((s) => s.id !== sheetIdToDelete);
+    const remainingExpenses = prev.expenses.filter((e) => e.sheetId !== sheetIdToDelete);
+
+    if (currentSheet?.id === sheetIdToDelete) {
+      const nextSheet = remainingSheets[0] ?? null;
+      setCurrentSheet(nextSheet);
+    }
+
+    return {
+      ...prev,
+      sheets: remainingSheets,
+      expenses: remainingExpenses,
+    };
+  });
+}
+
+
   return (
     <div className="expense-content-container">
       <div className="expense-table-container">
@@ -320,7 +364,25 @@ const handleNetIncomeChange = (value) => {
         </div>
 
         <div className="current-sheet-mobile">
-          <div className="sheet-label">{currentSheet.label}</div>
+          {/* <div className="sheet-label">{currentSheet.label}</div> */}
+
+          <div className="sheet-label">
+            {isRenamingSheet ? (
+              <input
+                className="sheet-label-input"
+                value={draftSheetLabel}
+                onChange={(e) => setDraftSheetLabel(e.target.value)}
+                autoFocus
+                onBlur={saveRename}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") saveRename();
+                }}
+              />
+            ) : (
+              currentSheet.label
+            )}
+          </div>
+
           <div
             className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
             onClick={() => setSheetMenuVisible((v) => !v)}
@@ -329,10 +391,18 @@ const handleNetIncomeChange = (value) => {
           </div>
         </div>
 
-          <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
-            <div className="rename-sheet">Rename</div>
-            <div className="delete-sheet">Delete</div>
+        <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
+          <div
+            className="rename-sheet"
+            onClick={() => startRename()}
+          >
+            Rename
           </div>
+          <div className="delete-sheet" onClick={() => {
+    deleteSheet(currentSheet.id);
+    setSheetMenuVisible((prev) => !prev);
+  }}>Delete</div>
+        </div>
       </div>
 
       <SheetOverlay

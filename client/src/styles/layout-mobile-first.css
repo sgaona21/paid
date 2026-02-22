@@ -11,6 +11,7 @@
   --background: #474e5a;
   --foreground: #15191f;
   --dark-secondary: #31353a73;
+  --inputBackground: lightgray;
 }
 
 /* PAGE LAYOUT */
@@ -352,7 +353,7 @@ body {
     align-items: center;
     padding: .25rem;
     margin-right: .5rem;
-    transition: transform 1s ease;
+    transition: transform .5s ease;
     background-color: var(--foreground);
     border-radius: 50%;
 }
@@ -425,8 +426,8 @@ body {
     opacity: 0;
     transform: translateY(4px) scale(0.98);
     transition:
-        opacity 1s ease,
-        transform 1s ease;
+        opacity .5s ease,
+        transform .5s ease;
 }
 
 .sheet-menu.show {
@@ -453,6 +454,17 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
+.sheet-label-input {
+    outline: none;
+    background-color: var(--inputBackground);
+    border-radius: 5px;
+    border: 1px solid aquamarine;
+    padding: .25rem .5rem .25rem .5rem;
+    font-size: .75rem;
+}
+
+
 
 
 

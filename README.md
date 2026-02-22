@@ -1,6 +1,6 @@
 Paid — Monthly Budgeting Web Application
 
-Paid is a fullstack budgeting application that helps users track monthly expenses and monitor expendable income. It provides a clean and intuitive interface for managing personal finances. I started building this to replace my google sheets page. It will be an ongoing project for years to come. 
+Paid is a fullstack budgeting application that helps users track monthly expenses and monitor expendable income. It provides a clean and intuitive interface for managing personal finances. 
 
 Tech Stack: 
 - React
@@ -15,35 +15,11 @@ https://www.paidbudget.com/
 
 Installation & Setup:
 
-1. Clone the repository
-```
-git clone https://github.com/sgaona21/paid.git
-```
+Frontend: "npm run dev from" client 
+Backend: "npm start from" api
 
-3. Install server dependencies
-```
-cd api
-npm install
-```
+create env variables for mysql db, jwt auth, and frontend api calls
 
-5. Install client dependencies
-```
-cd client
-npm install
-```
-
-7. Start development servers
-Backend
-```
-cd api
-npm run dev
-```
-
-Frontend
-```
-cd client
-npm run dev
-```
 
 
 

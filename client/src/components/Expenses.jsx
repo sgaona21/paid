@@ -262,13 +262,14 @@ function saveRename() {
   setIsRenamingSheet(false);
 }
 
+
 function deleteSheet(sheetIdToDelete) {
   if (userExpenseData.sheets.length <= 1) return;
   setUserExpenseData((prev) => {
-    const remainingSheets = prev.sheets.filter((s) => s.id !== sheetIdToDelete);
-    const remainingExpenses = prev.expenses.filter((e) => e.sheetId !== sheetIdToDelete);
+    const remainingSheets = prev.sheets.filter((s) => (s.id ?? s.clientId) !== sheetIdToDelete);
+    const remainingExpenses = prev.expenses.filter((e) => (e.id ?? e.clientId) !== sheetIdToDelete);
 
-    if (currentSheet?.id === sheetIdToDelete) {
+    if ((currentSheet?.id ?? currentSheet?.clientId) === sheetIdToDelete) {
       const nextSheet = remainingSheets[0] ?? null;
       setCurrentSheet(nextSheet);
     }
@@ -280,6 +281,7 @@ function deleteSheet(sheetIdToDelete) {
     };
   });
 }
+
 
 
   return (
@@ -426,16 +428,18 @@ function deleteSheet(sheetIdToDelete) {
         </div>
 
         <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
-          <div
-            className="rename-sheet"
-            onClick={() => startRename()}
-          >
+          <div className="rename-sheet" onClick={() => startRename()}>
             Rename
           </div>
-          <div className="delete-sheet" onClick={() => {
-    deleteSheet(currentSheet.id);
-    setSheetMenuVisible((prev) => !prev);
-  }}>Delete</div>
+          <div
+            className="delete-sheet"
+            onClick={() => {
+              deleteSheet(currentSheet.id ?? currentSheet.clientId);
+              setSheetMenuVisible((prev) => !prev);
+            }}
+          >
+            Delete
+          </div>
         </div>
       </div>
 

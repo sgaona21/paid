@@ -59,8 +59,10 @@ const Layout = () => {
 
     function toggleMobileDashOpen() {
       setMobileDashOpen(prev => !prev);
+      if (isDashOpen === true) {
+        setIsDashOpen(false)
+      }
     }
-
 
 
     if (authLoading) {
@@ -108,12 +110,33 @@ const Layout = () => {
                 </li>
               </ul>
             )}
+            {isDashOpen && (
+              <ul className="dash-options">
+                <li
+                  className={`expenses-menu-item ${selectedMenuItem === "expenses" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.EXPENSES)}
+                >
+                  Expenses
+                </li>
+                <li
+                  className={`income-menu-item ${selectedMenuItem === "income" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.INCOME)}
+                >
+                  Income
+                </li>
+                <li
+                  className={`debt-menu-item ${selectedMenuItem === "debt" ? "selected" : ""}`}
+                  onClick={() => setSelectedMenuItem(MENU.DEBT)}
+                >
+                  Debt
+                </li>
+              </ul>
+            )}
           </section>
 
         <section className="header">
           <div className="hamburger" onClick={() => {
-            setIsDashOpen((v) => !v);
-            setMobileDashOpen(true)
+            toggleDesktopDash();
           }}>
             <img src={hamburger} alt="hamburger menu icon" />
           </div>

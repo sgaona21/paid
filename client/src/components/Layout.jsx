@@ -73,8 +73,8 @@ const Layout = () => {
 
 
     return (
-      <main className={`layout-container ${isDashOpen ? "dash" : "no-dash"}`}>
-        {isDashOpen && (
+      <main className={`layout-container ${isDashOpen ? "" : "no-dash"}`}>
+          {/* <section className={`dashboard ${isDashOpen ? "" : "no-show"}`}> */}
           <section className="dashboard">
             <div className="dash-dropdown" onClick={toggleMobileDashOpen}>
               <h2 id="dashboard-header">Dashboard</h2>
@@ -109,10 +109,12 @@ const Layout = () => {
               </ul>
             )}
           </section>
-        )}
 
         <section className="header">
-          <div className="hamburger" onClick={() => setIsDashOpen((v) => !v)}>
+          <div className="hamburger" onClick={() => {
+            setIsDashOpen((v) => !v);
+            setMobileDashOpen(true)
+          }}>
             <img src={hamburger} alt="hamburger menu icon" />
           </div>
           <Link to="/" className="logo">

@@ -518,6 +518,84 @@ body {
 
 
 
+/* DESKTOP MODE */
+@media (min-width: 720px) {
+
+    .layout-container.no-dash .dashboard {
+        display: none;
+    }
+
+    .layout-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        grid-template-rows: 65px 1fr;
+        height: 100vh;
+        grid-template-areas: 
+            "dashboard header"
+            "dashboard content";
+    }
+
+    .layout-container.no-dash {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        grid-template-rows: 65px 1fr;
+        height: 100vh;
+        grid-template-areas: 
+            "header header"
+            "content content";
+    }
+
+    .header {
+        grid-area: header;
+    }
+
+    .dashboard {
+        grid-area: dashboard;
+    }
+
+    .content {
+        grid-area: content;
+        overflow-y: auto;
+        min-height: 0; 
+    }
+
+
+    .hamburger {
+        width: 40px;
+        display: flex;
+        align-self: center;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
+        background-color: rgba(211, 211, 211, 0.105);
+        border-radius: 25px;
+    }
+
+    .hamburger img {
+        width: 100%;
+        filter: invert(1);
+        padding: .35rem
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .dash-arrow-wrapper {
+        display: none;
+    }
+
+    .dash-dropdown {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+
+}
 
 
 

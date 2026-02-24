@@ -20,7 +20,7 @@ const Layout = () => {
     const [authLoading, setAuthLoading] = useState(true);
     const [isDashOpen, setIsDashOpen] = useState(true);
     const [signOutVisible, setSignOutVisible] = useState(false);
-    const [mobileDashOpen, setMobileDashOpen] = useState(false);
+    const [dashOptionsVisible, setDashOptionsVisible] = useState(false);
     const MENU = {
       EXPENSES: "expenses",
       INCOME: "income",
@@ -57,11 +57,12 @@ const Layout = () => {
       setSignOutVisible(prev => !prev);
     }
 
-    function toggleMobileDashOpen() {
-      setMobileDashOpen(prev => !prev);
-      if (isDashOpen === true) {
-        setIsDashOpen(false)
-      }
+    function toggleDashOptionsVisible() {
+      setDashOptionsVisible(prev => !prev);
+    }
+
+    function toggleDesktopDash() {
+      setIsDashOpen(prev => !prev);
     }
 
 
@@ -76,20 +77,44 @@ const Layout = () => {
 
     return (
       <main className={`layout-container ${isDashOpen ? "" : "no-dash"}`}>
-          {/* <section className={`dashboard ${isDashOpen ? "" : "no-show"}`}> */}
-          <section className="dashboard">
-            <div className="dash-dropdown" onClick={toggleMobileDashOpen}>
-              <h2 id="dashboard-header">Dashboard</h2>
-              <div className="dash-arrow-wrapper">
-                <img
-                  src={rightArrow}
-                  className={`dash-right-arrow ${mobileDashOpen ? "open" : ""}`}
-                  alt="Down arrow icons created by Arkinasi - Flaticon"
-                />
-              </div>
+        <section className="dashboard">
+          <div className="dash-dropdown" onClick={toggleDashOptionsVisible}>
+            <h2 id="dashboard-header">Dashboard</h2>
+            <div className="dash-arrow-wrapper">
+              <img
+                src={rightArrow}
+                className={`dash-right-arrow ${dashOptionsVisible ? "open" : ""}`}
+                alt="Down arrow icons created by Arkinasi - Flaticon"
+              />
             </div>
-            {mobileDashOpen && (
-              <ul className="dash-options">
+          </div>
+
+          {dashOptionsVisible && (
+            <ul className="dash-options">
+              <li
+                className={`expenses-menu-item ${selectedMenuItem === "expenses" ? "selected" : ""}`}
+                onClick={() => setSelectedMenuItem(MENU.EXPENSES)}
+              >
+                Expenses
+              </li>
+              <li
+                className={`income-menu-item ${selectedMenuItem === "income" ? "selected" : ""}`}
+                onClick={() => setSelectedMenuItem(MENU.INCOME)}
+              >
+                Income
+              </li>
+              <li
+                className={`debt-menu-item ${selectedMenuItem === "debt" ? "selected" : ""}`}
+                onClick={() => setSelectedMenuItem(MENU.DEBT)}
+              >
+                Debt
+              </li>
+            </ul>
+          )}
+
+          {isDashOpen && (
+            <div className="dash-options-desktop-container">
+              <ul className="dash-options-desktop">
                 <li
                   className={`expenses-menu-item ${selectedMenuItem === "expenses" ? "selected" : ""}`}
                   onClick={() => setSelectedMenuItem(MENU.EXPENSES)}
@@ -109,35 +134,17 @@ const Layout = () => {
                   Debt
                 </li>
               </ul>
-            )}
-            {isDashOpen && (
-              <ul className="dash-options">
-                <li
-                  className={`expenses-menu-item ${selectedMenuItem === "expenses" ? "selected" : ""}`}
-                  onClick={() => setSelectedMenuItem(MENU.EXPENSES)}
-                >
-                  Expenses
-                </li>
-                <li
-                  className={`income-menu-item ${selectedMenuItem === "income" ? "selected" : ""}`}
-                  onClick={() => setSelectedMenuItem(MENU.INCOME)}
-                >
-                  Income
-                </li>
-                <li
-                  className={`debt-menu-item ${selectedMenuItem === "debt" ? "selected" : ""}`}
-                  onClick={() => setSelectedMenuItem(MENU.DEBT)}
-                >
-                  Debt
-                </li>
-              </ul>
-            )}
-          </section>
+            </div>
+          )}
+        </section>
 
         <section className="header">
-          <div className="hamburger" onClick={() => {
-            toggleDesktopDash();
-          }}>
+          <div
+            className="hamburger"
+            onClick={() => {
+              toggleDesktopDash();
+            }}
+          >
             <img src={hamburger} alt="hamburger menu icon" />
           </div>
           <Link to="/" className="logo">

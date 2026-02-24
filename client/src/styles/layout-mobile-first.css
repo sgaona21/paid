@@ -121,6 +121,10 @@ body {
     transform: rotate(90deg);
 }
 
+.dash-options-desktop {
+    display: none;
+}
+
 .dash-options {
     display: flex;
     flex-direction: column;
@@ -551,6 +555,7 @@ body {
 
     .dashboard {
         grid-area: dashboard;
+        
     }
 
     .content {
@@ -592,8 +597,110 @@ body {
         align-items: center;
     }
 
+    .dash-options {
+        display: none;
+    }
 
+    .dash-options-desktop-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
+    .dash-options-desktop {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .dash-options-desktop li {
+        color: rgba(245, 245, 245, 0.806);
+        padding: .75rem;
+        border-radius: 10px;
+        background-color: #31353a73;
+        text-align: center;
+    }
+
+    .dash-options-desktop li:hover {
+        cursor: pointer;
+        background-color: #474e5a;
+        color: whitesmoke;
+    }
+
+    .dash-dropdown:hover {
+        cursor: auto;
+    }
+
+    .expenses-menu-item.selected,
+    .income-menu-item.selected,
+    .debt-menu-item.selected {
+        /* background-color: #474e5a; */
+        /* border: 2px solid rgba(144, 238, 144, 0.214); */
+        border: none;
+        background-color: var(--background);
+    }
+
+    .expense-content-container {
+        display: grid;
+        height: 100%;
+        gap: 1rem;
+        align-items: start;
+        justify-items: stretch;
+        grid-template-columns: minmax(300px, 500px) 1fr 1fr;
+        grid-template-rows: 1fr 1fr 60px;
+        grid-template-areas: 
+            "exp-table net-income total-exp"
+            "exp-table remaining expendable"
+            "exp-table remaining expendable"
+            "sheets sheets sheets";
+    }
+
+    .expense-table-container {
+        min-width: 300px;
+        max-width: 500px;
+        max-height: 95%;
+        justify-self: start;
+        width: 100%;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .table-with-add {
+        grid-area: exp-table;
+        height: 100%;
+    }
+
+    .add-row {
+        margin-top: 1px;
+    }
+
+    .net-monthly-container {
+        grid-area: net-income;
+    }
+
+    .monthly-total-container {
+        grid-area: total-exp;
+    }
+
+    .monthly-remaining-container {
+        grid-area: remaining;
+        grid-row-start: 1;
+        margin-top: 5rem;
+    }
+
+    .monthly-expendable-container {
+        grid-area: expendable;
+        border: solid 1px gray;
+        border-radius: 5px;
+        grid-row-start: 1;
+        margin-top: 5rem;
+    }
+
+    .sheets-container {
+        grid-area: sheets;
+    }
 
 }
 

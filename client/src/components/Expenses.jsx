@@ -287,34 +287,13 @@ function deleteSheet(sheetIdToDelete) {
 
   return (
     <div className="expense-content-container">
-      <div className="expense-table-container">
+      <div className="table-with-add">
+        <div className="expense-table-container">
         <ul className="expense-table-headers">
           <li>Expense</li>
           <li>Amount</li>
           <li>Paid</li>
         </ul>
-
-        {/* {rows.map((row, index) => (
-          <ExpenseRow
-            key={row.clientId ?? row.id}
-            row={row}
-            index={index}
-            deleteRow={() => deleteRow(row.id)}
-            handleRowChange={handleRowChange}
-            saveRow={saveRowToDb}
-          />
-        ))} */}
-
-        {/* {userExpenseData.expenses.map((row, index) => (
-          <ExpenseRow
-            key={row.clientId ?? row.id}
-            row={row}
-            index={index}
-            deleteRow={() => deleteRow(row.id)}
-            handleRowChange={handleRowChange}
-            saveRow={saveRowToDb}
-          />
-        ))} */}
 
         {userExpenseData.expenses
           .filter((expense) => expense.sheetId === currentSheet.id)
@@ -329,9 +308,12 @@ function deleteSheet(sheetIdToDelete) {
             />
           ))}
       </div>
+
       <div className="add-row" onClick={addRow}>
-        +
+          +
       </div>
+      </div>
+      
 
       <div className="net-monthly-container">
         <div className="monthly-total-label">Net Monthly Income</div>
@@ -362,12 +344,9 @@ function deleteSheet(sheetIdToDelete) {
                 {
                   label: "Total",
                   data: [`${totalPaid}`, `${total - totalPaid}`],
-                  backgroundColor: [
-                    "#26b52174",
-                    "#282f297c"
-                  ],
+                  backgroundColor: ["#26b52174", "#282f297c"],
                   borderWidth: 2,
-                  borderColor: "gray"
+                  borderColor: "gray",
                 },
               ],
             }}
@@ -375,11 +354,9 @@ function deleteSheet(sheetIdToDelete) {
         </div>
       </div>
 
-      
-
-      <div className="monthly-total-container">
+      <div className="monthly-expendable-container">
         <div className="monthly-total-label">Expendable Income</div>
-        <div className="monthly-total-amount">{total}</div>
+        <div className="monthly-total-amount">{ currentSheet.netIncome - total}</div>
         <div className="expendable-income-bar">
           <Bar
             data={{
@@ -387,10 +364,8 @@ function deleteSheet(sheetIdToDelete) {
               datasets: [
                 {
                   label: "Total",
-                  data: [`${total}`, `${totalPaid}`],
-                  backgroundColor: [
-                    "rgba(38, 160, 52, 0.5)"
-                  ]
+                  data: [`${currentSheet.netIncome}`, `${total}`],
+                  backgroundColor: ["rgba(38, 160, 52, 0.5)"],
                 },
               ],
             }}

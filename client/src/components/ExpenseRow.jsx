@@ -30,7 +30,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           checked={!!row?.isPaid}
           onChange={(e) => {
             // handleRowChange(index, "isPaid", e.target.checked);
-            handleRowChange(row.id, "isPaid", e.target.checked)
+            handleRowChange(row.id, "isPaid", e.target.checked);
             saveRow({ ...row, isPaid: e.target.checked });
           }}
           onBlur={() => saveRow(row)}

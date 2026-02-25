@@ -266,8 +266,9 @@ body {
     align-self: flex-start;
     font-size: x-large;
     color: lightgray;
-    margin-top: -1rem;
+    margin-top: 1px;
     padding: .25rem;
+    display: inline-block;
 }
 
 .add-row:hover {

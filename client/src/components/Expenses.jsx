@@ -289,31 +289,30 @@ function deleteSheet(sheetIdToDelete) {
     <div className="expense-content-container">
       <div className="table-with-add">
         <div className="expense-table-container">
-        <ul className="expense-table-headers">
-          <li>Expense</li>
-          <li>Amount</li>
-          <li>Paid</li>
-        </ul>
+          <ul className="expense-table-headers">
+            <li>Expense</li>
+            <li>Amount</li>
+            <li>Paid</li>
+          </ul>
 
-        {userExpenseData.expenses
-          .filter((expense) => expense.sheetId === currentSheet.id)
-          .map((row, index) => (
-            <ExpenseRow
-              key={row.clientId ?? row.id}
-              row={row}
-              index={index}
-              deleteRow={() => deleteRow(row.id)}
-              handleRowChange={handleRowChange}
-              saveRow={saveRowToDb}
-            />
-          ))}
-      </div>
+          {userExpenseData.expenses
+            .filter((expense) => expense.sheetId === currentSheet.id)
+            .map((row, index) => (
+              <ExpenseRow
+                key={row.clientId ?? row.id}
+                row={row}
+                index={index}
+                deleteRow={() => deleteRow(row.id)}
+                handleRowChange={handleRowChange}
+                saveRow={saveRowToDb}
+              />
+            ))}
+        </div>
 
-      <div className="add-row" onClick={addRow}>
+        <div className="add-row" onClick={addRow}>
           +
+        </div>
       </div>
-      </div>
-      
 
       <div className="net-monthly-container">
         <div className="monthly-total-label">Net Monthly Income</div>
@@ -356,7 +355,9 @@ function deleteSheet(sheetIdToDelete) {
 
       <div className="monthly-expendable-container">
         <div className="monthly-total-label">Expendable Income</div>
-        <div className="monthly-total-amount">{ currentSheet.netIncome - total}</div>
+        <div className="monthly-total-amount">
+          {currentSheet.netIncome - total}
+        </div>
         <div className="expendable-income-bar">
           <Bar
             data={{
@@ -368,6 +369,10 @@ function deleteSheet(sheetIdToDelete) {
                   backgroundColor: ["rgba(38, 160, 52, 0.5)"],
                 },
               ],
+              options: {
+                responsive: true,
+                // maintainAspectRatio: false,
+              },
             }}
           />
         </div>

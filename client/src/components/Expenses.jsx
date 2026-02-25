@@ -15,11 +15,10 @@ const Expenses = () => {
   const context = useContext(UserContext);
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [rows, setRows] = useState([]);
-  const [sheets, setSheets] = useState([]);
-  const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentSheet, setCurrentSheet] = useState("");
   const [sheetOverlayVisible, setSheetOverlayVisible] = useState(false);
+  const [sheetMenuOverlayVisible, setSheetMenuOverlayVisible] = useState(false);
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
   const [isRenamingSheet, setIsRenamingSheet] = useState(false);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
@@ -209,6 +208,10 @@ const handleNetIncomeChange = (value) => {
   function toggleSheetOverlay() {
       setSheetOverlayVisible(prev => !prev);
     }
+
+  function toggleMenuSheetBackdrop() {
+    setSheetMenuOverlayVisible(prev => !prev);
+  }  
 
   const total = userExpenseData.expenses
     .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
@@ -413,7 +416,10 @@ function deleteSheet(sheetIdToDelete) {
 
           <div
             className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
-            onClick={() => setSheetMenuVisible((v) => !v)}
+            onClick={() => {
+              setSheetMenuVisible((v) => !v);
+              toggleMenuSheetBackdrop();
+            }}
           >
             <img src={rightArrow} alt="right arrow" />
           </div>
@@ -444,6 +450,14 @@ function deleteSheet(sheetIdToDelete) {
         sheetOverlayVisible={sheetOverlayVisible}
         addSheet={addSheet}
       />
+
+      {sheetMenuOverlayVisible && (
+        <div className="menu-overlay" onClick={() => {
+              setSheetMenuVisible(false)
+              setSheetMenuOverlayVisible(false);
+            }}></div>
+      )}      
+
     </div>
   );
 };

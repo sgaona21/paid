@@ -382,6 +382,7 @@ body {
     transition: transform .5s ease;
     background-color: var(--foreground);
     border-radius: 50%;
+    z-index: 5;
 }
 
 .sheet-arrow-container.rotated {
@@ -449,6 +450,7 @@ body {
     top: -6.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     visibility: hidden;
+    z-index: 5;
     opacity: 0;
     transform: translateY(4px) scale(0.98);
     transition:
@@ -523,6 +525,13 @@ body {
 
 .spinner img {
     max-width: 100px;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 44, 44, 0.045);
+    z-index: 4;
 }
 
 

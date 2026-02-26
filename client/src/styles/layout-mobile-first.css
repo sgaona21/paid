@@ -366,11 +366,16 @@ body {
     width: 100%;
     background-color: var(--dark-secondary);
     border-radius: 10px;
+    position: relative;
     
 }
 
 .current-sheet-mobile:hover {
     cursor: pointer;
+}
+
+.current-sheet-desktop {
+    display: none;
 }
 
 .sheet-arrow-container {
@@ -724,6 +729,29 @@ body {
     .remaining-expense-donut, .expendable-income-bar {
         max-height: 250px;
         min-width: 250px;
+    }
+
+    .add-sheet-container {
+        display: none;
+    }
+
+    .current-sheet-mobile {
+        display: none;
+    }
+
+    .current-sheet-desktop {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: var(--dark-secondary);
+        border-radius: 10px;
+        position: relative;
+
+    }
+
+    .current-sheet-desktop:hover {
+        cursor: pointer;
     }
 
 }

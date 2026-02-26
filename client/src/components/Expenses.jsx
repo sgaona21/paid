@@ -9,6 +9,7 @@ import { mockExpenses as mockData } from './mockExpenses';
 import hamburger from '../assets/hamburger.png';
 import rightArrow from '../assets/right-arrow.png';
 import spinner from '../assets/spinner2.png';
+import Sheets from "./Sheets.jsx";
 
 
 const Expenses = () => {
@@ -395,8 +396,6 @@ function deleteSheet(sheetIdToDelete) {
         </div>
 
         <div className="current-sheet-mobile">
-          {/* <div className="sheet-label">{currentSheet.label}</div> */}
-
           <div className="sheet-label">
             {isRenamingSheet ? (
               <input
@@ -424,6 +423,25 @@ function deleteSheet(sheetIdToDelete) {
             <img src={rightArrow} alt="right arrow" />
           </div>
         </div>
+
+        {userExpenseData.sheets.map((sheet) => (
+          <Sheets
+            key={sheet.id}
+            sheet={sheet}
+            isRenamingSheet={isRenamingSheet}
+            draftSheetLabel={draftSheetLabel}
+            setDraftSheetLabel={setDraftSheetLabel}
+            saveRename={saveRename}
+            currentSheet={currentSheet}
+            sheetMenuVisible={sheetMenuVisible}
+            setSheetMenuVisible={setSheetMenuVisible}
+            toggleMenuSheetBackdrop={toggleMenuSheetBackdrop}
+            startRename={startRename}
+            deleteSheet={deleteSheet}
+          />
+        ))}
+
+
 
         <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
           <div className="rename-sheet" onClick={() => startRename()}>

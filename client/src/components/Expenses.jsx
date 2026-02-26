@@ -426,7 +426,7 @@ function deleteSheet(sheetIdToDelete) {
 
         {userExpenseData.sheets.map((sheet) => (
           <Sheets
-            key={sheet.id}
+            key={sheet.id ?? sheet.clientId}
             sheet={sheet}
             isRenamingSheet={isRenamingSheet}
             draftSheetLabel={draftSheetLabel}
@@ -438,6 +438,7 @@ function deleteSheet(sheetIdToDelete) {
             toggleMenuSheetBackdrop={toggleMenuSheetBackdrop}
             startRename={startRename}
             deleteSheet={deleteSheet}
+            setCurrentSheet={setCurrentSheet}
           />
         ))}
 

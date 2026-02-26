@@ -11,14 +11,16 @@ const Sheets = ({
   toggleMenuSheetBackdrop,
   sheet,
   startRename,
-  deleteSheet
+  deleteSheet,
+  setCurrentSheet
 }) => {
   return (
-    <div className="current-sheet-desktop">
+    <div className="current-sheet-desktop" onClick={() => setCurrentSheet(sheet)}>
       <div className="sheet-label">
         {isRenamingSheet ? (
           <input
             className="sheet-label-input"
+            
             value={draftSheetLabel}
             onChange={(e) => setDraftSheetLabel(e.target.value)}
             autoFocus

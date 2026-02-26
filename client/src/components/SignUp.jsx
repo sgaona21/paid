@@ -81,7 +81,7 @@ const UserSignUp = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <div className='logo'><img src={paidLogo} alt="site logo" /></div>
+          <div className='logo logo-register'><img src={paidLogo} alt="site logo" /></div>
         </div>
 
         <div className="signup-content">

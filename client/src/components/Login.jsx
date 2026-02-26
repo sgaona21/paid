@@ -54,14 +54,13 @@ const LogIn = () => {
     return (
       <div className="signup-container">
         <div className="signup-header">
-          <div className="logo">
+          <div className="logo logo-register">
             <img src={paidLogo} alt="site logo" />
           </div>
         </div>
 
         <div className="signup-content">
           <button className="demo-option">View Demo</button>
-          {/* <p> - or - </p> */}
           <form className="signup-form" onSubmit={handleSubmit}>
             <h2 className="sign-header">Sign In</h2>
             <div className="email-wrapper">

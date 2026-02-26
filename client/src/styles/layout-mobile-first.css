@@ -602,6 +602,10 @@ body {
         display: none;
     }
 
+    .logo-register {
+        display: block;
+    }
+
     .dash-arrow-wrapper {
         display: none;
     }

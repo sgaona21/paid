@@ -754,6 +754,10 @@ body {
         cursor: pointer;
     }
 
+    .current-sheet-desktop.selected {
+        background-color: var(--background);
+    }
+
 }
 
 

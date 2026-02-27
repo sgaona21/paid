@@ -1,4 +1,8 @@
+import { useState } from "react";
 import rightArrow from "../assets/right-arrow.png";
+
+
+
 
 const Sheets = ({
   isRenamingSheet,
@@ -14,8 +18,12 @@ const Sheets = ({
   deleteSheet,
   setCurrentSheet
 }) => {
+  // HELPERS
+const isCurrentSheet = sheet.id === currentSheet?.id;
+
   return (
-    <div className="current-sheet-desktop" onClick={() => setCurrentSheet(sheet)}>
+    <div className={`current-sheet-desktop ${isCurrentSheet ? "selected" : ""}`}
+    onClick={() => setCurrentSheet(sheet)}>
       <div className="sheet-label">
         {isRenamingSheet ? (
           <input
@@ -36,7 +44,8 @@ const Sheets = ({
 
       <div
         className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           setSheetMenuVisible((v) => !v);
           toggleMenuSheetBackdrop();
         }}
@@ -51,7 +60,7 @@ const Sheets = ({
           <div
             className="delete-sheet"
             onClick={() => {
-              deleteSheet(currentSheet.id ?? currentSheet.clientId);
+              deleteSheet(sheet.id ?? sheet.clientId);
               setSheetMenuVisible((prev) => !prev);
             }}
           >

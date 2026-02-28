@@ -16,10 +16,19 @@ const Sheets = ({
   sheet,
   startRename,
   deleteSheet,
-  setCurrentSheet
+  setCurrentSheet,
+  setSheetMenuOverlayVisible,
+  sheetMenuOverlayVisible,
+
 }) => {
-  // HELPERS
+const [isArrowRotated, setIsArrowRotated] = useState(false);
+
+// HELPERS
 const isCurrentSheet = sheet.id === currentSheet?.id;
+
+function toggleArrow() {
+  setIsArrowRotated(prev => !prev);
+}
 
   return (
     <div className={`current-sheet-desktop ${isCurrentSheet ? "selected" : ""}`}
@@ -43,17 +52,19 @@ const isCurrentSheet = sheet.id === currentSheet?.id;
       </div>
 
       <div
-        className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
+        // className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
+        className={`sheet-arrow-container ${isArrowRotated ? "rotated" : ""}`}
         onClick={(e) => {
           e.stopPropagation();
-          setSheetMenuVisible((v) => !v);
-          toggleMenuSheetBackdrop();
+          // setSheetMenuVisible((v) => !v);
+          toggleArrow();
+          
         }}
       >
         <img src={rightArrow} alt="right arrow" />
       </div>
 
-      <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
+      <div className={`sheet-menu ${isArrowRotated ? "show" : ""}`}>
           <div className="rename-sheet" onClick={() => startRename()}>
             Rename
           </div>
@@ -67,6 +78,8 @@ const isCurrentSheet = sheet.id === currentSheet?.id;
             Delete
           </div>
         </div>  
+
+       
 
     </div>
   );

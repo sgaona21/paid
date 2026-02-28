@@ -273,7 +273,7 @@ function deleteSheet(sheetIdToDelete) {
       const nextSheet = remainingSheets[0] ?? null;
       setCurrentSheet(nextSheet);
     }
-
+    setSheetMenuVisible(false)
     return {
       ...prev,
       sheets: remainingSheets,
@@ -439,6 +439,9 @@ function deleteSheet(sheetIdToDelete) {
             startRename={startRename}
             deleteSheet={deleteSheet}
             setCurrentSheet={setCurrentSheet}
+            setSheetMenuOverlayVisible={setSheetMenuOverlayVisible}
+            sheetMenuOverlayVisible={sheetMenuOverlayVisible}
+
           />
         ))}
 

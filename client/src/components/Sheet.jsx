@@ -17,14 +17,15 @@ const Sheet = ({
   setSheetMenuOverlayVisible,
   sheetMenuOverlayVisible,
   isArrowRotated,
-  setIsArrowRotated,
-  rotateArrow
+  openSheetId,
+  toggleSheetMenu
   
 }) => {
 //Hooks
 
 //Helpers
-
+const id = sheet.id ?? sheet.clientId;
+const isOpen = openSheetId === id;
 
   return (
     <div className="current-sheet">
@@ -45,18 +46,20 @@ const Sheet = ({
         )}
       </div>
 
-      <div className={`sheet-arrow-container ${isArrowRotated ? "rotated" : ""}`}
-      onClick={() => rotateArrow()}>
+      <div className={`sheet-arrow-container ${isOpen ? "rotated" : ""}`}
+      onClick={() => {
+        toggleSheetMenu(id)
+      }
+      }>
         <img src={rightArrow} alt="right arrow" />
       </div>
 
-      <div className={`sheet-menu ${isArrowRotated ? "show" : ""}`}>
+      <div className={`sheet-menu ${isOpen ? "show" : ""}`}>
         <div className="rename-sheet" onClick={() => startRename()}>
           Rename
         </div>
         <div className="delete-sheet" onClick={() => {
             deleteSheet(sheet.id ?? sheet.clientId);
-            rotateArrow();
         }}>
           Delete
         </div>

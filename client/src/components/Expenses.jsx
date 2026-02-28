@@ -24,7 +24,7 @@ const Expenses = () => {
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
   const [isRenamingSheet, setIsRenamingSheet] = useState(false);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
-  const [isArrowRotated, setIsArrowRotated] = useState(false);
+  const [openSheetId, setOpenSheetId] = useState(null);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -241,7 +241,6 @@ const handleNetIncomeChange = (value) => {
   function startRename() {
     setIsRenamingSheet(true);
     setDraftSheetLabel(currentSheet.label);
-    rotateArrow()
     
   }
 
@@ -285,8 +284,8 @@ function deleteSheet(sheetIdToDelete) {
   });
 }
 
-function rotateArrow() {
-    setIsArrowRotated(prev => !prev)
+function toggleSheetMenu(sheetId) {
+  setOpenSheetId(prev => (prev === sheetId ? null : sheetId));
 }
 
 
@@ -433,18 +432,32 @@ function rotateArrow() {
 
         <Sheet 
           sheet={currentSheet}
-          isArrowRotated={isArrowRotated}
-          setIsArrowRotated={setIsArrowRotated}
-          rotateArrow={rotateArrow}
           startRename={startRename}
           isRenamingSheet={isRenamingSheet}
           saveRename={saveRename}
           draftSheetLabel={draftSheetLabel}
           setDraftSheetLabel={setDraftSheetLabel}
           deleteSheet={deleteSheet}
+          openSheetId={openSheetId}
+          toggleSheetMenu={toggleSheetMenu}
         />
 
         {userExpenseData.sheets.map((sheet) => (
+          <Sheet
+            key={sheet.id ?? sheet.clientId}
+            sheet={sheet}
+          startRename={startRename}
+          isRenamingSheet={isRenamingSheet}
+          saveRename={saveRename}
+          draftSheetLabel={draftSheetLabel}
+          setDraftSheetLabel={setDraftSheetLabel}
+          deleteSheet={deleteSheet}
+          openSheetId={openSheetId}
+          toggleSheetMenu={toggleSheetMenu}
+          />
+        ))}
+
+        {/* {userExpenseData.sheets.map((sheet) => (
           <Sheets
             key={sheet.id ?? sheet.clientId}
             sheet={sheet}
@@ -463,7 +476,7 @@ function rotateArrow() {
             sheetMenuOverlayVisible={sheetMenuOverlayVisible}
 
           />
-        ))}
+        ))} */}
 
 
 
@@ -494,11 +507,11 @@ function rotateArrow() {
         addSheet={addSheet}
       />
 
-      {isArrowRotated && (
+      {/* {isArrowRotated && (
         <div className="menu-overlay" onClick={() => {
-              rotateArrow();
+
             }}></div>
-      )}      
+      )}       */}
 
     </div>
   );

@@ -10,6 +10,7 @@ import hamburger from '../assets/hamburger.png';
 import rightArrow from '../assets/right-arrow.png';
 import spinner from '../assets/spinner2.png';
 import Sheets from "./Sheets.jsx";
+import Sheet from "./Sheet.jsx";
 
 
 const Expenses = () => {
@@ -23,6 +24,7 @@ const Expenses = () => {
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
   const [isRenamingSheet, setIsRenamingSheet] = useState(false);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
+  const [isArrowRotated, setIsArrowRotated] = useState(false);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -239,7 +241,8 @@ const handleNetIncomeChange = (value) => {
   function startRename() {
     setIsRenamingSheet(true);
     setDraftSheetLabel(currentSheet.label);
-    setSheetMenuVisible((v) => !v);
+    rotateArrow()
+    
   }
 
 
@@ -273,13 +276,17 @@ function deleteSheet(sheetIdToDelete) {
       const nextSheet = remainingSheets[0] ?? null;
       setCurrentSheet(nextSheet);
     }
-    setSheetMenuVisible(false)
+    
     return {
       ...prev,
       sheets: remainingSheets,
       expenses: remainingExpenses,
     };
   });
+}
+
+function rotateArrow() {
+    setIsArrowRotated(prev => !prev)
 }
 
 
@@ -395,7 +402,7 @@ function deleteSheet(sheetIdToDelete) {
           </div>
         </div>
 
-        <div className="current-sheet-mobile">
+        {/* <div className="current-sheet-mobile">
           <div className="sheet-label">
             {isRenamingSheet ? (
               <input
@@ -422,7 +429,20 @@ function deleteSheet(sheetIdToDelete) {
           >
             <img src={rightArrow} alt="right arrow" />
           </div>
-        </div>
+        </div> */}
+
+        <Sheet 
+          sheet={currentSheet}
+          isArrowRotated={isArrowRotated}
+          setIsArrowRotated={setIsArrowRotated}
+          rotateArrow={rotateArrow}
+          startRename={startRename}
+          isRenamingSheet={isRenamingSheet}
+          saveRename={saveRename}
+          draftSheetLabel={draftSheetLabel}
+          setDraftSheetLabel={setDraftSheetLabel}
+          deleteSheet={deleteSheet}
+        />
 
         {userExpenseData.sheets.map((sheet) => (
           <Sheets
@@ -447,7 +467,7 @@ function deleteSheet(sheetIdToDelete) {
 
 
 
-        <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
+        {/* <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
           <div className="rename-sheet" onClick={() => startRename()}>
             Rename
           </div>
@@ -460,7 +480,8 @@ function deleteSheet(sheetIdToDelete) {
           >
             Delete
           </div>
-        </div>
+        </div> */}
+
       </div>
 
       <SheetOverlay
@@ -473,10 +494,9 @@ function deleteSheet(sheetIdToDelete) {
         addSheet={addSheet}
       />
 
-      {sheetMenuOverlayVisible && (
+      {isArrowRotated && (
         <div className="menu-overlay" onClick={() => {
-              setSheetMenuVisible(false)
-              setSheetMenuOverlayVisible(false);
+              rotateArrow();
             }}></div>
       )}      
 

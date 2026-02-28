@@ -19,10 +19,10 @@ const Sheets = ({
   setCurrentSheet,
   setSheetMenuOverlayVisible,
   sheetMenuOverlayVisible,
+  isArrowRotated,
+  setIsArrowRotated
 
 }) => {
-const [isArrowRotated, setIsArrowRotated] = useState(false);
-
 // HELPERS
 const isCurrentSheet = sheet.id === currentSheet?.id;
 

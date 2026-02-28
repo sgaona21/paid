@@ -374,6 +374,21 @@ body {
     cursor: pointer;
 }
 
+.current-sheet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--dark-secondary);
+    border-radius: 10px;
+    position: relative;
+    
+}
+
+.current-sheet:hover {
+    cursor: pointer;
+}
+
 .current-sheet-desktop {
     display: none;
 }

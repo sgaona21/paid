@@ -23,6 +23,7 @@ const Expenses = () => {
   const [sheetMenuOverlayVisible, setSheetMenuOverlayVisible] = useState(false);
   const [sheetMenuVisible, setSheetMenuVisible] = useState(false);
   const [isRenamingSheet, setIsRenamingSheet] = useState(false);
+  const [renamingSheetId, setRenamingSheetId] = useState(null);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
   const [userExpenseData, setUserExpenseData] = useState({
@@ -238,20 +239,47 @@ const handleNetIncomeChange = (value) => {
 
 
 
-  function startRename() {
-    setIsRenamingSheet(true);
-    setDraftSheetLabel(currentSheet.label);
-    
+  // function startRename() {
+  //   setIsRenamingSheet(true);
+  //   setDraftSheetLabel(currentSheet.label);
+  // }
+
+  function startRename(sheet) {
+    const id = sheet.id;
+    setRenamingSheetId(id);
+    setDraftSheetLabel(sheet.label);
   }
 
 
+// function saveRename() {
+//   const next = draftSheetLabel.trim();
+//   if (!next) return;
+
+//   const currentKey = currentSheet.id ?? currentSheet.clientId;
+
+//   setCurrentSheet((prev) => ({ ...prev, label: next }));
+
+//   setUserExpenseData((prev) => ({
+//     ...prev,
+//     sheets: prev.sheets.map((s) => {
+//       const sheetKey = s.id ?? s.clientId;
+//       return sheetKey === currentKey ? { ...s, label: next } : s;
+//     }),
+//   }));
+
+//   setIsRenamingSheet(false);
+// }
+
 function saveRename() {
+  if (!renamingSheetId) return;
+
   const next = draftSheetLabel.trim();
   if (!next) return;
 
-  const currentKey = currentSheet.id ?? currentSheet.clientId;
+  // const currentKey = currentSheet.id ?? currentSheet.clientId;
+  const currentKey = renamingSheetId;
 
-  setCurrentSheet((prev) => ({ ...prev, label: next }));
+  // setCurrentSheet((prev) => ({ ...prev, label: next }));
 
   setUserExpenseData((prev) => ({
     ...prev,
@@ -261,7 +289,7 @@ function saveRename() {
     }),
   }));
 
-  setIsRenamingSheet(false);
+  setRenamingSheetId(null);
 }
 
 
@@ -450,6 +478,8 @@ function isMenuOpen() {
           toggleSheetMenu={toggleSheetMenu}
           setCurrentSheet={setCurrentSheet}
           currentSheet={currentSheet}
+          renamingSheetId={renamingSheetId}
+          setRenamingSheetId={setRenamingSheetId}
         />
 
         {userExpenseData.sheets.map((sheet) => (
@@ -467,6 +497,8 @@ function isMenuOpen() {
             toggleSheetMenu={toggleSheetMenu}
             setCurrentSheet={setCurrentSheet}
             currentSheet={currentSheet}
+            renamingSheetId={renamingSheetId}
+            setRenamingSheetId={setRenamingSheetId}
           />
         ))}
 

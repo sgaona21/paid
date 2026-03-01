@@ -20,6 +20,8 @@ const Sheet = ({
   openSheetId,
   toggleSheetMenu,
   className,  
+  renamingSheetId,
+  setRenamingSheetId
 }) => {
 //Hooks
 
@@ -28,13 +30,14 @@ const id = sheet.id ?? sheet.clientId;
 const isOpen = openSheetId === id;
 const isCurrentSheet =
   (sheet.id ?? sheet.clientId) === (currentSheet?.id ?? currentSheet?.clientId);
+const isRenamingThisSheet = renamingSheetId === id;  
 
 
   return (
     <div className={`current-sheet ${isCurrentSheet ? "selected" : ""} ${className}`}
     onClick={() => setCurrentSheet(sheet)}>
       <div className="sheet-label">
-        {isRenamingSheet ? (
+        {isRenamingThisSheet ? (
           <input
             className="sheet-label-input"
             value={draftSheetLabel}
@@ -60,7 +63,12 @@ const isCurrentSheet =
       </div>
 
       <div className={`sheet-menu ${isOpen ? "show" : ""}`}>
-        <div className="rename-sheet" onClick={() => startRename()}>
+        <div className="rename-sheet" onClick={(e) => {
+          e.stopPropagation();
+          toggleSheetMenu(id);
+          startRename(sheet)
+          
+        }}>
           Rename
         </div>
         <div className="delete-sheet" onClick={() => {

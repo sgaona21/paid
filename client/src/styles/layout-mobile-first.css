@@ -380,9 +380,8 @@ body {
     align-items: center;
     width: 100%;
     background-color: var(--dark-secondary);
-    border-radius: 10px;
+    border-radius: 15px;
     position: relative;
-    
 }
 
 .current-sheet:hover {
@@ -428,6 +427,8 @@ body {
 
 .sheet-label {
     padding: .75rem;
+    white-space: nowrap;
+    overflow: auto;
 }
 
 .sheet-container:hover {
@@ -758,14 +759,8 @@ body {
         display: none;
     }
 
-    .current-sheet-desktop {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        background-color: var(--dark-secondary);
-        border-radius: 10px;
-        position: relative;
+    .current-sheet.desktop {
+        max-width: 250px;
 
     }
 

@@ -333,12 +333,11 @@ body {
     display: flex;
     gap: 1rem;
     align-items: center;
-    align-content: center;
     margin-bottom: -1rem;
     position: relative;
+    width: 100%;
+    overflow-y: visible;
 }
-
-
 
 .hamburger-sheets-container {
     display: flex;
@@ -742,9 +741,13 @@ body {
         margin-top: 5rem;
     }
 
-    .sheets-container {
+    .sheets-wrapper {
         grid-area: sheets;
-        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: -1rem;
+        gap: 1rem;
     }
 
     .remaining-expense-donut, .expendable-income-bar {
@@ -789,6 +792,7 @@ body {
         padding: 1.2rem;
         background-color: var(--dark-secondary);
         border-radius: 50%;
+        
     }
 
     .new-sheet-container:hover {
@@ -800,7 +804,42 @@ body {
         transform: translateY(-1px);
     }
 
+    .sheets-container {
+        margin-bottom: auto;
+        overflow-x: scroll;
+    }
 
+    .sheets-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sheet-scroll-buttons-container {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .scroll-left-container, .scroll-right-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--dark-secondary);
+        padding: .7rem;
+        border-radius: 25px;
+        transition: all .5s ease
+    }
+
+    .scroll-left-container:hover, .scroll-right-container:hover {
+        cursor: pointer;
+        background-color: var(--background);
+    }
+
+    .scroll-left-button {
+        transform: translateX(-1px);
+    }
+
+    .scroll-right-button {
+        transform: translateX(2px);
+    }
 
 }
 

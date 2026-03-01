@@ -11,6 +11,9 @@ import rightArrow from '../assets/right-arrow.png';
 import spinner from '../assets/spinner2.png';
 import Sheets from "./Sheets.jsx";
 import Sheet from "./Sheet.jsx";
+import { AiFillCaretLeft } from "react-icons/ai";
+import { AiFillCaretRight } from "react-icons/ai";
+
 
 
 const Expenses = () => {
@@ -26,15 +29,20 @@ const Expenses = () => {
   const [renamingSheetId, setRenamingSheetId] = useState(null);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
   });
 
+  const containerRef = useRef(null)
+
   useEffect(() => {
     updateUI();
     // updateSheets();
   }, []);
+
+  
 
   const updateUI = async () => {
     try {
@@ -324,6 +332,25 @@ function isMenuOpen() {
   }
 }
 
+function handleScroll(delta) {
+  const el = containerRef.current;
+  if (!el) return;
+
+  el.scrollBy({
+    left: delta,
+    behavior: "smooth",
+  });
+}
+
+function scrollOnePage(direction = 1) {
+  const el = containerRef.current;
+  if (!el) return;
+
+  const amount = el.clientWidth * 0.9;
+  el.scrollBy({ left: amount * direction, behavior: "smooth" });
+}
+
+
 
   if (isLoading) {
     return (
@@ -423,7 +450,8 @@ function isMenuOpen() {
         </div>
       </div>
 
-      <div className="sheets-container">
+      <div className="sheets-wrapper">   
+      <div className="sheets-container" ref={containerRef}>
         <div className="add-sheet-container">
           <div
             className="hamburger-sheets-container"
@@ -435,35 +463,6 @@ function isMenuOpen() {
             />
           </div>
         </div>
-
-        {/* <div className="current-sheet-mobile">
-          <div className="sheet-label">
-            {isRenamingSheet ? (
-              <input
-                className="sheet-label-input"
-                value={draftSheetLabel}
-                onChange={(e) => setDraftSheetLabel(e.target.value)}
-                autoFocus
-                onBlur={saveRename}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") saveRename();
-                }}
-              />
-            ) : (
-              currentSheet.label
-            )}
-          </div>
-
-          <div
-            className={`sheet-arrow-container ${sheetMenuVisible ? "rotated" : ""}`}
-            onClick={() => {
-              setSheetMenuVisible((v) => !v);
-              toggleMenuSheetBackdrop();
-            }}
-          >
-            <img src={rightArrow} alt="right arrow" />
-          </div>
-        </div> */}
 
         <Sheet
           className="mobile"
@@ -502,12 +501,33 @@ function isMenuOpen() {
           />
         ))}
 
-        <div className="new-sheet-container desktop" onClick={() => addSheet()}>
-          <div className="new-sheet">+</div>
-        </div>
+        
         
       </div>
 
+        <div className="sheet-scroll-buttons-container">
+          <div className="scroll-left-container" onClick={() => {
+            scrollOnePage(-1)
+            
+          }}>
+            <AiFillCaretLeft className="scroll-left-button"/>
+          </div>
+          <div className="scroll-right-container" onClick={() => {
+           scrollOnePage(1)
+            
+          }}>
+            <AiFillCaretRight className="scroll-right-button" />
+          </div>
+        </div>
+
+        <div className="new-sheet-container desktop" onClick={() => {
+          addSheet();
+          scrollOnePage(50)
+          }}>
+            <div className="new-sheet">+</div>
+        </div>
+
+      </div>   
       
 
 

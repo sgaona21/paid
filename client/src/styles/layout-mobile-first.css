@@ -440,7 +440,7 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.34);
-  z-index: 4;
+  z-index: 51;
 }
 
 .sheet-overlay {
@@ -744,6 +744,7 @@ body {
 
     .sheets-container {
         grid-area: sheets;
+        
     }
 
     .remaining-expense-donut, .expendable-income-bar {
@@ -778,6 +779,28 @@ body {
     .desktop {
         display: flex;
     }
+
+    .new-sheet-container {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1.2rem;
+        background-color: var(--dark-secondary);
+        border-radius: 50%;
+    }
+
+    .new-sheet-container:hover {
+        cursor: pointer;
+    }
+
+    .new-sheet {
+        font-size: 1.5rem;
+        transform: translateY(-1px);
+    }
+
+
 
 }
 

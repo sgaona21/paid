@@ -245,7 +245,7 @@ const handleNetIncomeChange = (value) => {
   // }
 
   function startRename(sheet) {
-    const id = sheet.id;
+    const id = sheet.id ?? sheet.clientId;
     setRenamingSheetId(id);
     setDraftSheetLabel(sheet.label);
   }
@@ -502,44 +502,13 @@ function isMenuOpen() {
           />
         ))}
 
+        <div className="new-sheet-container desktop" onClick={() => addSheet()}>
+          <div className="new-sheet">+</div>
+        </div>
         
-
-        {/* {userExpenseData.sheets.map((sheet) => (
-          <Sheets
-            key={sheet.id ?? sheet.clientId}
-            sheet={sheet}
-            isRenamingSheet={isRenamingSheet}
-            draftSheetLabel={draftSheetLabel}
-            setDraftSheetLabel={setDraftSheetLabel}
-            saveRename={saveRename}
-            currentSheet={currentSheet}
-            sheetMenuVisible={sheetMenuVisible}
-            setSheetMenuVisible={setSheetMenuVisible}
-            toggleMenuSheetBackdrop={toggleMenuSheetBackdrop}
-            startRename={startRename}
-            deleteSheet={deleteSheet}
-            setCurrentSheet={setCurrentSheet}
-            setSheetMenuOverlayVisible={setSheetMenuOverlayVisible}
-            sheetMenuOverlayVisible={sheetMenuOverlayVisible}
-
-          />
-        ))} */}
-
-        {/* <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
-          <div className="rename-sheet" onClick={() => startRename()}>
-            Rename
-          </div>
-          <div
-            className="delete-sheet"
-            onClick={() => {
-              deleteSheet(currentSheet.id ?? currentSheet.clientId);
-              setSheetMenuVisible((prev) => !prev);
-            }}
-          >
-            Delete
-          </div>
-        </div> */}
       </div>
+
+      
 
 
       <SheetOverlay

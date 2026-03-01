@@ -18,17 +18,21 @@ const Sheet = ({
   sheetMenuOverlayVisible,
   isArrowRotated,
   openSheetId,
-  toggleSheetMenu
-  
+  toggleSheetMenu,
+  className,  
 }) => {
 //Hooks
 
 //Helpers
 const id = sheet.id ?? sheet.clientId;
 const isOpen = openSheetId === id;
+const isCurrentSheet =
+  (sheet.id ?? sheet.clientId) === (currentSheet?.id ?? currentSheet?.clientId);
+
 
   return (
-    <div className="current-sheet">
+    <div className={`current-sheet ${isCurrentSheet ? "selected" : ""} ${className}`}
+    onClick={() => setCurrentSheet(sheet)}>
       <div className="sheet-label">
         {isRenamingSheet ? (
           <input
@@ -47,7 +51,8 @@ const isOpen = openSheetId === id;
       </div>
 
       <div className={`sheet-arrow-container ${isOpen ? "rotated" : ""}`}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         toggleSheetMenu(id)
       }
       }>

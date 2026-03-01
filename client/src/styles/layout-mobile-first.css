@@ -554,6 +554,10 @@ body {
     z-index: 4;
 }
 
+.desktop {
+    display: none;
+}
+
 
 
 
@@ -769,10 +773,16 @@ body {
         cursor: pointer;
     }
 
-    .current-sheet-desktop.selected {
+    .current-sheet.selected {
         background-color: var(--background);
     }
 
+    .mobile {
+        display: none
+    }
+    .desktop {
+        display: flex;
+    }
 
 }
 

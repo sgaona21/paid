@@ -288,6 +288,14 @@ function toggleSheetMenu(sheetId) {
   setOpenSheetId(prev => (prev === sheetId ? null : sheetId));
 }
 
+function isMenuOpen() {
+  if (openSheetId != null) {
+    return true;
+  } else if (openSheetId === null) {
+    return false
+  }
+}
+
 
   if (isLoading) {
     return (
@@ -381,7 +389,6 @@ function toggleSheetMenu(sheetId) {
               ],
               options: {
                 responsive: true,
-                // maintainAspectRatio: false,
               },
             }}
           />
@@ -430,7 +437,8 @@ function toggleSheetMenu(sheetId) {
           </div>
         </div> */}
 
-        <Sheet 
+        <Sheet
+          className="mobile"
           sheet={currentSheet}
           startRename={startRename}
           isRenamingSheet={isRenamingSheet}
@@ -440,22 +448,29 @@ function toggleSheetMenu(sheetId) {
           deleteSheet={deleteSheet}
           openSheetId={openSheetId}
           toggleSheetMenu={toggleSheetMenu}
+          setCurrentSheet={setCurrentSheet}
+          currentSheet={currentSheet}
         />
 
         {userExpenseData.sheets.map((sheet) => (
           <Sheet
+            className="desktop"
             key={sheet.id ?? sheet.clientId}
             sheet={sheet}
-          startRename={startRename}
-          isRenamingSheet={isRenamingSheet}
-          saveRename={saveRename}
-          draftSheetLabel={draftSheetLabel}
-          setDraftSheetLabel={setDraftSheetLabel}
-          deleteSheet={deleteSheet}
-          openSheetId={openSheetId}
-          toggleSheetMenu={toggleSheetMenu}
+            startRename={startRename}
+            isRenamingSheet={isRenamingSheet}
+            saveRename={saveRename}
+            draftSheetLabel={draftSheetLabel}
+            setDraftSheetLabel={setDraftSheetLabel}
+            deleteSheet={deleteSheet}
+            openSheetId={openSheetId}
+            toggleSheetMenu={toggleSheetMenu}
+            setCurrentSheet={setCurrentSheet}
+            currentSheet={currentSheet}
           />
         ))}
+
+        
 
         {/* {userExpenseData.sheets.map((sheet) => (
           <Sheets
@@ -478,8 +493,6 @@ function toggleSheetMenu(sheetId) {
           />
         ))} */}
 
-
-
         {/* <div className={`sheet-menu ${sheetMenuVisible ? "show" : ""}`}>
           <div className="rename-sheet" onClick={() => startRename()}>
             Rename
@@ -494,8 +507,8 @@ function toggleSheetMenu(sheetId) {
             Delete
           </div>
         </div> */}
-
       </div>
+
 
       <SheetOverlay
         userExpenseData={userExpenseData}
@@ -507,11 +520,9 @@ function toggleSheetMenu(sheetId) {
         addSheet={addSheet}
       />
 
-      {/* {isArrowRotated && (
-        <div className="menu-overlay" onClick={() => {
-
-            }}></div>
-      )}       */}
+      {isMenuOpen() && <div className="menu-overlay" onClick={() => {
+        setOpenSheetId(null)
+      }}></div>}
 
     </div>
   );

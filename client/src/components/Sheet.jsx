@@ -21,7 +21,8 @@ const Sheet = ({
   toggleSheetMenu,
   className,  
   renamingSheetId,
-  setRenamingSheetId
+  setRenamingSheetId,
+  isCurrent
 }) => {
 //Hooks
 

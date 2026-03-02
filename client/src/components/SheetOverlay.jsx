@@ -34,7 +34,10 @@ const SheetOverlay = ({
             {(sheet.id ?? sheet.clientId) === (currentSheet.id ?? currentSheet.clientId) && <div>✅</div>}
           </div>
         ))}
-        <button className="add-sheet" onClick={() => addSheet()}>Add Sheet</button>
+        <button className="add-sheet" onClick={() => {
+          addSheet();
+          setSheetOverlayVisible(false);
+          }}>Add Sheet</button>
       </div>
     </div>
   );

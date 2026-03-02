@@ -335,8 +335,7 @@ body {
     align-items: center;
     margin-bottom: -1rem;
     position: relative;
-    width: 100%;
-    overflow-y: visible;
+    
 }
 
 .hamburger-sheets-container {
@@ -744,7 +743,7 @@ body {
     .sheets-wrapper {
         grid-area: sheets;
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         align-items: center;
         margin-bottom: -1rem;
         gap: 1rem;
@@ -755,17 +754,16 @@ body {
         min-width: 250px;
     }
 
-    .add-sheet-container {
+    /* .add-sheet-container {
         display: none;
-    }
+    } */
 
     .current-sheet-mobile {
         display: none;
     }
 
     .current-sheet.desktop {
-        max-width: 250px;
-
+        max-width: 25%;
     }
 
     .current-sheet-desktop:hover {
@@ -784,15 +782,14 @@ body {
     }
 
     .new-sheet-container {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 1.2rem;
+        padding: 1.25rem;
         background-color: var(--dark-secondary);
-        border-radius: 50%;
-        
+        border-radius: 50%;        
     }
 
     .new-sheet-container:hover {
@@ -806,7 +803,11 @@ body {
 
     .sheets-container {
         margin-bottom: auto;
-        overflow-x: scroll;
+        width: 100vw;
+    }
+
+    .sheets-container > :nth-child(n + 15) {
+        display: none;
     }
 
     .sheets-container::-webkit-scrollbar {
@@ -839,6 +840,22 @@ body {
 
     .scroll-right-button {
         transform: translateX(2px);
+    }
+
+    .sheet-overlay {
+        height: 40vh;
+        position: fixed;
+        border-radius: 10px;
+        left: 40%;
+        right: 40%;
+        min-width: 300px;
+        bottom: 0;
+        z-index: 5;
+        background-color: var(--foreground);
+        overflow-y: scroll;
+
+        transform: translateY(100%);
+        transition: transform 1s ease;
     }
 
 }

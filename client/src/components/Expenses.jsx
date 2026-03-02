@@ -30,6 +30,7 @@ const Expenses = () => {
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -37,10 +38,32 @@ const Expenses = () => {
 
   const containerRef = useRef(null)
 
+  const VISIBLE = 6;
+
+const currentIndex = userExpenseData.sheets.findIndex(
+  (sheet) =>
+    (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
+    sheet.clientId === currentSheet.clientId,
+);
+
+  const visibleSheets = userExpenseData.sheets.slice(startIndex, startIndex + VISIBLE);
+
   useEffect(() => {
     updateUI();
     // updateSheets();
   }, []);
+
+  useEffect(() => {
+  if (currentIndex === -1) return;
+
+  if (currentIndex < startIndex) {
+    setStartIndex(currentIndex);
+  }
+
+  if (currentIndex >= startIndex + VISIBLE) {
+    setStartIndex(currentIndex - VISIBLE + 1);
+  }
+}, [currentIndex]);
 
   
 
@@ -143,6 +166,7 @@ function addSheet() {
     sheets: [...prev.sheets, newSheet],
   }));
 
+  setCurrentSheet(newSheet);
 }
 
   const addRowToDb = async (row) => {
@@ -332,23 +356,7 @@ function isMenuOpen() {
   }
 }
 
-function handleScroll(delta) {
-  const el = containerRef.current;
-  if (!el) return;
 
-  el.scrollBy({
-    left: delta,
-    behavior: "smooth",
-  });
-}
-
-function scrollOnePage(direction = 1) {
-  const el = containerRef.current;
-  if (!el) return;
-
-  const amount = el.clientWidth * 0.9;
-  el.scrollBy({ left: amount * direction, behavior: "smooth" });
-}
 
 
 
@@ -481,7 +489,7 @@ function scrollOnePage(direction = 1) {
           setRenamingSheetId={setRenamingSheetId}
         />
 
-        {userExpenseData.sheets.map((sheet) => (
+        {visibleSheets.map((sheet) => (
           <Sheet
             className="desktop"
             key={sheet.id ?? sheet.clientId}
@@ -498,6 +506,7 @@ function scrollOnePage(direction = 1) {
             currentSheet={currentSheet}
             renamingSheetId={renamingSheetId}
             setRenamingSheetId={setRenamingSheetId}
+            isCurrent={sheet.id === currentSheet.id}
           />
         ))}
 
@@ -505,7 +514,7 @@ function scrollOnePage(direction = 1) {
         
       </div>
 
-        <div className="sheet-scroll-buttons-container">
+        {/* <div className="sheet-scroll-buttons-container desktop">
           <div className="scroll-left-container" onClick={() => {
             scrollOnePage(-1)
             
@@ -518,11 +527,10 @@ function scrollOnePage(direction = 1) {
           }}>
             <AiFillCaretRight className="scroll-right-button" />
           </div>
-        </div>
+        </div> */}
 
         <div className="new-sheet-container desktop" onClick={() => {
           addSheet();
-          scrollOnePage(50)
           }}>
             <div className="new-sheet">+</div>
         </div>
@@ -544,6 +552,7 @@ function scrollOnePage(direction = 1) {
       {isMenuOpen() && <div className="menu-overlay" onClick={() => {
         setOpenSheetId(null)
       }}></div>}
+
 
     </div>
   );

@@ -9,7 +9,7 @@ module.exports = {
         'userId',
         {
           type: Sequelize.INTEGER,
-          allowNull: false,                  // set true if you already have rows; tighten later
+          allowNull: false,
           references: { model: 'Users', key: 'id' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',

@@ -3,18 +3,16 @@ import ExpenseRow from "./ExpenseRow";
 import SheetOverlay from "./SheetOverlay.jsx";
 import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
-import { Doughnut, Bar } from 'react-chartjs-2';
-import { sheets as mockSheets } from './mockData'
-import { mockExpenses as mockData } from './mockExpenses';
-import hamburger from '../assets/hamburger.png';
-import rightArrow from '../assets/right-arrow.png';
-import spinner from '../assets/spinner2.png';
+import { Doughnut, Bar } from "react-chartjs-2";
+import { sheets as mockSheets } from "./mockData";
+import { mockExpenses as mockData } from "./mockExpenses";
+import hamburger from "../assets/hamburger.png";
+import rightArrow from "../assets/right-arrow.png";
+import spinner from "../assets/spinner2.png";
 import Sheets from "./Sheets.jsx";
 import Sheet from "./Sheet.jsx";
 import { AiFillCaretLeft } from "react-icons/ai";
 import { AiFillCaretRight } from "react-icons/ai";
-
-
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -36,73 +34,56 @@ const Expenses = () => {
     expenses: [],
   });
 
-  const containerRef = useRef(null)
+  const containerRef = useRef(null);
 
   const VISIBLE = 6;
 
-const currentIndex = userExpenseData.sheets.findIndex(
-  (sheet) =>
-    (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
-    sheet.clientId === currentSheet.clientId,
-);
+  const currentIndex = userExpenseData.sheets.findIndex(
+    (sheet) =>
+      (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
+      sheet.clientId === currentSheet.clientId,
+  );
 
-  const visibleSheets = userExpenseData.sheets.slice(startIndex, startIndex + VISIBLE);
+  const visibleSheets = userExpenseData.sheets.slice(
+    startIndex,
+    startIndex + VISIBLE,
+  );
 
   useEffect(() => {
     updateUI();
   }, []);
 
   useEffect(() => {
-  if (currentIndex === -1) return;
+    if (currentIndex === -1) return;
 
-  if (currentIndex < startIndex) {
-    setStartIndex(currentIndex);
-  }
+    if (currentIndex < startIndex) {
+      setStartIndex(currentIndex);
+    }
 
-  if (currentIndex >= startIndex + VISIBLE) {
-    setStartIndex(currentIndex - VISIBLE + 1);
-  }
-}, [currentIndex]);
+    if (currentIndex >= startIndex + VISIBLE) {
+      setStartIndex(currentIndex - VISIBLE + 1);
+    }
+  }, [currentIndex]);
 
-  
+  const updateUI = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
 
-  // const updateUI = async () => {
-  //   try {
-  //     const res = await fetch(`${API_BASE}/expense`, {
-  //       credentials: "include",
-  //     });
-
-  //     if (!res.ok) {
-  //       console.warn("updateUI failed:", res.status);
-  //       return;
-  //     }
-
-  //     const data = await res.json();
-  //     setRows(data);
-  //   } catch (err) {
-  //     console.error("updateUI crashed:", err);
-  //   }
-  // };
-
-    const updateUI = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/expense`, {
-          credentials: "include",
-        });
-
-        if (!res.ok) {
-          console.warn("updateUI failed:", res.status);
-          return;
-        }
-
-        const data = await res.json();
-        console.log("UserExpenseData from API:", data);
-        setUserExpenseData(data);
-        setCurrentSheet(data.sheets?.[0] ?? null);
-      } catch (err) {
-        console.error("updateUI crashed:", err);
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
       }
-    };
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+      setCurrentSheet(data.sheets?.[0] ?? null);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
 
   // useEffect(() => {
   //   setIsLoading(true)
@@ -118,34 +99,30 @@ const currentIndex = userExpenseData.sheets.findIndex(
   //   return () => clearTimeout(timer);
   // }, []);
 
-
-
-
   // const handleRowChange = (index, field, value) => {
   //   const updated = [...rows];
   //   updated[index][field] = value;
   //   setRows(updated);
   // };
 
-//   const handleRowChange = (rowKey, field, value) => {
-//   setUserExpenseData((prev) => ({
-//     ...prev,
-//     expenses: prev.expenses.map((e) => {
-//       const key = e.clientId ?? e.id;
-//       return key === rowKey ? { ...e, [field]: value } : e;
-//     }),
-//   }));
-// };
+  //   const handleRowChange = (rowKey, field, value) => {
+  //   setUserExpenseData((prev) => ({
+  //     ...prev,
+  //     expenses: prev.expenses.map((e) => {
+  //       const key = e.clientId ?? e.id;
+  //       return key === rowKey ? { ...e, [field]: value } : e;
+  //     }),
+  //   }));
+  // };
 
-function handleRowChange(rowId, field, value) {
-  setUserExpenseData(prev => ({
-    ...prev,
-    expenses: prev.expenses.map(e =>
-      (e.id ?? e.clientId) === rowId ? { ...e, [field]: value } : e
-    )
-  }));
-}
-
+  function handleRowChange(rowId, field, value) {
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: prev.expenses.map((e) =>
+        (e.id ?? e.clientId) === rowId ? { ...e, [field]: value } : e,
+      ),
+    }));
+  }
 
   // const addRow = () => {
   //   const newRow = {
@@ -160,36 +137,94 @@ function handleRowChange(rowId, field, value) {
   //   addRowToDb(newRow);
   // };
 
-function addRow(newRow) {
-  const rowWithSheet = {
-    ...newRow,
-    id: null,
-    sheetId: currentSheet.id,
-    clientId: crypto.randomUUID(),
-    userId: context?.currentUser?.id
-  };
+  function addRow(newRow) {
+    const rowWithSheet = {
+      ...newRow,
+      id: null,
+      sheetId: currentSheet.id,
+      clientId: crypto.randomUUID(),
+      userId: context?.currentUser?.id,
+    };
 
-  setUserExpenseData((prev) => ({
-    ...prev,
-    expenses: [...prev.expenses, rowWithSheet],
-  }));
-}
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: [...prev.expenses, rowWithSheet],
+    }));
+  }
 
-function addSheet() {
-  const newSheet = {
+  // function addSheet() {
+  //   const newSheet = {
+  //     id: null,
+  //     clientId: crypto.randomUUID(),
+  //     label: "New Sheet",
+  //     netIncome: null,
+  //   };
+
+  //   setUserExpenseData((prev) => ({
+  //     ...prev,
+  //     sheets: [...prev.sheets, newSheet],
+  //   }));
+
+  //   setCurrentSheet(newSheet);
+  // }
+
+  async function addSheet() {
+  const temp = {
     id: null,
     clientId: crypto.randomUUID(),
     label: "New Sheet",
-    netIncome: null
+    netIncome: null,
+    userId: context?.currentUser?.id,
   };
 
-  setUserExpenseData((prev) => ({
+  setUserExpenseData(prev => ({
     ...prev,
-    sheets: [...prev.sheets, newSheet],
+    sheets: [...prev.sheets, temp],
   }));
 
-  setCurrentSheet(newSheet);
+  setCurrentSheet(temp);
+
+  try {
+    const res = await fetch(`${API_BASE}/sheet/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        clientId: temp.clientId,
+        label: temp.label,
+        netIncome: temp.netIncome,
+        userId: temp.userId
+      }),
+    });
+
+    if (!res.ok) throw new Error(`create sheet failed: ${res.status}`);
+
+    const created = await res.json();
+    console.log(created)
+
+    setUserExpenseData(prev => ({
+      ...prev,
+      sheets: prev.sheets.map(s =>
+        s.id === created.id ? created : s
+      ),
+    }));
+
+    setCurrentSheet(created);
+  } catch (err) {
+    console.error(err);
+
+    setUserExpenseData(prev => ({
+      ...prev,
+      sheets: prev.sheets.filter(s => s.clientId !== temp.clientId),
+    }));
+
+  }
 }
+
+
+
+
+
 
   const addRowToDb = async (row) => {
     await fetch(`${API_BASE}/expense/add`, {
@@ -233,16 +268,16 @@ function addSheet() {
     }));
   }
 
-const handleNetIncomeChange = (value) => {
-  setCurrentSheet((prev) => ({ ...prev, netIncome: value }));
+  const handleNetIncomeChange = (value) => {
+    setCurrentSheet((prev) => ({ ...prev, netIncome: value }));
 
-  setUserExpenseData((prev) => ({
-    ...prev,
-    sheets: prev.sheets.map((sheet) =>
-      sheet.id === currentSheet.id ? { ...sheet, netIncome: value } : sheet
-    ),
-  }));
-};
+    setUserExpenseData((prev) => ({
+      ...prev,
+      sheets: prev.sheets.map((sheet) =>
+        sheet.id === currentSheet.id ? { ...sheet, netIncome: value } : sheet,
+      ),
+    }));
+  };
 
   async function deleteRowFromDb(rowId) {
     try {
@@ -264,12 +299,12 @@ const handleNetIncomeChange = (value) => {
   }
 
   function toggleSheetOverlay() {
-      setSheetOverlayVisible(prev => !prev);
-    }
+    setSheetOverlayVisible((prev) => !prev);
+  }
 
   function toggleMenuSheetBackdrop() {
-    setSheetMenuOverlayVisible(prev => !prev);
-  }  
+    setSheetMenuOverlayVisible((prev) => !prev);
+  }
 
   const total = userExpenseData.expenses
     .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
@@ -282,16 +317,14 @@ const handleNetIncomeChange = (value) => {
   //   return sum + (isNaN(amount) ? 0 : amount);
   // }, 0);
 
-    const totalPaid = userExpenseData.expenses
-      .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
-      .reduce((sum, row) => {
+  const totalPaid = userExpenseData.expenses
+    .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
+    .reduce((sum, row) => {
       if (!row.isPaid) return sum;
 
       const amount = parseFloat(row.amount);
       return sum + (isNaN(amount) ? 0 : amount);
     }, 0);
-
-
 
   // function startRename() {
   //   setIsRenamingSheet(true);
@@ -304,88 +337,90 @@ const handleNetIncomeChange = (value) => {
     setDraftSheetLabel(sheet.label);
   }
 
+  // function saveRename() {
+  //   const next = draftSheetLabel.trim();
+  //   if (!next) return;
 
-// function saveRename() {
-//   const next = draftSheetLabel.trim();
-//   if (!next) return;
+  //   const currentKey = currentSheet.id ?? currentSheet.clientId;
 
-//   const currentKey = currentSheet.id ?? currentSheet.clientId;
+  //   setCurrentSheet((prev) => ({ ...prev, label: next }));
 
-//   setCurrentSheet((prev) => ({ ...prev, label: next }));
+  //   setUserExpenseData((prev) => ({
+  //     ...prev,
+  //     sheets: prev.sheets.map((s) => {
+  //       const sheetKey = s.id ?? s.clientId;
+  //       return sheetKey === currentKey ? { ...s, label: next } : s;
+  //     }),
+  //   }));
 
-//   setUserExpenseData((prev) => ({
-//     ...prev,
-//     sheets: prev.sheets.map((s) => {
-//       const sheetKey = s.id ?? s.clientId;
-//       return sheetKey === currentKey ? { ...s, label: next } : s;
-//     }),
-//   }));
+  //   setIsRenamingSheet(false);
+  // }
 
-//   setIsRenamingSheet(false);
-// }
+  function saveRename() {
+    if (!renamingSheetId) return;
 
-function saveRename() {
-  if (!renamingSheetId) return;
+    const next = draftSheetLabel.trim();
+    if (!next) return;
 
-  const next = draftSheetLabel.trim();
-  if (!next) return;
+    // const currentKey = currentSheet.id ?? currentSheet.clientId;
+    const currentKey = renamingSheetId;
 
-  // const currentKey = currentSheet.id ?? currentSheet.clientId;
-  const currentKey = renamingSheetId;
+    // setCurrentSheet((prev) => ({ ...prev, label: next }));
 
-  // setCurrentSheet((prev) => ({ ...prev, label: next }));
-
-  setUserExpenseData((prev) => ({
-    ...prev,
-    sheets: prev.sheets.map((s) => {
-      const sheetKey = s.id ?? s.clientId;
-      return sheetKey === currentKey ? { ...s, label: next } : s;
-    }),
-  }));
-
-  setRenamingSheetId(null);
-}
-
-
-function deleteSheet(sheetIdToDelete) {
-  if (userExpenseData.sheets.length <= 1) return;
-  setUserExpenseData((prev) => {
-    const remainingSheets = prev.sheets.filter((s) => (s.id ?? s.clientId) !== sheetIdToDelete);
-    const remainingExpenses = prev.expenses.filter((e) => (e.id ?? e.clientId) !== sheetIdToDelete);
-
-    if ((currentSheet?.id ?? currentSheet?.clientId) === sheetIdToDelete) {
-      const nextSheet = remainingSheets[0] ?? null;
-      setCurrentSheet(nextSheet);
-    }
-    
-    return {
+    setUserExpenseData((prev) => ({
       ...prev,
-      sheets: remainingSheets,
-      expenses: remainingExpenses,
-    };
-  });
-}
+      sheets: prev.sheets.map((s) => {
+        const sheetKey = s.id ?? s.clientId;
+        return sheetKey === currentKey ? { ...s, label: next } : s;
+      }),
+    }));
 
-function toggleSheetMenu(sheetId) {
-  setOpenSheetId(prev => (prev === sheetId ? null : sheetId));
-}
-
-function isMenuOpen() {
-  if (openSheetId != null) {
-    return true;
-  } else if (openSheetId === null) {
-    return false
+    setRenamingSheetId(null);
   }
-}
 
-const netIncomeNum = Number(currentSheet.netIncome ?? 0);
+  function deleteSheet(sheetIdToDelete) {
+    if (userExpenseData.sheets.length <= 1) return;
+    setUserExpenseData((prev) => {
+      const remainingSheets = prev.sheets.filter(
+        (s) => (s.id ?? s.clientId) !== sheetIdToDelete,
+      );
+      const remainingExpenses = prev.expenses.filter(
+        (e) => (e.id ?? e.clientId) !== sheetIdToDelete,
+      );
 
+      if ((currentSheet?.id ?? currentSheet?.clientId) === sheetIdToDelete) {
+        const nextSheet = remainingSheets[0] ?? null;
+        setCurrentSheet(nextSheet);
+      }
 
+      return {
+        ...prev,
+        sheets: remainingSheets,
+        expenses: remainingExpenses,
+      };
+    });
+  }
+
+  function toggleSheetMenu(sheetId) {
+    setOpenSheetId((prev) => (prev === sheetId ? null : sheetId));
+  }
+
+  function isMenuOpen() {
+    if (openSheetId != null) {
+      return true;
+    } else if (openSheetId === null) {
+      return false;
+    }
+  }
+
+  const netIncomeNum = Number(currentSheet.netIncome ?? 0);
 
   if (isLoading) {
     return (
-      <div className="spinner"><img src={spinner} alt="loading spinner" /></div>
-    )
+      <div className="spinner">
+        <img src={spinner} alt="loading spinner" />
+      </div>
+    );
   }
 
   return (
@@ -458,9 +493,7 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
 
       <div className="monthly-expendable-container">
         <div className="monthly-total-label">Expendable Income</div>
-        <div className="monthly-total-amount">
-          {netIncomeNum - total}
-        </div>
+        <div className="monthly-total-amount">{netIncomeNum - total}</div>
         <div className="expendable-income-bar">
           <Bar
             data={{
@@ -480,42 +513,24 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
         </div>
       </div>
 
-      <div className="sheets-wrapper">   
-      <div className="sheets-container" ref={containerRef}>
-        <div className="add-sheet-container">
-          <div
-            className="hamburger-sheets-container"
-            onClick={toggleSheetOverlay}
-          >
-            <img
-              src={hamburger}
-              alt="hamburger menu for mobile sheet options"
-            />
+      <div className="sheets-wrapper">
+        <div className="sheets-container" ref={containerRef}>
+          <div className="add-sheet-container">
+            <div
+              className="hamburger-sheets-container"
+              onClick={toggleSheetOverlay}
+            >
+              <img
+                src={hamburger}
+                alt="hamburger menu for mobile sheet options"
+              />
+            </div>
           </div>
-        </div>
 
-        <Sheet
-          className="mobile"
-          sheet={currentSheet}
-          startRename={startRename}
-          isRenamingSheet={isRenamingSheet}
-          saveRename={saveRename}
-          draftSheetLabel={draftSheetLabel}
-          setDraftSheetLabel={setDraftSheetLabel}
-          deleteSheet={deleteSheet}
-          openSheetId={openSheetId}
-          toggleSheetMenu={toggleSheetMenu}
-          setCurrentSheet={setCurrentSheet}
-          currentSheet={currentSheet}
-          renamingSheetId={renamingSheetId}
-          setRenamingSheetId={setRenamingSheetId}
-        />
-
-        {visibleSheets.map((sheet) => (
           <Sheet
-            className="desktop"
-            key={sheet.id ?? sheet.clientId}
-            sheet={sheet}
+            className="mobile"
+            key={currentSheet.id}
+            sheet={currentSheet}
             startRename={startRename}
             isRenamingSheet={isRenamingSheet}
             saveRename={saveRename}
@@ -528,13 +543,29 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
             currentSheet={currentSheet}
             renamingSheetId={renamingSheetId}
             setRenamingSheetId={setRenamingSheetId}
-            isCurrent={sheet.id === currentSheet.id}
           />
-        ))}
 
-        
-        
-      </div>
+          {visibleSheets.map((sheet) => (
+            <Sheet
+              className="desktop"
+              key={sheet.id ?? sheet.clientId}
+              sheet={sheet}
+              startRename={startRename}
+              isRenamingSheet={isRenamingSheet}
+              saveRename={saveRename}
+              draftSheetLabel={draftSheetLabel}
+              setDraftSheetLabel={setDraftSheetLabel}
+              deleteSheet={deleteSheet}
+              openSheetId={openSheetId}
+              toggleSheetMenu={toggleSheetMenu}
+              setCurrentSheet={setCurrentSheet}
+              currentSheet={currentSheet}
+              renamingSheetId={renamingSheetId}
+              setRenamingSheetId={setRenamingSheetId}
+              isCurrent={sheet.id === currentSheet.id}
+            />
+          ))}
+        </div>
 
         {/* <div className="sheet-scroll-buttons-container desktop">
           <div className="scroll-left-container" onClick={() => {
@@ -551,15 +582,15 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
           </div>
         </div> */}
 
-        <div className="new-sheet-container desktop" onClick={() => {
-          addSheet();
-          }}>
-            <div className="new-sheet">+</div>
+        <div
+          className="new-sheet-container desktop"
+          onClick={() => {
+            addSheet();
+          }}
+        >
+          <div className="new-sheet">+</div>
         </div>
-
-      </div>   
-      
-
+      </div>
 
       <SheetOverlay
         userExpenseData={userExpenseData}
@@ -571,11 +602,14 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
         addSheet={addSheet}
       />
 
-      {isMenuOpen() && <div className="menu-overlay" onClick={() => {
-        setOpenSheetId(null)
-      }}></div>}
-
-
+      {isMenuOpen() && (
+        <div
+          className="menu-overlay"
+          onClick={() => {
+            setOpenSheetId(null);
+          }}
+        ></div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ const express = require('express');
 const { asyncHandler } = require('../middleware/async-handler');
 const { authJwt } = require('../middleware/auth-jwt');
 const { User } = require('../models');
-const { Expense, sequelize } = require('../models');
+const { Expense, Sheet, sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -43,31 +43,42 @@ router.post("/auth", asyncHandler(async (req, res) => {
   })
 );
 
+
 // SIGNUP
-// Creates new user and creates 10 starter expense rows in the db
+// Creates new user, creates a sheet, and creates 15 starter expenses
 router.post('/signup', asyncHandler(async (req, res) => {
   try {
     const userData = { ...req.body };
     console.log(userData)
+
     if (userData.password) {
       userData.passwordHash = await bcrypt.hash(userData.password, 10);
       delete userData.password;
     }
 
     await sequelize.transaction(async (t) => {
+
       const createdUser = await User.create(userData, { transaction: t });
 
-      const starters = Array.from({ length: 10 }, () => ({
+      const createdSheet = await Sheet.create({
+        userId: createdUser.id,
+        label: "New Sheet",
+        netIncome: null
+      }, { transaction: t });
+
+      const starters = Array.from({ length: 15 }, () => ({
         name: "",
         amount: null,
         isPaid: false,
-        userId: createdUser.id
+        sheetId: createdSheet.id
       }));
 
       await Expense.bulkCreate(starters, { transaction: t });
+
     });
 
     res.status(201).end();
+
   } catch (error) {
     if (
       error.name === 'SequelizeValidationError' ||

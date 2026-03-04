@@ -3,24 +3,50 @@ const { asyncHandler } = require('../middleware/async-handler');
 const { authJwt } = require('../middleware/auth-jwt');
 const { Expense } = require('../models');
 const { User } = require('../models');
+const { Sheet } = require('../models');
 const router = express.Router();
 
 
 //GET EXPENSES 
-router.get('/', authJwt, asyncHandler(async (req, res) => {
-  const userId = req.currentUser.id;
-  console.log("THE USER ID", userId)
+// router.get('/', authJwt, asyncHandler(async (req, res) => {
+//   const userId = req.currentUser.id;
+//   console.log("THE USER ID", userId)
 
-    const expenses = await Expense.findAll({
-      where: { userId },
-      attributes: ['id', 'name', 'amount', 'isPaid', 'userId'],
-      include: [{
-        model: User,
-        attributes: ['id', 'firstName', 'lastName', 'email']
-      }]
-    })
-    res.status(200).json(expenses);
+//     const expenses = await Expense.findAll({
+//       where: { userId },
+//       attributes: ['id', 'name', 'amount', 'isPaid', 'userId'],
+//       include: [{
+//         model: User,
+//         attributes: ['id', 'firstName', 'lastName', 'email']
+//       }]
+//     })
+//     res.status(200).json(expenses);
+// }));
+
+// GET EXPENSES 
+router.get("/", authJwt, asyncHandler(async (req, res) => {
+  const userId = req.currentUser.id;
+
+  const sheets = await Sheet.findAll({
+    where: { userId },
+    attributes: ["id", "label", "netIncome"],
+    order: [["id", "ASC"]],
+  });
+
+  const sheetIds = sheets.map(s => s.id);
+
+  const expenses = sheetIds.length
+    ? await Expense.findAll({
+        where: { sheetId: sheetIds }, 
+        attributes: ["id", "name", "amount", "isPaid", "sheetId"],
+        order: [["id", "ASC"]],
+      })
+    : [];
+
+  res.status(200).json({ sheets, expenses });
 }));
+
+
 
 // ADD 
 // Adds new expense row to db

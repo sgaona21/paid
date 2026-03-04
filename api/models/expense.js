@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Expense extends Model {
     /**
@@ -14,17 +12,24 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Sheet, { foreignKey: "sheetId", as: "sheet" });
     }
   }
-  Expense.init({
-    name: DataTypes.STRING,
-    amount: DataTypes.DECIMAL(10, 2),
-    isPaid: DataTypes.BOOLEAN,
-    sheetId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    }
-  }, {
-    sequelize,
-    modelName: 'Expense',
-  });
+  Expense.init(
+    {
+      name: DataTypes.STRING,
+      amount: DataTypes.DECIMAL(10, 2),
+      isPaid: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      sheetId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Expense",
+    },
+  );
   return Expense;
 };

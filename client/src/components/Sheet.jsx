@@ -46,7 +46,9 @@ const isRenamingThisSheet = renamingSheetId === id;
             autoFocus
             onBlur={saveRename}
             onKeyDown={(e) => {
-              if (e.key === "Enter") saveRename();
+              if (e.key === "Enter") {
+                saveRename();
+              }
             }}
           />
         ) : (

@@ -50,7 +50,6 @@ const currentIndex = userExpenseData.sheets.findIndex(
 
   useEffect(() => {
     updateUI();
-    // updateSheets();
   }, []);
 
   useEffect(() => {
@@ -67,37 +66,60 @@ const currentIndex = userExpenseData.sheets.findIndex(
 
   
 
-  const updateUI = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/expense`, {
-        credentials: "include",
-      });
+  // const updateUI = async () => {
+  //   try {
+  //     const res = await fetch(`${API_BASE}/expense`, {
+  //       credentials: "include",
+  //     });
 
-      if (!res.ok) {
-        console.warn("updateUI failed:", res.status);
-        return;
+  //     if (!res.ok) {
+  //       console.warn("updateUI failed:", res.status);
+  //       return;
+  //     }
+
+  //     const data = await res.json();
+  //     setRows(data);
+  //   } catch (err) {
+  //     console.error("updateUI crashed:", err);
+  //   }
+  // };
+
+    const updateUI = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/expense`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          console.warn("updateUI failed:", res.status);
+          return;
+        }
+
+        const data = await res.json();
+        console.log("UserExpenseData from API:", data);
+        setUserExpenseData(data);
+        setCurrentSheet(data.sheets?.[0] ?? null);
+      } catch (err) {
+        console.error("updateUI crashed:", err);
       }
+    };
 
-      const data = await res.json();
-      setRows(data);
-    } catch (err) {
-      console.error("updateUI crashed:", err);
-    }
-  };
+  // useEffect(() => {
+  //   setIsLoading(true)
+  //   const timer = setTimeout(() => {
+  //     setUserExpenseData(mockData);
 
-  useEffect(() => {
-    setIsLoading(true)
-    const timer = setTimeout(() => {
-      setUserExpenseData(mockData);
+  //     if (!currentSheet && mockData?.sheets?.length) {
+  //       setCurrentSheet(mockData.sheets[0]);
+  //     }
+  //     setIsLoading(false)
+  //   }, 2000);
 
-      if (!currentSheet && mockData?.sheets?.length) {
-        setCurrentSheet(mockData.sheets[0]);
-      }
-      setIsLoading(false)
-    }, 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-    return () => clearTimeout(timer);
-  }, []);
+
+
 
   // const handleRowChange = (index, field, value) => {
   //   const updated = [...rows];
@@ -356,7 +378,7 @@ function isMenuOpen() {
   }
 }
 
-
+const netIncomeNum = Number(currentSheet.netIncome ?? 0);
 
 
 
@@ -437,7 +459,7 @@ function isMenuOpen() {
       <div className="monthly-expendable-container">
         <div className="monthly-total-label">Expendable Income</div>
         <div className="monthly-total-amount">
-          {currentSheet.netIncome - total}
+          {netIncomeNum - total}
         </div>
         <div className="expendable-income-bar">
           <Bar

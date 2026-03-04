@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Sheet extends Model {
     /**
@@ -15,13 +13,23 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Expense, { foreignKey: "sheetId", as: "expenses" });
     }
   }
-  Sheet.init({
-    label: DataTypes.STRING,
-    netIncome: DataTypes.DECIMAL(10, 2),
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Sheet',
-  });
+  Sheet.init(
+    {
+      label: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "New Sheet",
+      },
+      netIncome: DataTypes.DECIMAL(10, 2),
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Sheet",
+    },
+  );
   return Sheet;
 };

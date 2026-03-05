@@ -169,62 +169,62 @@ const Expenses = () => {
   // }
 
   async function addSheet() {
-  const temp = {
-    id: null,
-    clientId: crypto.randomUUID(),
-    label: "New Sheet",
-    netIncome: null,
-    userId: context?.currentUser?.id,
-  };
+    const temp = {
+      id: null,
+      clientId: crypto.randomUUID(),
+      label: "New Sheet",
+      netIncome: null,
+      userId: context?.currentUser?.id,
+    };
 
-  setUserExpenseData(prev => ({
-    ...prev,
-    sheets: [...prev.sheets, temp],
-  }));
-
-  setCurrentSheet(temp);
-
-  try {
-    const res = await fetch(`${API_BASE}/sheet/add`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        clientId: temp.clientId,
-        label: temp.label,
-        netIncome: temp.netIncome,
-        userId: temp.userId
-      }),
-    });
-
-    if (!res.ok) throw new Error(`create sheet failed: ${res.status}`);
-
-    const created = await res.json();
-    console.log(created)
-
-    setUserExpenseData(prev => ({
-      ...prev,
-      sheets: prev.sheets.map(s =>
-        s.id === created.id ? created : s
-      ),
+    const starters = Array.from({ length: 15 }, () => ({
+      clientId: crypto.randomUUID(),
+      name: "",
+      amount: null,
+      isPaid: false,
+      sheetId: temp.id,
     }));
 
-    setCurrentSheet(created);
-  } catch (err) {
-    console.error(err);
-
-    setUserExpenseData(prev => ({
+    setUserExpenseData((prev) => ({
       ...prev,
-      sheets: prev.sheets.filter(s => s.clientId !== temp.clientId),
+      sheets: [...prev.sheets, temp],
+      expenses: [...prev.expenses, ...starters]
     }));
 
+    setCurrentSheet(temp);
+
+    try {
+      const res = await fetch(`${API_BASE}/sheet/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sheets: temp,
+          expenses: [starters]
+        }),
+      });
+
+      if (!res.ok) throw new Error(`create sheet failed: ${res.status}`);
+      const created = await res.json();
+
+      setUserExpenseData((prev) => ({
+        ...prev,
+        sheets: prev.sheets.map((s) => (s.id === created.id ? created : s)),
+      }));
+
+      updateUI();
+
+      
+      
+    } catch (err) {
+      console.error(err);
+
+      setUserExpenseData((prev) => ({
+        ...prev,
+        sheets: prev.sheets.filter((s) => s.clientId !== temp.clientId),
+      }));
+    }
   }
-}
-
-
-
-
-
 
   const addRowToDb = async (row) => {
     await fetch(`${API_BASE}/expense/add`, {

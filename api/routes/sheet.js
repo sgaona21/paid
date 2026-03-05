@@ -11,19 +11,17 @@ const router = express.Router();
 // Add new sheet to db with 15 starter expenses
 router.post('/add', asyncHandler(async (req, res) => {
   try {
-    const sheetData = { ...req.body };
-    console.log(sheetData)
+    const newSheet = { ...req.body.sheets };
+    const newRows = { ...req.body.expenses };
 
     let returnedSheet = null
     await sequelize.transaction(async (t) => {
       const createdSheet = await Sheet.create({
-        userId: sheetData.userId,
+        userId: newSheet.userId,
         label: "New Sheet",
         netIncome: null
       }, { transaction: t });
 
-      console.log(createdSheet)
-      returnedSheet = createdSheet;
 
       const starters = Array.from({ length: 15 }, () => ({
         name: "",
@@ -32,7 +30,12 @@ router.post('/add', asyncHandler(async (req, res) => {
         sheetId: createdSheet.id
       }));
 
-      await Expense.bulkCreate(starters, { transaction: t });
+
+      newRows[0].forEach(exp => {
+        exp.sheetId = createdSheet.id;
+      })
+
+      await Expense.bulkCreate(newRows[0], { transaction: t });
 
     });
 

@@ -85,6 +85,26 @@ const Expenses = () => {
     }
   };
 
+  const updateUIAfterNewSheetAdd = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+      setCurrentSheet(data.sheets.at(-1));
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
+
   // useEffect(() => {
   //   setIsLoading(true)
   //   const timer = setTimeout(() => {
@@ -212,9 +232,8 @@ const Expenses = () => {
         sheets: prev.sheets.map((s) => (s.id === created.id ? created : s)),
       }));
 
-      updateUI();
+      updateUIAfterNewSheetAdd();
 
-      
       
     } catch (err) {
       console.error(err);

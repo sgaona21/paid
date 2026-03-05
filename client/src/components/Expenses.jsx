@@ -65,7 +65,7 @@ const Expenses = () => {
     }
   }, [currentIndex]);
 
-  const updateUI = async (selectedSheet) => {
+  const updateUI = async () => {
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",
@@ -79,7 +79,7 @@ const Expenses = () => {
       const data = await res.json();
       console.log("UserExpenseData from API:", data);
       setUserExpenseData(data);
-      setCurrentSheet(selectedSheet);
+      // setCurrentSheet(selectedSheet);
     } catch (err) {
       console.error("updateUI crashed:", err);
     }
@@ -338,7 +338,7 @@ const Expenses = () => {
       return;
     }
 
-    updateUI(currentSheet);
+    updateUI();
 
   }
 
@@ -492,7 +492,7 @@ const Expenses = () => {
         return;
       }
 
-      // updateUI();
+      updateUI();
   }
 
   function toggleSheetMenu(sheetId) {

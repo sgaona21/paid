@@ -59,7 +59,8 @@ const isRenamingThisSheet = renamingSheetId === id;
       <div className={`sheet-arrow-container ${isOpen ? "rotated" : ""}`}
       onClick={(e) => {
         e.stopPropagation();
-        toggleSheetMenu(id)
+        toggleSheetMenu(id);
+        setCurrentSheet(sheet);
       }
       }>
         <img src={rightArrow} alt="right arrow" />

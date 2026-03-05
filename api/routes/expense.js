@@ -77,7 +77,7 @@ router.put("/:id", authJwt, asyncHandler(async (req, res) => {
       amount: req.body.amount,
       isPaid: req.body.isPaid,
     },
-    { where: { id, userId } }
+    { where: { id } }
   );
 
   if (updatedCount === 0) return res.status(404).json({ message: "Not found" });
@@ -91,6 +91,7 @@ router.put("/:id", authJwt, asyncHandler(async (req, res) => {
 // Deletes expense row from db
 router.delete('/:id', asyncHandler(async (req, res) => {
   const { id } = req.params;
+  console.log("YEETING EXPENSE ID:", id);
 
   await Expense.destroy({ where: { id } });
 

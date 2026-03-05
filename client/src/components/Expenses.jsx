@@ -164,49 +164,35 @@ const Expenses = () => {
     }));
   }
 
-  // const addRow = () => {
-  //   const newRow = {
-  //     clientId: crypto.randomUUID(),
-  //     id: null,
-  //     name: "",
-  //     amount: null,
-  //     isPaid: false,
-  //     userId: context?.currentUser?.id,
-  //   };
-  //   setRows((prevRows) => [...prevRows, newRow]);
-  //   addRowToDb(newRow);
-  // };
 
-  function addRow(newRow) {
-    const rowWithSheet = {
-      ...newRow,
-      id: null,
-      sheetId: currentSheet.id,
+  async function addRow() {
+    const newRow = {
       clientId: crypto.randomUUID(),
-      userId: context?.currentUser?.id,
+      name: "",
+      amount: null,
+      isPaid: false,
+      sheetId: currentSheet.id
     };
 
     setUserExpenseData((prev) => ({
       ...prev,
-      expenses: [...prev.expenses, rowWithSheet],
+      expenses: [...prev.expenses, newRow],
     }));
+
+    const res = await fetch(`${API_BASE}/expense/add`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newRow),
+    });
+
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
+    }
+
+    updateUI()
   }
-
-  // function addSheet() {
-  //   const newSheet = {
-  //     id: null,
-  //     clientId: crypto.randomUUID(),
-  //     label: "New Sheet",
-  //     netIncome: null,
-  //   };
-
-  //   setUserExpenseData((prev) => ({
-  //     ...prev,
-  //     sheets: [...prev.sheets, newSheet],
-  //   }));
-
-  //   setCurrentSheet(newSheet);
-  // }
 
   async function addSheet() {
     const temp = {
@@ -265,15 +251,6 @@ const Expenses = () => {
     }
   }
 
-  const addRowToDb = async (row) => {
-    await fetch(`${API_BASE}/expense/add`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(row),
-    });
-    updateUI();
-  };
 
   async function saveRowToDb(row) {
     const res = await fetch(`${API_BASE}/expense/${row.id}`, {
@@ -295,16 +272,24 @@ const Expenses = () => {
     updateUI();
   }
 
-  // const deleteRow = (idToDelete) => {
-  //   setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
-  //   deleteRowFromDb(idToDelete);
-  // };
 
-  function deleteRow(rowId) {
+  async function deleteRow(rowId) {
     setUserExpenseData((prev) => ({
       ...prev,
       expenses: prev.expenses.filter((e) => (e.id ?? e.clientId) !== rowId),
     }));
+
+    const res = await fetch(`${API_BASE}/expense/${rowId}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        console.warn("Delete failed:", res.status);
+        return;
+      }
+      updateUI();
   }
 
   const handleNetIncomeChange = (value) => {
@@ -342,25 +327,6 @@ const Expenses = () => {
 
   }
 
-
-  async function deleteRowFromDb(rowId) {
-    try {
-      const res = await fetch(`${API_BASE}/expense/${rowId}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!res.ok) {
-        console.warn("Delete failed:", res.status);
-        return;
-      }
-
-      updateUI();
-    } catch (err) {
-      console.error("deleteRowFromDb crashed:", err);
-    }
-  }
 
   function toggleSheetOverlay() {
     setSheetOverlayVisible((prev) => !prev);

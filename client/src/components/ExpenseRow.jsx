@@ -35,7 +35,7 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           }}
           onBlur={() => saveRow(row)}
         ></input>
-        <div className="delete-row" onClick={deleteRow}>
+        <div className="delete-row" onClick={() => deleteRow(row.id)}>
           ❌
         </div>
       </div>

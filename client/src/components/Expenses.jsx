@@ -50,7 +50,7 @@ const Expenses = () => {
   );
 
   useEffect(() => {
-    updateUI();
+    initialUIUpdate();
   }, []);
 
   useEffect(() => {
@@ -65,7 +65,27 @@ const Expenses = () => {
     }
   }, [currentIndex]);
 
-  const updateUI = async () => {
+  const updateUI = async (selectedSheet) => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+      setCurrentSheet(selectedSheet);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
+
+    const initialUIUpdate = async () => {
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",
@@ -298,6 +318,31 @@ const Expenses = () => {
     }));
   };
 
+
+  async function saveNetIncomeToDb() {
+    const newNetIncome = currentSheet.netIncome;
+    const restoredSheet = currentSheet;
+
+    const res = await fetch(`${API_BASE}/sheet/net-income`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        netIncome: newNetIncome,
+        sheetId: currentSheet.id,
+      }),
+    });
+
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
+    }
+
+    updateUI(currentSheet);
+
+  }
+
+
   async function deleteRowFromDb(rowId) {
     try {
       const res = await fetch(`${API_BASE}/expense/${rowId}`, {
@@ -375,7 +420,7 @@ const Expenses = () => {
   //   setIsRenamingSheet(false);
   // }
 
-  function saveRename() {
+  async function saveRename() {
     if (!renamingSheetId) return;
 
     const next = draftSheetLabel.trim();
@@ -394,7 +439,24 @@ const Expenses = () => {
       }),
     }));
 
+
+    const res = await fetch(`${API_BASE}/sheet/label`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        updatedLabel: next,
+        sheetId: renamingSheetId
+      }),
+    });
+
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
+    }
+
     setRenamingSheetId(null);
+    updateUI();
   }
 
   function deleteSheet(sheetIdToDelete) {
@@ -479,7 +541,12 @@ const Expenses = () => {
             name="net-total"
             value={currentSheet.netIncome ?? ""}
             onChange={(e) => handleNetIncomeChange(e.target.value)}
-            // onBlur={}
+            onBlur={saveNetIncomeToDb}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                saveNetIncomeToDb();
+              }
+            }}
           ></input>
         </div>
       </div>

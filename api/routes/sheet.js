@@ -4,6 +4,7 @@ const { authJwt } = require('../middleware/auth-jwt');
 const { Expense } = require('../models');
 const { sequelize } = require('../models');
 const { Sheet } = require('../models');
+const { where } = require('sequelize');
 const router = express.Router();
 
 
@@ -55,6 +56,41 @@ router.post('/add', asyncHandler(async (req, res) => {
 }));
 
 // UPDATE
+// Update sheet label
+router.put("/label", authJwt, asyncHandler(async (req, res) => {
+  const updatedLabel = req.body.updatedLabel;
+  const sheetId = req.body.sheetId;
+
+  await Sheet.update(
+    {label: updatedLabel},
+    {
+      where: {id: sheetId}
+    }
+  );
+
+  // if (updatedCount === 0) return res.status(404).json({ message: "Not found" });
+
+  res.status(204).end();
+}));
+
+// update net income value
+router.put("/net-income", authJwt, asyncHandler(async (req, res) => {
+  const newNetIncomeValue = req.body.netIncome;
+  console.log("INCOMING NET INCOME:", newNetIncomeValue);
+  const sheetId = req.body.sheetId;
+  console.log("INCOMING SHEET ID:", sheetId);
+
+  await Sheet.update(
+    {netIncome: newNetIncomeValue},
+    {
+      where: {id: sheetId}
+    }
+  );
+
+  // if (updatedCount === 0) return res.status(404).json({ message: "Not found" });
+
+  res.status(204).end();
+}));
 
 
 

@@ -70,7 +70,6 @@ const isRenamingThisSheet = renamingSheetId === id;
           e.stopPropagation();
           toggleSheetMenu(id);
           startRename(sheet)
-          
         }}>
           Rename
         </div>

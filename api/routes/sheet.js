@@ -76,9 +76,7 @@ router.put("/label", authJwt, asyncHandler(async (req, res) => {
 // update net income value
 router.put("/net-income", authJwt, asyncHandler(async (req, res) => {
   const newNetIncomeValue = req.body.netIncome;
-  console.log("INCOMING NET INCOME:", newNetIncomeValue);
   const sheetId = req.body.sheetId;
-  console.log("INCOMING SHEET ID:", sheetId);
 
   await Sheet.update(
     {netIncome: newNetIncomeValue},
@@ -96,7 +94,15 @@ router.put("/net-income", authJwt, asyncHandler(async (req, res) => {
 
 
 // DELETE 
+// Deletes expense row from db
+router.delete('/:id', asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  console.log("INCOMING ID TO DESTROY:", id);
 
+  await Sheet.destroy({ where: { id } });
+
+  res.status(204).end();
+}));
 
 
 

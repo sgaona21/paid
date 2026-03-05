@@ -459,7 +459,7 @@ const Expenses = () => {
     updateUI();
   }
 
-  function deleteSheet(sheetIdToDelete) {
+  async function deleteSheet(sheetIdToDelete) {
     if (userExpenseData.sheets.length <= 1) return;
     setUserExpenseData((prev) => {
       const remainingSheets = prev.sheets.filter(
@@ -480,6 +480,19 @@ const Expenses = () => {
         expenses: remainingExpenses,
       };
     });
+
+    const res = await fetch(`${API_BASE}/sheet/${sheetIdToDelete}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        console.warn("Delete failed:", res.status);
+        return;
+      }
+
+      // updateUI();
   }
 
   function toggleSheetMenu(sheetId) {

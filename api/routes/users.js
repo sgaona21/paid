@@ -9,9 +9,6 @@ const router = express.Router();
 const { demoData } = require("../demoData");
 const { sheets: demoSheets, expenses: demoExpenses } = demoData;
 
-console.log("DEMO SHEETS:", demoSheets);
-console.log("DEMO EXPENSES:", demoExpenses);
-
 
 // AUTHENTICATE
 // Authenticates user and creates JWT
@@ -76,6 +73,8 @@ router.post("/demo", asyncHandler(async (req, res) => {
       })
 
       // Clear current sheet data for demo
+      const demoUserId = user.id;
+
       await Sheet.destroy({
         where: { userId: 8 },
       });
@@ -95,6 +94,8 @@ router.post("/demo", asyncHandler(async (req, res) => {
         ...expense,
         sheetId: sheetIds[expense.sheetId - 1],
       }));
+
+      console.log("HERE IS THE DEMO USER ID:", demoUserId);
 
       await Expense.bulkCreate(updatedExpenses);
 

@@ -28,42 +28,67 @@ const Expenses = () => {
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [startIndex, setStartIndex] = useState(0);
+  // const [startIndex, setStartIndex] = useState(0);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
   });
 
-  const containerRef = useRef(null);
-
-  const VISIBLE = 6;
-
-  const currentIndex = userExpenseData.sheets.findIndex(
-    (sheet) =>
-      (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
-      sheet.clientId === currentSheet.clientId,
-  );
-
-  const visibleSheets = userExpenseData.sheets.slice(
-    startIndex,
-    startIndex + VISIBLE,
-  );
-
   useEffect(() => {
     initialUIUpdate();
   }, []);
 
-  useEffect(() => {
-    if (currentIndex === -1) return;
+  const containerRef = useRef(null);
 
-    if (currentIndex < startIndex) {
-      setStartIndex(currentIndex);
-    }
 
-    if (currentIndex >= startIndex + VISIBLE) {
-      setStartIndex(currentIndex - VISIBLE + 1);
-    }
-  }, [currentIndex]);
+
+
+
+
+  // const VISIBLE = 6;
+
+  // const currentIndex = userExpenseData.sheets.findIndex(
+  //   (sheet) =>
+  //     (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
+  //     sheet.clientId === currentSheet.clientId,
+  // );
+
+  // const visibleSheets = userExpenseData.sheets.slice(
+  //   startIndex,
+  //   startIndex + VISIBLE,
+  // );
+
+  // useEffect(() => {
+  //   if (currentIndex === -1) return;
+
+  //   if (currentIndex < startIndex) {
+  //     setStartIndex(currentIndex);
+  //   }
+
+  //   if (currentIndex >= startIndex + VISIBLE) {
+  //     setStartIndex(currentIndex - VISIBLE + 1);
+  //   }
+  // }, [currentIndex]);
+
+
+
+
+          
+      
+
+          const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
+          let totalIndex = userExpenseData.sheets.length;
+          console.log(totalIndex);
+          let firstIndex = Math.max(currentIndex - 2, 0); // never allow this number to be negative 
+          let secondIndex = Math.max(currentIndex + 6, 6);
+          const visibleSheets = userExpenseData.sheets.slice(firstIndex, secondIndex);
+
+
+
+
+
+
+
 
   const updateUI = async () => {
     try {
@@ -79,7 +104,6 @@ const Expenses = () => {
       const data = await res.json();
       console.log("UserExpenseData from API:", data);
       setUserExpenseData(data);
-      // setCurrentSheet(selectedSheet);
     } catch (err) {
       console.error("updateUI crashed:", err);
     }
@@ -634,13 +658,11 @@ const Expenses = () => {
 
         {/* <div className="sheet-scroll-buttons-container desktop">
           <div className="scroll-left-container" onClick={() => {
-            scrollOnePage(-1)
             
           }}>
             <AiFillCaretLeft className="scroll-left-button"/>
           </div>
           <div className="scroll-right-container" onClick={() => {
-           scrollOnePage(1)
             
           }}>
             <AiFillCaretRight className="scroll-right-button" />

@@ -76,12 +76,13 @@ const Expenses = () => {
           
       
 
-          const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
-          let totalIndex = userExpenseData.sheets.length;
-          console.log(totalIndex);
-          let firstIndex = Math.max(currentIndex - 2, 0); // never allow this number to be negative 
-          let secondIndex = Math.max(currentIndex + 6, 6);
-          const visibleSheets = userExpenseData.sheets.slice(firstIndex, secondIndex);
+  const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
+  let totalIndex = userExpenseData.sheets.length;
+  let firstIndex = Math.max(currentIndex - 2, 0); 
+  let secondIndex = Math.max(currentIndex + 6, 6);
+  const visibleSheets = userExpenseData.sheets.slice(firstIndex, secondIndex);
+
+  
 
 
 

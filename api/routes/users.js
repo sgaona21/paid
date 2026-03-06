@@ -76,14 +76,14 @@ router.post("/demo", asyncHandler(async (req, res) => {
       const demoUserId = user.id;
 
       await Sheet.destroy({
-        where: { userId: 8 },
+        where: { userId: demoUserId },
       });
 
       // Generate Demo Seed Data
       await Sheet.bulkCreate(demoSheets);
 
       const sheets = await Sheet.findAll({
-        where: { userId: 8 },
+        where: { userId: demoUserId },
         attributes: ["id"],
         raw: true,
       });

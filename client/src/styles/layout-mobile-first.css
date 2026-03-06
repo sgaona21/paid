@@ -345,10 +345,12 @@ body {
     background-color: rgba(211, 211, 211, 0.105);
     padding: .5rem;
     border-radius: 50%;
+    transition: all .5s ease
 }
 
 .hamburger-sheets-container:hover {
     cursor: pointer;
+    background-color: var(--background);
 }
 
 .hamburger-sheets-container img {
@@ -790,11 +792,13 @@ body {
         align-items: center;
         padding: 1.25rem;
         background-color: var(--dark-secondary);
-        border-radius: 50%;        
+        border-radius: 50%;     
+        transition: all .5s ease   
     }
 
     .new-sheet-container:hover {
         cursor: pointer;
+        background-color: var(--background);
     }
 
     .new-sheet {

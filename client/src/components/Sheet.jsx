@@ -23,8 +23,6 @@ const Sheet = ({
   renamingSheetId,
   setRenamingSheetId,
   isCurrent,
-  setCurrentIndex,
-  userExpenseData
 }) => {
 //Hooks
 

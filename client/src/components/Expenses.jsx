@@ -27,7 +27,7 @@ const Expenses = () => {
   const [renamingSheetId, setRenamingSheetId] = useState(null);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
+  const [startIndex, setStartIndex] = useState(0);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -37,78 +37,39 @@ const Expenses = () => {
     initialUIUpdate();
   }, []);
 
+  // Sheet navigation
+  const VISIBLE = 6;
 
+  useEffect(() => {
+    const currentIndex = userExpenseData.sheets.findIndex(
+      (sheet) =>
+        (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
+        (sheet.clientId &&
+          currentSheet.clientId &&
+          sheet.clientId === currentSheet.clientId),
+    );
 
+    if (currentIndex === -1) return;
 
-  // const VISIBLE = 6;
+    const newStartIndex = Math.floor(currentIndex / VISIBLE) * VISIBLE;
+    setStartIndex(newStartIndex);
+  }, [currentSheet, userExpenseData.sheets]);
 
-  // const currentIndex = userExpenseData.sheets.findIndex(
-  //   (sheet) =>
-  //     (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
-  //     sheet.clientId === currentSheet.clientId,
-  // );
+  const visibleSheets = userExpenseData.sheets.slice(
+    startIndex,
+    startIndex + VISIBLE,
+  );
 
-  // const visibleSheets = userExpenseData.sheets.slice(
-  //   startIndex,
-  //   startIndex + VISIBLE,
-  // );
+  function handleSheetScrollLeft() {
+    setStartIndex((prev) => Math.max(prev - VISIBLE, 0));
+  }
 
-  // useEffect(() => {
-  //   if (currentIndex === -1) return;
-
-  //   if (currentIndex < startIndex) {
-  //     setStartIndex(currentIndex);
-  //   }
-
-  //   if (currentIndex >= startIndex + VISIBLE) {
-  //     setStartIndex(currentIndex - VISIBLE + 1);
-  //   }
-  // }, [currentIndex]);
-
-
-
-
-      
-
-
- 
-
-  // const indexSets = Object.freeze({
-  //   set1: [0, 6],
-  //   set2: [7, 12],
-  //   set3: [13, 18],
-  // });
-
-  // function setCurrentSet() {
-  //   const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
-  //   if (currentIndex >= 0 && currentIndex < 6) {
-  //     return indexSets.set1;
-  //   } else if (currentIndex >= 6 && currentIndex < 12) {
-  //     return indexSets.set2;
-  //   } else if (currentIndex >= 12 && currentIndex < 18) {
-  //     return indexSets.set3;
-  //   }
-  // }
-
-  // const currentSet = setCurrentSet()
-
-  // console.log("CURRENT SET:", currentSet)
-  //   console.log("OTHER DATA:", indexSets.set1)
-
-  // function setVisibleSheets(indexSet) {
-  //   const [start, end] = indexSet;
-  //   return userExpenseData.sheets.slice(start, end);
-  // }
-
-  // const visibleSheets = setVisibleSheets(indexSets.set1);
-
-
-
-
-
-
-
-
+  function handleSheetScrollRight() {
+    setStartIndex((prev) => {
+      const nextStart = prev + VISIBLE;
+      return nextStart >= userExpenseData.sheets.length ? prev : nextStart;
+    });
+  }
 
   const updateUI = async () => {
     try {
@@ -129,7 +90,7 @@ const Expenses = () => {
     }
   };
 
-    const initialUIUpdate = async () => {
+  const initialUIUpdate = async () => {
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",
@@ -208,14 +169,13 @@ const Expenses = () => {
     }));
   }
 
-
   async function addRow() {
     const newRow = {
       clientId: crypto.randomUUID(),
       name: "",
       amount: null,
       isPaid: false,
-      sheetId: currentSheet.id
+      sheetId: currentSheet.id,
     };
 
     setUserExpenseData((prev) => ({
@@ -235,7 +195,7 @@ const Expenses = () => {
       return;
     }
 
-    updateUI()
+    updateUI();
   }
 
   async function addSheet() {
@@ -262,7 +222,7 @@ const Expenses = () => {
     setUserExpenseData((prev) => ({
       ...prev,
       sheets: [...prev.sheets, temp],
-      expenses: [...prev.expenses, ...starters]
+      expenses: [...prev.expenses, ...starters],
     }));
 
     setCurrentSheet(temp);
@@ -274,7 +234,7 @@ const Expenses = () => {
         credentials: "include",
         body: JSON.stringify({
           sheets: temp,
-          expenses: [starters]
+          expenses: [starters],
         }),
       });
 
@@ -287,8 +247,6 @@ const Expenses = () => {
       }));
 
       updateUIAfterNewSheetAdd();
-
-      
     } catch (err) {
       console.error(err);
 
@@ -298,7 +256,6 @@ const Expenses = () => {
       }));
     }
   }
-
 
   async function saveRowToDb(row) {
     const res = await fetch(`${API_BASE}/expense/${row.id}`, {
@@ -320,7 +277,6 @@ const Expenses = () => {
     updateUI();
   }
 
-
   async function deleteRow(rowId) {
     setUserExpenseData((prev) => ({
       ...prev,
@@ -328,16 +284,16 @@ const Expenses = () => {
     }));
 
     const res = await fetch(`${API_BASE}/expense/${rowId}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
 
-      if (!res.ok) {
-        console.warn("Delete failed:", res.status);
-        return;
-      }
-      updateUI();
+    if (!res.ok) {
+      console.warn("Delete failed:", res.status);
+      return;
+    }
+    updateUI();
   }
 
   const handleNetIncomeChange = (value) => {
@@ -350,7 +306,6 @@ const Expenses = () => {
       ),
     }));
   };
-
 
   async function saveNetIncomeToDb() {
     const newNetIncome = currentSheet.netIncome;
@@ -372,9 +327,7 @@ const Expenses = () => {
     }
 
     updateUI();
-
   }
-
 
   function toggleSheetOverlay() {
     setSheetOverlayVisible((prev) => !prev);
@@ -453,14 +406,13 @@ const Expenses = () => {
       }),
     }));
 
-
     const res = await fetch(`${API_BASE}/sheet/label`, {
       method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         updatedLabel: next,
-        sheetId: renamingSheetId
+        sheetId: renamingSheetId,
       }),
     });
 
@@ -496,17 +448,17 @@ const Expenses = () => {
     });
 
     const res = await fetch(`${API_BASE}/sheet/${sheetIdToDelete}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
 
-      if (!res.ok) {
-        console.warn("Delete failed:", res.status);
-        return;
-      }
+    if (!res.ok) {
+      console.warn("Delete failed:", res.status);
+      return;
+    }
 
-      updateUI();
+    updateUI();
   }
 
   function toggleSheetMenu(sheetId) {
@@ -640,6 +592,19 @@ const Expenses = () => {
             </div>
           </div>
 
+          {/* <div className="sheet-scroll-buttons-container desktop">
+          <div className="scroll-left-container" onClick={() => {
+            handleSheetScrollLeft();
+          }}>
+            <AiFillCaretLeft className="scroll-left-button"/>
+          </div>
+          <div className="scroll-right-container" onClick={() => {
+            handleSheetScrollRight();
+          }}>
+            <AiFillCaretRight className="scroll-right-button" />
+          </div>
+        </div> */}
+
           <Sheet
             className="mobile"
             key={currentSheet.id}
@@ -658,7 +623,7 @@ const Expenses = () => {
             setRenamingSheetId={setRenamingSheetId}
           />
 
-          {userExpenseData.sheets.map((sheet) => (
+          {visibleSheets.map((sheet) => (
             <Sheet
               className="desktop"
               key={sheet.id ?? sheet.clientId}
@@ -676,24 +641,29 @@ const Expenses = () => {
               renamingSheetId={renamingSheetId}
               setRenamingSheetId={setRenamingSheetId}
               isCurrent={sheet.id === currentSheet.id}
-              setCurrentIndex={setCurrentIndex}
               userExpenseData={userExpenseData}
             />
           ))}
         </div>
 
-        {/* <div className="sheet-scroll-buttons-container desktop">
-          <div className="scroll-left-container" onClick={() => {
-            
-          }}>
-            <AiFillCaretLeft className="scroll-left-button"/>
+        <div className="sheet-scroll-buttons-container desktop">
+          <div
+            className="scroll-left-container"
+            onClick={() => {
+              handleSheetScrollLeft();
+            }}
+          >
+            <AiFillCaretLeft className="scroll-left-button" />
           </div>
-          <div className="scroll-right-container" onClick={() => {
-            
-          }}>
+          <div
+            className="scroll-right-container"
+            onClick={() => {
+              handleSheetScrollRight();
+            }}
+          >
             <AiFillCaretRight className="scroll-right-button" />
           </div>
-        </div> */}
+        </div>
 
         <div
           className="new-sheet-container desktop"

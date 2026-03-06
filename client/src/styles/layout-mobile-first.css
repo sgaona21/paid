@@ -451,6 +451,7 @@ body {
     z-index: 5;
     background-color: var(--foreground);
     overflow-y: scroll;
+    scrollbar-width: none;
 
     transform: translateY(100%);
     transition: transform 1.25s ease;

@@ -6,6 +6,11 @@ const { Expense, Sheet, sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const { demoData } = require("../demoData");
+const { sheets: demoSheets, expenses: demoExpenses } = demoData;
+
+console.log("DEMO SHEETS:", demoSheets);
+console.log("DEMO EXPENSES:", demoExpenses);
 
 
 // AUTHENTICATE
@@ -33,6 +38,65 @@ router.post("/auth", asyncHandler(async (req, res) => {
         sameSite: "lax",
         maxAge: 30 * 60 * 1000
       })
+
+      res.status(200).json({
+        id: user.id,
+        email: user.email,
+        name: user.firstName,
+      })
+
+  })
+);
+
+// DEMO LOGIN
+// Launches demo, creates 5 minute JWT, deletes sheets, creates new sheets 
+router.post("/demo", asyncHandler(async (req, res) => {
+      const { email, password } = req.body || {};
+      const user = await User.findOne({
+        where: { email: email.toLowerCase() },
+        attributes: ["id", "email", "passwordHash", "firstName"],
+      });
+      if (!user) return res.status(401).json({ message: "Invalid email or password" });
+
+      const isAuth = await bcrypt.compare(password, user.passwordHash);
+      if (!isAuth) return res.status(401).json({ message: "Invalid email or password" });
+
+      // 5 minute jwt for demo view
+      const token = jwt.sign(
+        { userId: user.id},
+        process.env.JWT_SECRET,
+        { expiresIn: "5m"}
+      );
+
+      res.cookie("auth", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 5 * 60 * 1000
+      })
+
+      // Clear current sheet data for demo
+      await Sheet.destroy({
+        where: { userId: 8 },
+      });
+
+      // Generate Demo Seed Data
+      await Sheet.bulkCreate(demoSheets);
+
+      const sheets = await Sheet.findAll({
+        where: { userId: 8 },
+        attributes: ["id"],
+        raw: true,
+      });
+
+      const sheetIds = await sheets.map((sheet) => sheet.id);
+
+      const updatedExpenses = demoExpenses.map((expense) => ({
+        ...expense,
+        sheetId: sheetIds[expense.sheetId - 1],
+      }));
+
+      await Expense.bulkCreate(updatedExpenses);
 
       res.status(200).json({
         id: user.id,

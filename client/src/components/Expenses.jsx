@@ -27,8 +27,7 @@ const Expenses = () => {
   const [renamingSheetId, setRenamingSheetId] = useState(null);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  // const [startIndex, setStartIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(null);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
@@ -37,10 +36,6 @@ const Expenses = () => {
   useEffect(() => {
     initialUIUpdate();
   }, []);
-
-  const containerRef = useRef(null);
-
-
 
 
 
@@ -73,16 +68,40 @@ const Expenses = () => {
 
 
 
-          
       
 
-  const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
-  let totalIndex = userExpenseData.sheets.length;
-  let firstIndex = Math.max(currentIndex - 2, 0); 
-  let secondIndex = Math.max(currentIndex + 6, 6);
-  const visibleSheets = userExpenseData.sheets.slice(firstIndex, secondIndex);
 
-  
+ 
+
+  // const indexSets = Object.freeze({
+  //   set1: [0, 6],
+  //   set2: [7, 12],
+  //   set3: [13, 18],
+  // });
+
+  // function setCurrentSet() {
+  //   const currentIndex = userExpenseData.sheets.findIndex(sheet => sheet.id === currentSheet.id);
+  //   if (currentIndex >= 0 && currentIndex < 6) {
+  //     return indexSets.set1;
+  //   } else if (currentIndex >= 6 && currentIndex < 12) {
+  //     return indexSets.set2;
+  //   } else if (currentIndex >= 12 && currentIndex < 18) {
+  //     return indexSets.set3;
+  //   }
+  // }
+
+  // const currentSet = setCurrentSet()
+
+  // console.log("CURRENT SET:", currentSet)
+  //   console.log("OTHER DATA:", indexSets.set1)
+
+  // function setVisibleSheets(indexSet) {
+  //   const [start, end] = indexSet;
+  //   return userExpenseData.sheets.slice(start, end);
+  // }
+
+  // const visibleSheets = setVisibleSheets(indexSets.set1);
+
 
 
 
@@ -220,6 +239,10 @@ const Expenses = () => {
   }
 
   async function addSheet() {
+    if (userExpenseData.sheets.length >= 18) {
+      return;
+    }
+
     const temp = {
       id: null,
       clientId: crypto.randomUUID(),
@@ -604,7 +627,7 @@ const Expenses = () => {
       </div>
 
       <div className="sheets-wrapper">
-        <div className="sheets-container" ref={containerRef}>
+        <div className="sheets-container">
           <div className="add-sheet-container">
             <div
               className="hamburger-sheets-container"
@@ -635,7 +658,7 @@ const Expenses = () => {
             setRenamingSheetId={setRenamingSheetId}
           />
 
-          {visibleSheets.map((sheet) => (
+          {userExpenseData.sheets.map((sheet) => (
             <Sheet
               className="desktop"
               key={sheet.id ?? sheet.clientId}
@@ -653,6 +676,8 @@ const Expenses = () => {
               renamingSheetId={renamingSheetId}
               setRenamingSheetId={setRenamingSheetId}
               isCurrent={sheet.id === currentSheet.id}
+              setCurrentIndex={setCurrentIndex}
+              userExpenseData={userExpenseData}
             />
           ))}
         </div>

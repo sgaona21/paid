@@ -22,7 +22,9 @@ const Sheet = ({
   className,  
   renamingSheetId,
   setRenamingSheetId,
-  isCurrent
+  isCurrent,
+  setCurrentIndex,
+  userExpenseData
 }) => {
 //Hooks
 
@@ -36,7 +38,9 @@ const isRenamingThisSheet = renamingSheetId === id;
 
   return (
     <div className={`current-sheet ${isCurrentSheet ? "selected" : ""} ${className}`}
-    onClick={() => setCurrentSheet(sheet)}>
+    onClick={() => {
+      setCurrentSheet(sheet);
+      }}>
       <div className="sheet-label">
         {isRenamingThisSheet ? (
           <input

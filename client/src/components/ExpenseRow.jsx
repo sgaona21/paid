@@ -9,6 +9,12 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
           // onChange={(e) => handleRowChange(index, "name", e.target.value)}
           onChange={(e) => handleRowChange(row.id, "name", e.target.value)}
           onBlur={() => saveRow(row)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.target.blur();
+            }
+          }}
         ></input>
       </div>
       <div className="expense-row-inputs">
@@ -21,6 +27,12 @@ const ExpenseRow = ({ row, index, handleRowChange, deleteRow, saveRow }) => {
             handleRowChange(row.id, "amount", e.target.value)
           }
           onBlur={() => saveRow(row)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.target.blur();
+            }
+          }}
         ></input>
       </div>
       <div className="expense-row-inputs checkbox-container">

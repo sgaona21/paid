@@ -522,10 +522,11 @@ const Expenses = () => {
             onChange={(e) => handleNetIncomeChange(e.target.value)}
             onBlur={saveNetIncomeToDb}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                saveNetIncomeToDb();
-              }
-            }}
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.target.blur();
+            }
+          }}
           ></input>
         </div>
       </div>

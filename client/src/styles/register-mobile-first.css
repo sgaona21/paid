@@ -105,6 +105,7 @@
     cursor: pointer;
 }
 
+
 .signup-content p {
     color: rgba(245, 245, 245, 0.85);
     font-size: medium;
@@ -116,6 +117,22 @@ a {
     color: rgba(144, 238, 144, 0.892);
     text-decoration: none;
     margin-left: 5px;
+}
+
+
+
+.demo-option,
+.signup-button {
+    background: linear-gradient(135deg, #16a050df, #79e835, #16a050df);
+    background-size: 200% 200%;
+    transition: background-position 2s ease, box-shadow 2s ease, color 1s ease-in-out;
+}
+
+.demo-option:hover,
+.signup-button:hover {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.22);
+    background-position: right center;
+    color: whitesmoke;
 }
 
 

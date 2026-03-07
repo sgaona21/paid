@@ -3,18 +3,16 @@ import ExpenseRow from "./ExpenseRow";
 import SheetOverlay from "./SheetOverlay.jsx";
 import UserContext from "../auth/UserContext";
 import { Chart as ChartJS } from "chart.js/auto";
-import { Doughnut, Bar } from 'react-chartjs-2';
-import { sheets as mockSheets } from './mockData'
-import { mockExpenses as mockData } from './mockExpenses';
-import hamburger from '../assets/hamburger.png';
-import rightArrow from '../assets/right-arrow.png';
-import spinner from '../assets/spinner2.png';
+import { Doughnut, Bar } from "react-chartjs-2";
+import { sheets as mockSheets } from "./mockData";
+import { mockExpenses as mockData } from "./mockExpenses";
+import hamburger from "../assets/hamburger.png";
+import rightArrow from "../assets/right-arrow.png";
+import spinner from "../assets/spinner2.png";
 import Sheets from "./Sheets.jsx";
 import Sheet from "./Sheet.jsx";
 import { AiFillCaretLeft } from "react-icons/ai";
 import { AiFillCaretRight } from "react-icons/ai";
-
-
 
 const Expenses = () => {
   const context = useContext(UserContext);
@@ -29,80 +27,108 @@ const Expenses = () => {
   const [renamingSheetId, setRenamingSheetId] = useState(null);
   const [draftSheetLabel, setDraftSheetLabel] = useState("");
   const [openSheetId, setOpenSheetId] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [userExpenseData, setUserExpenseData] = useState({
     sheets: [],
     expenses: [],
   });
 
-  const containerRef = useRef(null)
-
-  const VISIBLE = 6;
-
-const currentIndex = userExpenseData.sheets.findIndex(
-  (sheet) =>
-    (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
-    sheet.clientId === currentSheet.clientId,
-);
-
-  const visibleSheets = userExpenseData.sheets.slice(startIndex, startIndex + VISIBLE);
-
   useEffect(() => {
-    updateUI();
+    initialUIUpdate();
   }, []);
 
+  // Sheet navigation
+  const VISIBLE = 6;
+
   useEffect(() => {
-  if (currentIndex === -1) return;
+    const currentIndex = userExpenseData.sheets.findIndex(
+      (sheet) =>
+        (sheet.id && currentSheet.id && sheet.id === currentSheet.id) ||
+        (sheet.clientId &&
+          currentSheet.clientId &&
+          sheet.clientId === currentSheet.clientId),
+    );
 
-  if (currentIndex < startIndex) {
-    setStartIndex(currentIndex);
+    if (currentIndex === -1) return;
+
+    const newStartIndex = Math.floor(currentIndex / VISIBLE) * VISIBLE;
+    setStartIndex(newStartIndex);
+  }, [currentSheet, userExpenseData.sheets]);
+
+  const visibleSheets = userExpenseData.sheets.slice(
+    startIndex,
+    startIndex + VISIBLE,
+  );
+
+  function handleSheetScrollLeft() {
+    setStartIndex((prev) => Math.max(prev - VISIBLE, 0));
   }
 
-  if (currentIndex >= startIndex + VISIBLE) {
-    setStartIndex(currentIndex - VISIBLE + 1);
+  function handleSheetScrollRight() {
+    setStartIndex((prev) => {
+      const nextStart = prev + VISIBLE;
+      return nextStart >= userExpenseData.sheets.length ? prev : nextStart;
+    });
   }
-}, [currentIndex]);
 
-  
+  const updateUI = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
 
-  // const updateUI = async () => {
-  //   try {
-  //     const res = await fetch(`${API_BASE}/expense`, {
-  //       credentials: "include",
-  //     });
-
-  //     if (!res.ok) {
-  //       console.warn("updateUI failed:", res.status);
-  //       return;
-  //     }
-
-  //     const data = await res.json();
-  //     setRows(data);
-  //   } catch (err) {
-  //     console.error("updateUI crashed:", err);
-  //   }
-  // };
-
-    const updateUI = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/expense`, {
-          credentials: "include",
-        });
-
-        if (!res.ok) {
-          console.warn("updateUI failed:", res.status);
-          return;
-        }
-
-        const data = await res.json();
-        console.log("UserExpenseData from API:", data);
-        setUserExpenseData(data);
-        setCurrentSheet(data.sheets?.[0] ?? null);
-      } catch (err) {
-        console.error("updateUI crashed:", err);
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
       }
-    };
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
+
+  const initialUIUpdate = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+      setCurrentSheet(data.sheets?.[0] ?? null);
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
+
+  const updateUIAfterNewSheetAdd = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/expense`, {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn("updateUI failed:", res.status);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("UserExpenseData from API:", data);
+      setUserExpenseData(data);
+      setCurrentSheet(data.sheets.at(-1));
+    } catch (err) {
+      console.error("updateUI crashed:", err);
+    }
+  };
 
   // useEffect(() => {
   //   setIsLoading(true)
@@ -118,88 +144,118 @@ const currentIndex = userExpenseData.sheets.findIndex(
   //   return () => clearTimeout(timer);
   // }, []);
 
-
-
-
   // const handleRowChange = (index, field, value) => {
   //   const updated = [...rows];
   //   updated[index][field] = value;
   //   setRows(updated);
   // };
 
-//   const handleRowChange = (rowKey, field, value) => {
-//   setUserExpenseData((prev) => ({
-//     ...prev,
-//     expenses: prev.expenses.map((e) => {
-//       const key = e.clientId ?? e.id;
-//       return key === rowKey ? { ...e, [field]: value } : e;
-//     }),
-//   }));
-// };
-
-function handleRowChange(rowId, field, value) {
-  setUserExpenseData(prev => ({
-    ...prev,
-    expenses: prev.expenses.map(e =>
-      (e.id ?? e.clientId) === rowId ? { ...e, [field]: value } : e
-    )
-  }));
-}
-
-
-  // const addRow = () => {
-  //   const newRow = {
-  //     clientId: crypto.randomUUID(),
-  //     id: null,
-  //     name: "",
-  //     amount: null,
-  //     isPaid: false,
-  //     userId: context?.currentUser?.id,
-  //   };
-  //   setRows((prevRows) => [...prevRows, newRow]);
-  //   addRowToDb(newRow);
+  //   const handleRowChange = (rowKey, field, value) => {
+  //   setUserExpenseData((prev) => ({
+  //     ...prev,
+  //     expenses: prev.expenses.map((e) => {
+  //       const key = e.clientId ?? e.id;
+  //       return key === rowKey ? { ...e, [field]: value } : e;
+  //     }),
+  //   }));
   // };
 
-function addRow(newRow) {
-  const rowWithSheet = {
-    ...newRow,
-    id: null,
-    sheetId: currentSheet.id,
-    clientId: crypto.randomUUID(),
-    userId: context?.currentUser?.id
-  };
+  function handleRowChange(rowId, field, value) {
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: prev.expenses.map((e) =>
+        (e.id ?? e.clientId) === rowId ? { ...e, [field]: value } : e,
+      ),
+    }));
+  }
 
-  setUserExpenseData((prev) => ({
-    ...prev,
-    expenses: [...prev.expenses, rowWithSheet],
-  }));
-}
+  async function addRow() {
+    const newRow = {
+      clientId: crypto.randomUUID(),
+      name: "",
+      amount: null,
+      isPaid: false,
+      sheetId: currentSheet.id,
+    };
 
-function addSheet() {
-  const newSheet = {
-    id: null,
-    clientId: crypto.randomUUID(),
-    label: "New Sheet",
-    netIncome: null
-  };
+    setUserExpenseData((prev) => ({
+      ...prev,
+      expenses: [...prev.expenses, newRow],
+    }));
 
-  setUserExpenseData((prev) => ({
-    ...prev,
-    sheets: [...prev.sheets, newSheet],
-  }));
-
-  setCurrentSheet(newSheet);
-}
-
-  const addRowToDb = async (row) => {
-    await fetch(`${API_BASE}/expense/add`, {
+    const res = await fetch(`${API_BASE}/expense/add`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(row),
+      body: JSON.stringify(newRow),
     });
+
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
+    }
+
     updateUI();
-  };
+  }
+
+  async function addSheet() {
+    if (userExpenseData.sheets.length >= 18) {
+      return;
+    }
+
+    const temp = {
+      id: null,
+      clientId: crypto.randomUUID(),
+      label: "New Sheet",
+      netIncome: null,
+      userId: context?.currentUser?.id,
+    };
+
+    const starters = Array.from({ length: 15 }, () => ({
+      clientId: crypto.randomUUID(),
+      name: "",
+      amount: null,
+      isPaid: false,
+      sheetId: temp.id,
+    }));
+
+    setUserExpenseData((prev) => ({
+      ...prev,
+      sheets: [...prev.sheets, temp],
+      expenses: [...prev.expenses, ...starters],
+    }));
+
+    setCurrentSheet(temp);
+
+    try {
+      const res = await fetch(`${API_BASE}/sheet/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sheets: temp,
+          expenses: [starters],
+        }),
+      });
+
+      if (!res.ok) throw new Error(`create sheet failed: ${res.status}`);
+      const created = await res.json();
+
+      setUserExpenseData((prev) => ({
+        ...prev,
+        sheets: prev.sheets.map((s) => (s.id === created.id ? created : s)),
+      }));
+
+      updateUIAfterNewSheetAdd();
+    } catch (err) {
+      console.error(err);
+
+      setUserExpenseData((prev) => ({
+        ...prev,
+        sheets: prev.sheets.filter((s) => s.clientId !== temp.clientId),
+      }));
+    }
+  }
 
   async function saveRowToDb(row) {
     const res = await fetch(`${API_BASE}/expense/${row.id}`, {
@@ -221,55 +277,65 @@ function addSheet() {
     updateUI();
   }
 
-  // const deleteRow = (idToDelete) => {
-  //   setRows((prevRows) => prevRows.filter((row) => row.id !== idToDelete));
-  //   deleteRowFromDb(idToDelete);
-  // };
-
-  function deleteRow(rowId) {
+  async function deleteRow(rowId) {
     setUserExpenseData((prev) => ({
       ...prev,
       expenses: prev.expenses.filter((e) => (e.id ?? e.clientId) !== rowId),
     }));
+
+    const res = await fetch(`${API_BASE}/expense/${rowId}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      console.warn("Delete failed:", res.status);
+      return;
+    }
+    updateUI();
   }
 
-const handleNetIncomeChange = (value) => {
-  setCurrentSheet((prev) => ({ ...prev, netIncome: value }));
+  const handleNetIncomeChange = (value) => {
+    setCurrentSheet((prev) => ({ ...prev, netIncome: value }));
 
-  setUserExpenseData((prev) => ({
-    ...prev,
-    sheets: prev.sheets.map((sheet) =>
-      sheet.id === currentSheet.id ? { ...sheet, netIncome: value } : sheet
-    ),
-  }));
-};
+    setUserExpenseData((prev) => ({
+      ...prev,
+      sheets: prev.sheets.map((sheet) =>
+        sheet.id === currentSheet.id ? { ...sheet, netIncome: value } : sheet,
+      ),
+    }));
+  };
 
-  async function deleteRowFromDb(rowId) {
-    try {
-      const res = await fetch(`${API_BASE}/expense/${rowId}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+  async function saveNetIncomeToDb() {
+    const newNetIncome = currentSheet.netIncome;
+    const restoredSheet = currentSheet;
 
-      if (!res.ok) {
-        console.warn("Delete failed:", res.status);
-        return;
-      }
+    const res = await fetch(`${API_BASE}/sheet/net-income`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        netIncome: newNetIncome,
+        sheetId: currentSheet.id,
+      }),
+    });
 
-      updateUI();
-    } catch (err) {
-      console.error("deleteRowFromDb crashed:", err);
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
     }
+
+    updateUI();
   }
 
   function toggleSheetOverlay() {
-      setSheetOverlayVisible(prev => !prev);
-    }
+    setSheetOverlayVisible((prev) => !prev);
+  }
 
   function toggleMenuSheetBackdrop() {
-    setSheetMenuOverlayVisible(prev => !prev);
-  }  
+    setSheetMenuOverlayVisible((prev) => !prev);
+  }
 
   const total = userExpenseData.expenses
     .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
@@ -282,16 +348,14 @@ const handleNetIncomeChange = (value) => {
   //   return sum + (isNaN(amount) ? 0 : amount);
   // }, 0);
 
-    const totalPaid = userExpenseData.expenses
-      .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
-      .reduce((sum, row) => {
+  const totalPaid = userExpenseData.expenses
+    .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
+    .reduce((sum, row) => {
       if (!row.isPaid) return sum;
 
       const amount = parseFloat(row.amount);
       return sum + (isNaN(amount) ? 0 : amount);
     }, 0);
-
-
 
   // function startRename() {
   //   setIsRenamingSheet(true);
@@ -304,88 +368,119 @@ const handleNetIncomeChange = (value) => {
     setDraftSheetLabel(sheet.label);
   }
 
+  // function saveRename() {
+  //   const next = draftSheetLabel.trim();
+  //   if (!next) return;
 
-// function saveRename() {
-//   const next = draftSheetLabel.trim();
-//   if (!next) return;
+  //   const currentKey = currentSheet.id ?? currentSheet.clientId;
 
-//   const currentKey = currentSheet.id ?? currentSheet.clientId;
+  //   setCurrentSheet((prev) => ({ ...prev, label: next }));
 
-//   setCurrentSheet((prev) => ({ ...prev, label: next }));
+  //   setUserExpenseData((prev) => ({
+  //     ...prev,
+  //     sheets: prev.sheets.map((s) => {
+  //       const sheetKey = s.id ?? s.clientId;
+  //       return sheetKey === currentKey ? { ...s, label: next } : s;
+  //     }),
+  //   }));
 
-//   setUserExpenseData((prev) => ({
-//     ...prev,
-//     sheets: prev.sheets.map((s) => {
-//       const sheetKey = s.id ?? s.clientId;
-//       return sheetKey === currentKey ? { ...s, label: next } : s;
-//     }),
-//   }));
+  //   setIsRenamingSheet(false);
+  // }
 
-//   setIsRenamingSheet(false);
-// }
+  async function saveRename() {
+    if (!renamingSheetId) return;
 
-function saveRename() {
-  if (!renamingSheetId) return;
+    const next = draftSheetLabel.trim();
+    if (!next) return;
 
-  const next = draftSheetLabel.trim();
-  if (!next) return;
+    // const currentKey = currentSheet.id ?? currentSheet.clientId;
+    const currentKey = renamingSheetId;
 
-  // const currentKey = currentSheet.id ?? currentSheet.clientId;
-  const currentKey = renamingSheetId;
+    // setCurrentSheet((prev) => ({ ...prev, label: next }));
 
-  // setCurrentSheet((prev) => ({ ...prev, label: next }));
-
-  setUserExpenseData((prev) => ({
-    ...prev,
-    sheets: prev.sheets.map((s) => {
-      const sheetKey = s.id ?? s.clientId;
-      return sheetKey === currentKey ? { ...s, label: next } : s;
-    }),
-  }));
-
-  setRenamingSheetId(null);
-}
-
-
-function deleteSheet(sheetIdToDelete) {
-  if (userExpenseData.sheets.length <= 1) return;
-  setUserExpenseData((prev) => {
-    const remainingSheets = prev.sheets.filter((s) => (s.id ?? s.clientId) !== sheetIdToDelete);
-    const remainingExpenses = prev.expenses.filter((e) => (e.id ?? e.clientId) !== sheetIdToDelete);
-
-    if ((currentSheet?.id ?? currentSheet?.clientId) === sheetIdToDelete) {
-      const nextSheet = remainingSheets[0] ?? null;
-      setCurrentSheet(nextSheet);
-    }
-    
-    return {
+    setUserExpenseData((prev) => ({
       ...prev,
-      sheets: remainingSheets,
-      expenses: remainingExpenses,
-    };
-  });
-}
+      sheets: prev.sheets.map((s) => {
+        const sheetKey = s.id ?? s.clientId;
+        return sheetKey === currentKey ? { ...s, label: next } : s;
+      }),
+    }));
 
-function toggleSheetMenu(sheetId) {
-  setOpenSheetId(prev => (prev === sheetId ? null : sheetId));
-}
+    const res = await fetch(`${API_BASE}/sheet/label`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        updatedLabel: next,
+        sheetId: renamingSheetId,
+      }),
+    });
 
-function isMenuOpen() {
-  if (openSheetId != null) {
-    return true;
-  } else if (openSheetId === null) {
-    return false
+    if (!res.ok) {
+      console.warn("Save failed:", res.status);
+      return;
+    }
+
+    setRenamingSheetId(null);
+    updateUI();
   }
-}
 
-const netIncomeNum = Number(currentSheet.netIncome ?? 0);
+  async function deleteSheet(sheetIdToDelete) {
+    if (userExpenseData.sheets.length <= 1) return;
+    setUserExpenseData((prev) => {
+      const remainingSheets = prev.sheets.filter(
+        (s) => (s.id ?? s.clientId) !== sheetIdToDelete,
+      );
+      const remainingExpenses = prev.expenses.filter(
+        (e) => (e.id ?? e.clientId) !== sheetIdToDelete,
+      );
 
+      if ((currentSheet?.id ?? currentSheet?.clientId) === sheetIdToDelete) {
+        const nextSheet = remainingSheets[0] ?? null;
+        setCurrentSheet(nextSheet);
+      }
 
+      return {
+        ...prev,
+        sheets: remainingSheets,
+        expenses: remainingExpenses,
+      };
+    });
+
+    const res = await fetch(`${API_BASE}/sheet/${sheetIdToDelete}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      console.warn("Delete failed:", res.status);
+      return;
+    }
+
+    updateUI();
+  }
+
+  function toggleSheetMenu(sheetId) {
+    setOpenSheetId((prev) => (prev === sheetId ? null : sheetId));
+  }
+
+  function isMenuOpen() {
+    if (openSheetId != null) {
+      return true;
+    } else if (openSheetId === null) {
+      return false;
+    }
+  }
+
+  const netIncomeNum = Number(currentSheet.netIncome ?? 0);
 
   if (isLoading) {
     return (
-      <div className="spinner"><img src={spinner} alt="loading spinner" /></div>
-    )
+      <div className="spinner">
+        <img src={spinner} alt="loading spinner" />
+      </div>
+    );
   }
 
   return (
@@ -425,7 +520,13 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
             name="net-total"
             value={currentSheet.netIncome ?? ""}
             onChange={(e) => handleNetIncomeChange(e.target.value)}
-            // onBlur={}
+            onBlur={saveNetIncomeToDb}
+            onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.target.blur();
+            }
+          }}
           ></input>
         </div>
       </div>
@@ -458,9 +559,7 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
 
       <div className="monthly-expendable-container">
         <div className="monthly-total-label">Expendable Income</div>
-        <div className="monthly-total-amount">
-          {netIncomeNum - total}
-        </div>
+        <div className="monthly-total-amount">{netIncomeNum - total}</div>
         <div className="expendable-income-bar">
           <Bar
             data={{
@@ -480,42 +579,37 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
         </div>
       </div>
 
-      <div className="sheets-wrapper">   
-      <div className="sheets-container" ref={containerRef}>
-        <div className="add-sheet-container">
-          <div
-            className="hamburger-sheets-container"
-            onClick={toggleSheetOverlay}
-          >
-            <img
-              src={hamburger}
-              alt="hamburger menu for mobile sheet options"
-            />
+      <div className="sheets-wrapper">
+        <div className="sheets-container">
+          <div className="add-sheet-container">
+            <div
+              className="hamburger-sheets-container"
+              onClick={toggleSheetOverlay}
+            >
+              <img
+                src={hamburger}
+                alt="hamburger menu for mobile sheet options"
+              />
+            </div>
           </div>
-        </div>
 
-        <Sheet
-          className="mobile"
-          sheet={currentSheet}
-          startRename={startRename}
-          isRenamingSheet={isRenamingSheet}
-          saveRename={saveRename}
-          draftSheetLabel={draftSheetLabel}
-          setDraftSheetLabel={setDraftSheetLabel}
-          deleteSheet={deleteSheet}
-          openSheetId={openSheetId}
-          toggleSheetMenu={toggleSheetMenu}
-          setCurrentSheet={setCurrentSheet}
-          currentSheet={currentSheet}
-          renamingSheetId={renamingSheetId}
-          setRenamingSheetId={setRenamingSheetId}
-        />
+          {/* <div className="sheet-scroll-buttons-container desktop">
+          <div className="scroll-left-container" onClick={() => {
+            handleSheetScrollLeft();
+          }}>
+            <AiFillCaretLeft className="scroll-left-button"/>
+          </div>
+          <div className="scroll-right-container" onClick={() => {
+            handleSheetScrollRight();
+          }}>
+            <AiFillCaretRight className="scroll-right-button" />
+          </div>
+        </div> */}
 
-        {visibleSheets.map((sheet) => (
           <Sheet
-            className="desktop"
-            key={sheet.id ?? sheet.clientId}
-            sheet={sheet}
+            className="mobile"
+            key={currentSheet.id}
+            sheet={currentSheet}
             startRename={startRename}
             isRenamingSheet={isRenamingSheet}
             saveRename={saveRename}
@@ -528,38 +622,59 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
             currentSheet={currentSheet}
             renamingSheetId={renamingSheetId}
             setRenamingSheetId={setRenamingSheetId}
-            isCurrent={sheet.id === currentSheet.id}
           />
-        ))}
 
-        
-        
-      </div>
-
-        {/* <div className="sheet-scroll-buttons-container desktop">
-          <div className="scroll-left-container" onClick={() => {
-            scrollOnePage(-1)
-            
-          }}>
-            <AiFillCaretLeft className="scroll-left-button"/>
-          </div>
-          <div className="scroll-right-container" onClick={() => {
-           scrollOnePage(1)
-            
-          }}>
-            <AiFillCaretRight className="scroll-right-button" />
-          </div>
-        </div> */}
-
-        <div className="new-sheet-container desktop" onClick={() => {
-          addSheet();
-          }}>
-            <div className="new-sheet">+</div>
+          {visibleSheets.map((sheet) => (
+            <Sheet
+              className="desktop"
+              key={sheet.id ?? sheet.clientId}
+              sheet={sheet}
+              startRename={startRename}
+              isRenamingSheet={isRenamingSheet}
+              saveRename={saveRename}
+              draftSheetLabel={draftSheetLabel}
+              setDraftSheetLabel={setDraftSheetLabel}
+              deleteSheet={deleteSheet}
+              openSheetId={openSheetId}
+              toggleSheetMenu={toggleSheetMenu}
+              setCurrentSheet={setCurrentSheet}
+              currentSheet={currentSheet}
+              renamingSheetId={renamingSheetId}
+              setRenamingSheetId={setRenamingSheetId}
+              isCurrent={sheet.id === currentSheet.id}
+              userExpenseData={userExpenseData}
+            />
+          ))}
         </div>
 
-      </div>   
-      
+        <div className="sheet-scroll-buttons-container desktop">
+          <div
+            className="scroll-left-container"
+            onClick={() => {
+              handleSheetScrollLeft();
+            }}
+          >
+            <AiFillCaretLeft className="scroll-left-button" />
+          </div>
+          <div
+            className="scroll-right-container"
+            onClick={() => {
+              handleSheetScrollRight();
+            }}
+          >
+            <AiFillCaretRight className="scroll-right-button" />
+          </div>
+        </div>
 
+        <div
+          className="new-sheet-container desktop"
+          onClick={() => {
+            addSheet();
+          }}
+        >
+          <div className="new-sheet">+</div>
+        </div>
+      </div>
 
       <SheetOverlay
         userExpenseData={userExpenseData}
@@ -571,11 +686,14 @@ const netIncomeNum = Number(currentSheet.netIncome ?? 0);
         addSheet={addSheet}
       />
 
-      {isMenuOpen() && <div className="menu-overlay" onClick={() => {
-        setOpenSheetId(null)
-      }}></div>}
-
-
+      {isMenuOpen() && (
+        <div
+          className="menu-overlay"
+          onClick={() => {
+            setOpenSheetId(null);
+          }}
+        ></div>
+      )}
     </div>
   );
 };

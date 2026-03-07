@@ -22,7 +22,7 @@ const Sheet = ({
   className,  
   renamingSheetId,
   setRenamingSheetId,
-  isCurrent
+  isCurrent,
 }) => {
 //Hooks
 
@@ -36,7 +36,9 @@ const isRenamingThisSheet = renamingSheetId === id;
 
   return (
     <div className={`current-sheet ${isCurrentSheet ? "selected" : ""} ${className}`}
-    onClick={() => setCurrentSheet(sheet)}>
+    onClick={() => {
+      setCurrentSheet(sheet);
+      }}>
       <div className="sheet-label">
         {isRenamingThisSheet ? (
           <input
@@ -59,7 +61,8 @@ const isRenamingThisSheet = renamingSheetId === id;
       <div className={`sheet-arrow-container ${isOpen ? "rotated" : ""}`}
       onClick={(e) => {
         e.stopPropagation();
-        toggleSheetMenu(id)
+        toggleSheetMenu(id);
+        setCurrentSheet(sheet);
       }
       }>
         <img src={rightArrow} alt="right arrow" />
@@ -70,7 +73,6 @@ const isRenamingThisSheet = renamingSheetId === id;
           e.stopPropagation();
           toggleSheetMenu(id);
           startRename(sheet)
-          
         }}>
           Rename
         </div>

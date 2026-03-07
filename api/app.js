@@ -19,8 +19,10 @@ app.use(cookieParser());
 
 const userRoutes = require('./routes/users');
 const expenseRoutes = require('./routes/expense');
+const sheetRoutes = require('./routes/sheet');
 app.use('/users', userRoutes);
 app.use('/expense', expenseRoutes);
+app.use('/sheet', sheetRoutes);
 
 
 //test db connection

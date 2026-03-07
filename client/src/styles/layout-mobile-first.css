@@ -345,10 +345,12 @@ body {
     background-color: rgba(211, 211, 211, 0.105);
     padding: .5rem;
     border-radius: 50%;
+    transition: all .5s ease
 }
 
 .hamburger-sheets-container:hover {
     cursor: pointer;
+    background-color: var(--background);
 }
 
 .hamburger-sheets-container img {
@@ -451,6 +453,7 @@ body {
     z-index: 5;
     background-color: var(--foreground);
     overflow-y: scroll;
+    scrollbar-width: none;
 
     transform: translateY(100%);
     transition: transform 1.25s ease;
@@ -660,7 +663,7 @@ body {
     .dash-options-desktop li {
         color: rgba(245, 245, 245, 0.806);
         padding: .75rem;
-        border-radius: 10px;
+        border-radius: 15px;
         background-color: #31353a73;
         text-align: center;
     }
@@ -789,11 +792,13 @@ body {
         align-items: center;
         padding: 1.25rem;
         background-color: var(--dark-secondary);
-        border-radius: 50%;        
+        border-radius: 50%;     
+        transition: all .5s ease   
     }
 
     .new-sheet-container:hover {
         cursor: pointer;
+        background-color: var(--background);
     }
 
     .new-sheet {

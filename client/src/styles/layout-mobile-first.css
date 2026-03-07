@@ -605,23 +605,23 @@ body {
         min-height: 0; 
     }
 
-
     .hamburger {
         width: 40px;
         display: flex;
         align-self: center;
+        border-radius: 25px;
+        transition: all .5s ease;
     }
 
     .hamburger:hover {
         cursor: pointer;
         background-color: rgba(211, 211, 211, 0.105);
-        border-radius: 25px;
     }
 
     .hamburger img {
         width: 100%;
         filter: invert(1);
-        padding: .35rem
+        padding: .4rem
     }
 
     .logo {

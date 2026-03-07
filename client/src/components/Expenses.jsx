@@ -144,22 +144,6 @@ const Expenses = () => {
   //   return () => clearTimeout(timer);
   // }, []);
 
-  // const handleRowChange = (index, field, value) => {
-  //   const updated = [...rows];
-  //   updated[index][field] = value;
-  //   setRows(updated);
-  // };
-
-  //   const handleRowChange = (rowKey, field, value) => {
-  //   setUserExpenseData((prev) => ({
-  //     ...prev,
-  //     expenses: prev.expenses.map((e) => {
-  //       const key = e.clientId ?? e.id;
-  //       return key === rowKey ? { ...e, [field]: value } : e;
-  //     }),
-  //   }));
-  // };
-
   function handleRowChange(rowId, field, value) {
     setUserExpenseData((prev) => ({
       ...prev,
@@ -341,13 +325,6 @@ const Expenses = () => {
     .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
     .reduce((sum, row) => sum + (parseFloat(row.amount) || 0), 0);
 
-  // const totalPaid = rows.reduce((sum, row) => {
-  //   if (!row.isPaid) return sum;
-
-  //   const amount = parseFloat(row.amount);
-  //   return sum + (isNaN(amount) ? 0 : amount);
-  // }, 0);
-
   const totalPaid = userExpenseData.expenses
     .filter((row) => row.sheetId != null && row.sheetId === currentSheet.id)
     .reduce((sum, row) => {
@@ -357,35 +334,11 @@ const Expenses = () => {
       return sum + (isNaN(amount) ? 0 : amount);
     }, 0);
 
-  // function startRename() {
-  //   setIsRenamingSheet(true);
-  //   setDraftSheetLabel(currentSheet.label);
-  // }
-
   function startRename(sheet) {
     const id = sheet.id ?? sheet.clientId;
     setRenamingSheetId(id);
     setDraftSheetLabel(sheet.label);
   }
-
-  // function saveRename() {
-  //   const next = draftSheetLabel.trim();
-  //   if (!next) return;
-
-  //   const currentKey = currentSheet.id ?? currentSheet.clientId;
-
-  //   setCurrentSheet((prev) => ({ ...prev, label: next }));
-
-  //   setUserExpenseData((prev) => ({
-  //     ...prev,
-  //     sheets: prev.sheets.map((s) => {
-  //       const sheetKey = s.id ?? s.clientId;
-  //       return sheetKey === currentKey ? { ...s, label: next } : s;
-  //     }),
-  //   }));
-
-  //   setIsRenamingSheet(false);
-  // }
 
   async function saveRename() {
     if (!renamingSheetId) return;
@@ -393,10 +346,7 @@ const Expenses = () => {
     const next = draftSheetLabel.trim();
     if (!next) return;
 
-    // const currentKey = currentSheet.id ?? currentSheet.clientId;
     const currentKey = renamingSheetId;
-
-    // setCurrentSheet((prev) => ({ ...prev, label: next }));
 
     setUserExpenseData((prev) => ({
       ...prev,
@@ -522,11 +472,11 @@ const Expenses = () => {
             onChange={(e) => handleNetIncomeChange(e.target.value)}
             onBlur={saveNetIncomeToDb}
             onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              e.target.blur();
-            }
-          }}
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.target.blur();
+              }
+            }}
           ></input>
         </div>
       </div>
@@ -592,19 +542,6 @@ const Expenses = () => {
               />
             </div>
           </div>
-
-          {/* <div className="sheet-scroll-buttons-container desktop">
-          <div className="scroll-left-container" onClick={() => {
-            handleSheetScrollLeft();
-          }}>
-            <AiFillCaretLeft className="scroll-left-button"/>
-          </div>
-          <div className="scroll-right-container" onClick={() => {
-            handleSheetScrollRight();
-          }}>
-            <AiFillCaretRight className="scroll-right-button" />
-          </div>
-        </div> */}
 
           <Sheet
             className="mobile"

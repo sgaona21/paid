@@ -663,7 +663,7 @@ body {
     .dash-options-desktop li {
         color: rgba(245, 245, 245, 0.806);
         padding: .75rem;
-        border-radius: 10px;
+        border-radius: 15px;
         background-color: #31353a73;
         text-align: center;
     }

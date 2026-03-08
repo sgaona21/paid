@@ -160,31 +160,16 @@ router.post('/signup', asyncHandler(async (req, res) => {
 
 // RESTORE
 // Restores currentUser state to persist after a page refresh
-// router.get("/restore", authJwt, asyncHandler(async (req, res) => {
-//   const user = await User.findByPk(req.currentUser.id, {
-//     attributes: ["id", "email", "firstName"],
-//   });
-
-//   if (!user) return res.status(204).end();
-//   res.json(user);
-// }));
-
 router.get("/restore", authJwt, asyncHandler(async (req, res) => {
-
-  if (!req.currentUser) {
-    return res.json(null);
-  }
-
   const user = await User.findByPk(req.currentUser.id, {
     attributes: ["id", "email", "firstName"],
   });
 
-  if (!user) {
-    return res.json(null);
-  }
-
-  return res.json(user);
+  if (!user) return res.status(204).end();
+  res.json(user);
 }));
+
+
 
 
 

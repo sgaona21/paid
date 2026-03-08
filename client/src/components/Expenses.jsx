@@ -75,6 +75,7 @@ const Expenses = () => {
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",
+        cache: "no-store",
       });
 
       if (!res.ok) {

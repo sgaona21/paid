@@ -1,44 +1,43 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    "User",
+    {
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
       firstName: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       lastName: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       email: {
-        type: Sequelize.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false,
         unique: true,
       },
       passwordHash: {
-        type: Sequelize.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
-      createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
-  },
+    },
+    {
+      tableName: "Users",
+      timestamps: true,
+    }
+  );
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
-  },
+  User.associate = function (models) {
+    // add associations here later
+    // User.hasMany(models.Sheet, { foreignKey: "userId" });
+  };
+
+  return User;
 };

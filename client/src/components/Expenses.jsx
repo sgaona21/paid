@@ -108,7 +108,7 @@ const Expenses = () => {
       setUserExpenseData(data);
       setCurrentSheet(data.sheets?.[0] ?? null);
     } catch (err) {
-      console.error("updateUI crashed:", err);
+      console.error("ititialUpdateUI crashed:", err);
     }
   };
 
@@ -128,7 +128,7 @@ const Expenses = () => {
       setUserExpenseData(data);
       setCurrentSheet(data.sheets.at(-1));
     } catch (err) {
-      console.error("updateUI crashed:", err);
+      console.error("updateUIAFterNewSheetAdd crashed:", err);
     }
   };
 

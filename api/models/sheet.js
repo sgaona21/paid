@@ -37,8 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
     });
 
-    // later:
-    // Sheet.hasMany(models.Expense, { foreignKey: "sheetId" })
+    Sheet.hasMany(models.Expense, { foreignKey: "sheetId" })
   };
 
   return Sheet;

@@ -1,11 +1,11 @@
 export const demoData = {
   sheets: [
-    { label: "January", netIncome: 7200, userId: 8 },
-    { label: "February", netIncome: 6400, userId: 8 },
-    { label: "March", netIncome: 8100, userId: 8 },
-    { label: "April", netIncome: 5600, userId: 8 },
-    { label: "May", netIncome: 9300, userId: 8 },
-    { label: "June", netIncome: 7800, userId: 8 }
+    { label: "January", netIncome: 7200, userId: 1 },
+    { label: "February", netIncome: 6400, userId: 1 },
+    { label: "March", netIncome: 8100, userId: 1 },
+    { label: "April", netIncome: 5600, userId: 1 },
+    { label: "May", netIncome: 9300, userId: 1 },
+    { label: "June", netIncome: 7800, userId: 1 }
   ],
 
   expenses: [

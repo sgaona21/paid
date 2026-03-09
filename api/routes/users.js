@@ -16,7 +16,7 @@ router.post("/auth", asyncHandler(async (req, res) => {
       const { email, password } = req.body || {};
       const user = await User.findOne({
         where: { email: email.toLowerCase() },
-        attributes: ["id", "email", "passwordHash", "firstName"],
+        attributes: ["id", "email", "passwordHash", "firstName"]
       });
       if (!user) return res.status(401).json({ message: "Invalid email or password" });
 
@@ -48,14 +48,19 @@ router.post("/auth", asyncHandler(async (req, res) => {
 // DEMO LOGIN
 // Launches demo, creates 5 minute JWT, deletes sheets, creates new sheets 
 router.post("/demo", asyncHandler(async (req, res) => {
+  console.log("HEY YOU MADE IT STUPID");
       const { email, password } = req.body || {};
+      console.log("EMAIL:", email)
+      console.log(password);
       const user = await User.findOne({
         where: { email: email.toLowerCase() },
         attributes: ["id", "email", "passwordHash", "firstName"],
       });
+      console.log("HERE IS THE USER:", user);
       if (!user) return res.status(401).json({ message: "Invalid email or password" });
 
       const isAuth = await bcrypt.compare(password, user.passwordHash);
+      console.log("IS AUTH?!?!?!?!?:", isAuth);
       if (!isAuth) return res.status(401).json({ message: "Invalid email or password" });
 
       // 5 minute jwt for demo view
@@ -64,6 +69,7 @@ router.post("/demo", asyncHandler(async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "5m"}
       );
+      console.log("HERE IS THE TOKEN:", token)
 
       res.cookie("auth", token, {
         httpOnly: true,
@@ -72,15 +78,23 @@ router.post("/demo", asyncHandler(async (req, res) => {
         maxAge: 5 * 60 * 1000
       })
 
+      console.log("WE MADE IT PAST THE COOKIE!!!!!!!!!!")
       // Clear current sheet data for demo
       const demoUserId = user.id;
+
+      console.log("DMEO USER ID!!!!!:", demoUserId);
 
       await Sheet.destroy({
         where: { userId: demoUserId },
       });
 
+      console.log("WE MADE IT PAST THE DESTROY COMMAND!!!")
       // Generate Demo Seed Data
+      console.log("DEMO SHEETS:", demoSheets)
+      
       await Sheet.bulkCreate(demoSheets);
+
+      console.log("WE MADE IT PAST THE BULK CREATE!!!")
 
       const sheets = await Sheet.findAll({
         where: { userId: demoUserId },

@@ -424,7 +424,7 @@ const Expenses = () => {
     }
   }
 
-  const netIncomeNum = Number(currentSheet.netIncome ?? 0);
+  const netIncomeNum = Number(currentSheet?.netIncome ?? 0);
 
   if (isLoading) {
     return (

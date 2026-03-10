@@ -44,7 +44,7 @@ router.post("/auth", asyncHandler(async (req, res) => {
       //   maxAge: 30 * 60 * 1000,
       // });
 
-      const isLocalhost = process.env.NODE_ENV === "production";
+      const isLocalhost = process.env.NODE_ENV === "development";
 
       res.cookie("auth", token, {
         httpOnly: true,
@@ -95,11 +95,13 @@ router.post("/demo", asyncHandler(async (req, res) => {
       //   maxAge: 5 * 60 * 1000
       // })
 
+      const isLocalhost = process.env.NODE_ENV === "development";
+
       res.cookie("auth", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 30 * 60 * 1000,
+        secure: !isLocalhost,
+        sameSite: isLocalhost ? "lax" : "none",
+        maxAge: 5 * 60 * 1000,
       });
 
 

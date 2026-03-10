@@ -35,10 +35,21 @@ router.post("/auth", asyncHandler(async (req, res) => {
       //   sameSite: "lax",
       //   maxAge: 30 * 60 * 1000
       // })
+
+
+      // res.cookie("auth", token, {
+      //   httpOnly: true,
+      //   secure: true,
+      //   sameSite: "none",
+      //   maxAge: 30 * 60 * 1000,
+      // });
+
+      const isLocalhost = process.env.NODE_ENV === "development";
+
       res.cookie("auth", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: !isLocalhost,
+        sameSite: isLocalhost ? "lax" : "none",
         maxAge: 30 * 60 * 1000,
       });
 

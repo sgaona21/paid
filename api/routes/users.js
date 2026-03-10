@@ -88,12 +88,20 @@ router.post("/demo", asyncHandler(async (req, res) => {
       );
       console.log("HERE IS THE TOKEN:", token)
 
+      // res.cookie("auth", token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === "production",
+      //   sameSite: "lax",
+      //   maxAge: 5 * 60 * 1000
+      // })
+
       res.cookie("auth", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 5 * 60 * 1000
-      })
+        secure: true,
+        sameSite: "none",
+        maxAge: 30 * 60 * 1000,
+      });
+
 
       console.log("WE MADE IT PAST THE COOKIE!!!!!!!!!!")
       // Clear current sheet data for demo

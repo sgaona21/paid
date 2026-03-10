@@ -93,6 +93,7 @@ const Expenses = () => {
   };
 
   const initialUIUpdate = async () => {
+    
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",
@@ -102,7 +103,7 @@ const Expenses = () => {
         console.warn("updateUI failed:", res.status);
         return;
       }
-
+      
       const data = await res.json();
       console.log("UserExpenseData from API:", data);
       setUserExpenseData(data);

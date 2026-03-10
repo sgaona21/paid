@@ -54,19 +54,19 @@ const LogIn = () => {
     }
   };
 
-  useEffect(() => {
-    fetch(`${API_BASE}/users/restore`, { credentials: "include" })
-      .then(async (res) => {
-        if (res.status === 204) return null;
-        if (!res.ok) return null;
-        return res.json();
-      })
-      .then((data) => {
-        if (data) {
-          navigate("/");
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${API_BASE}/users/restore`, { credentials: "include" })
+  //     .then(async (res) => {
+  //       if (res.status === 204) return null;
+  //       if (!res.ok) return null;
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       if (data) {
+  //         navigate("/");
+  //       }
+  //     });
+  // }, []);
 
   return (
     <div className="signup-container">

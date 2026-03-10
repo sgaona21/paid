@@ -17,7 +17,8 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://paidbudget.com",
-    "https://www.paidbudget.com"
+    "https://www.paidbudget.com",
+    "https://brilliant-truth-dev.up.railway.app"
   ],
   credentials: true
 }));

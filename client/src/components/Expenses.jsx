@@ -103,7 +103,7 @@ const Expenses = () => {
         console.warn("updateUI failed:", res.status);
         return;
       }
-      console.log('WE MADE IT HERE');
+      
       const data = await res.json();
       console.log("UserExpenseData from API:", data);
       setUserExpenseData(data);

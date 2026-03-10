@@ -18,7 +18,7 @@ const { User } = require("../models");
 exports.authJwt = async (req, res, next) => {
   try {
     const token = req.cookies?.auth;
-    console.log("HEYYYYYYY YO", token)
+    
     if (!token) {
       return res.status(401).json({ message: "Authentication required" });
     }

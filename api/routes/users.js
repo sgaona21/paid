@@ -9,6 +9,21 @@ const router = express.Router();
 const { demoData } = require("../demoData");
 const { sheets: demoSheets, expenses: demoExpenses } = demoData;
 
+const getAuthCookieOptions = (req, maxAge) => {
+  const origin = req.get("origin") || "";
+  const host = req.get("host") || "";
+  const requestHost = `${origin} ${host}`.toLowerCase();
+  const isLocalhost = requestHost.includes("localhost") || requestHost.includes("127.0.0.1") || requestHost.includes("[::1]");
+
+  return {
+    httpOnly: true,
+    secure: !isLocalhost,
+    sameSite: isLocalhost ? "lax" : "none",
+    path: "/",
+    ...(typeof maxAge === "number" ? { maxAge } : {}),
+  };
+};
+
 
 // AUTHENTICATE
 // Authenticates user and creates JWT
@@ -44,14 +59,15 @@ router.post("/auth", asyncHandler(async (req, res) => {
       //   maxAge: 30 * 60 * 1000,
       // });
 
-      const isLocalhost = process.env.NODE_ENV === "development";
+      // const isLocalhost = process.env.NODE_ENV === "development";
 
-      res.cookie("auth", token, {
-        httpOnly: true,
-        secure: !isLocalhost,
-        sameSite: isLocalhost ? "lax" : "none",
-        maxAge: 30 * 60 * 1000,
-      });
+      // res.cookie("auth", token, {
+      //   httpOnly: true,
+      //   secure: !isLocalhost,
+      //   sameSite: isLocalhost ? "lax" : "none",
+      //   maxAge: 30 * 60 * 1000,
+      // });
+      res.cookie("auth", token, getAuthCookieOptions(req, 30 * 60 * 1000));
 
       res.status(200).json({
         id: user.id,
@@ -95,14 +111,15 @@ router.post("/demo", asyncHandler(async (req, res) => {
       //   maxAge: 5 * 60 * 1000
       // })
 
-      const isLocalhost = process.env.NODE_ENV === "development";
+      // const isLocalhost = process.env.NODE_ENV === "development";
 
-      res.cookie("auth", token, {
-        httpOnly: true,
-        secure: !isLocalhost,
-        sameSite: isLocalhost ? "lax" : "none",
-        maxAge: 5 * 60 * 1000,
-      });
+      // res.cookie("auth", token, {
+      //   httpOnly: true,
+      //   secure: !isLocalhost,
+      //   sameSite: isLocalhost ? "lax" : "none",
+      //   maxAge: 5 * 60 * 1000,
+      // });
+      res.cookie("auth", token, getAuthCookieOptions(req, 5 * 60 * 1000));
 
 
       console.log("WE MADE IT PAST THE COOKIE!!!!!!!!!!")
@@ -214,23 +231,16 @@ router.get("/restore", authJwt, asyncHandler(async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
 // SIGN OUT
 // Deletes cookie and ends user session
 router.post('/signout', asyncHandler(async (req, res) => {
-  res.clearCookie("auth", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax"
-  })
+  // res.clearCookie("auth", {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: "lax"
+  // })
+
+  res.clearCookie("auth", getAuthCookieOptions(req))
 
   return res.status(204).send();
 }))

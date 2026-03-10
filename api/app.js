@@ -18,7 +18,7 @@ app.use(cors({
     "http://localhost:5173",
     "https://paidbudget.com",
     "https://www.paidbudget.com",
-    "https://proud-communication-dev.up.railway.app/"
+    "https://proud-communication-dev.up.railway.app"
   ],
   credentials: true
 }));

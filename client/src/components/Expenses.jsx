@@ -93,6 +93,7 @@ const Expenses = () => {
   };
 
   const initialUIUpdate = async () => {
+    console.log('WE MADE IT HERE')
     try {
       const res = await fetch(`${API_BASE}/expense`, {
         credentials: "include",

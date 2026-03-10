@@ -56,7 +56,7 @@ router.post("/auth", asyncHandler(async (req, res) => {
       res.status(200).json({
         id: user.id,
         email: user.email,
-        name: user.firstName,
+        firstName: user.firstName,
       })
 
   })
@@ -143,7 +143,7 @@ router.post("/demo", asyncHandler(async (req, res) => {
       res.status(200).json({
         id: user.id,
         email: user.email,
-        name: user.firstName,
+        firstName: user.firstName,
       })
 
   })

@@ -16,11 +16,12 @@ const { User } = require("../models");
 // };
 
 exports.authJwt = async (req, res, next) => {
+  console.log("hey dude i ran lol")
   try {
     const token = req.cookies?.auth;
-    
+    console.log("HERE IS THE COOKIE:", token);
     if (!token) {
-      return res.status(401).json({ message: "Authentication required" });
+      return res.status(401).json({ message: "From authJwt: Cookie Invalid or Missing" });
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);

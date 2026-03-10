@@ -29,12 +29,18 @@ router.post("/auth", asyncHandler(async (req, res) => {
         { expiresIn: "30m"}
       );
 
+      // res.cookie("auth", token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === "production",
+      //   sameSite: "lax",
+      //   maxAge: 30 * 60 * 1000
+      // })
       res.cookie("auth", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 30 * 60 * 1000
-      })
+        secure: true,
+        sameSite: "none",
+        maxAge: 30 * 60 * 1000,
+      });
 
       res.status(200).json({
         id: user.id,

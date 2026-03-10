@@ -38,6 +38,7 @@ const Layout = () => {
         })
         .then((data) => {
           if (data) context.actions.setCurrentUser(data);
+          console.log(data)
         })
         .finally(() => setAuthLoading(false));
     }, []);

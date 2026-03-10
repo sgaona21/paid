@@ -30,6 +30,7 @@ export const UserProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
+    
   };
 
     const signInDemo = async (credentials) => {

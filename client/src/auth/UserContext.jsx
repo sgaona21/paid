@@ -30,10 +30,9 @@ export const UserProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
-    
   };
 
-    const signInDemo = async (credentials) => {
+  const signInDemo = async (credentials) => {
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     try {
@@ -67,7 +66,7 @@ export const UserProvider = (props) => {
         actions: {
           signIn,
           setCurrentUser,
-          signInDemo
+          signInDemo,
         },
       }}
     >

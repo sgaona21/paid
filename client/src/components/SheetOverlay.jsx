@@ -1,4 +1,3 @@
-
 const SheetOverlay = ({
   userExpenseData,
   toggleSheetOverlay,
@@ -6,22 +5,22 @@ const SheetOverlay = ({
   setSheetOverlayVisible,
   setCurrentSheet,
   sheetOverlayVisible,
-  addSheet
+  addSheet,
 }) => {
-
   function selectSheet(sheet) {
     setSheetOverlayVisible(false);
-    setCurrentSheet(sheet)
+    setCurrentSheet(sheet);
   }
 
   return (
     <div
       className={`sheet-overlay-backdrop ${sheetOverlayVisible ? "show" : ""}`}
-      // onClick={() => toggleSheetOverlay()}
       onClick={() => setSheetOverlayVisible(false)}
     >
-      <div className={`sheet-overlay ${sheetOverlayVisible ? "show" : ""}`}
-      onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`sheet-overlay ${sheetOverlayVisible ? "show" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {userExpenseData.sheets.map((sheet) => (
           <div
             className="sheet-container"
@@ -31,13 +30,19 @@ const SheetOverlay = ({
           >
             {sheet.label}
 
-            {(sheet.id ?? sheet.clientId) === (currentSheet.id ?? currentSheet.clientId) && <div>✅</div>}
+            {(sheet.id ?? sheet.clientId) ===
+              (currentSheet.id ?? currentSheet.clientId) && <div>✅</div>}
           </div>
         ))}
-        <button className="add-sheet" onClick={() => {
-          addSheet();
-          setSheetOverlayVisible(false);
-          }}>Add Sheet</button>
+        <button
+          className="add-sheet"
+          onClick={() => {
+            addSheet();
+            setSheetOverlayVisible(false);
+          }}
+        >
+          Add Sheet
+        </button>
       </div>
     </div>
   );

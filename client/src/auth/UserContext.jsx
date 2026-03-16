@@ -4,6 +4,7 @@ const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [demoClicks, setDemoClicks] = useState(0);
 
   const signIn = async (credentials) => {
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -67,6 +68,7 @@ export const UserProvider = (props) => {
           signIn,
           setCurrentUser,
           signInDemo,
+          setDemoClicks
         },
       }}
     >

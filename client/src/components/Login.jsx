@@ -77,7 +77,13 @@ const LogIn = () => {
       </div>
 
       <div className="signup-content">
-        <button className="demo-option" onClick={launchDemo}>
+        <button
+          className="demo-option"
+          onClick={(e) => {
+            launchDemo(e);
+            context.actions.setDemoClicks((prev) => prev + 1);
+          }}
+        >
           View Demo
         </button>
 

@@ -52,6 +52,7 @@ const isRenamingThisSheet = renamingSheetId === id;
                 saveRename();
               }
             }}
+            onFocus={(e) => e.target.select()}
           />
         ) : (
           sheet.label

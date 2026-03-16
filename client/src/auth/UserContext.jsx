@@ -4,6 +4,7 @@ const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [demoClicks, setDemoClicks] = useState(0);
 
   const signIn = async (credentials) => {
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -30,10 +31,9 @@ export const UserProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
-    
   };
 
-    const signInDemo = async (credentials) => {
+  const signInDemo = async (credentials) => {
     const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
     try {
@@ -67,7 +67,8 @@ export const UserProvider = (props) => {
         actions: {
           signIn,
           setCurrentUser,
-          signInDemo
+          signInDemo,
+          setDemoClicks
         },
       }}
     >

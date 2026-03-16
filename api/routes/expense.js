@@ -1,13 +1,12 @@
-const express = require('express');
-const { asyncHandler } = require('../middleware/async-handler');
-const { authJwt } = require('../middleware/auth-jwt');
-const { Expense } = require('../models');
-const { User } = require('../models');
-const { Sheet } = require('../models');
+const express = require("express");
+const { asyncHandler } = require("../middleware/async-handler");
+const { authJwt } = require("../middleware/auth-jwt");
+const { Expense } = require("../models");
+const { User } = require("../models");
+const { Sheet } = require("../models");
 const router = express.Router();
 
-
-//GET EXPENSES 
+//GET EXPENSES
 // router.get('/', authJwt, asyncHandler(async (req, res) => {
 //   const userId = req.currentUser.id;
 //   console.log("THE USER ID", userId)
@@ -23,84 +22,92 @@ const router = express.Router();
 //     res.status(200).json(expenses);
 // }));
 
-// GET EXPENSES 
-router.get("/", authJwt, asyncHandler(async (req, res) => {
-  const userId = req.currentUser.id;
+// GET EXPENSES
+router.get(
+  "/",
+  authJwt,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUser.id;
 
-  const sheets = await Sheet.findAll({
-    where: { userId },
-    attributes: ["id", "label", "netIncome"],
-    order: [["id", "ASC"]],
-  });
+    const sheets = await Sheet.findAll({
+      where: { userId },
+      attributes: ["id", "label", "netIncome"],
+      order: [["id", "ASC"]],
+    });
 
-  const sheetIds = sheets.map(s => s.id);
+    const sheetIds = sheets.map((s) => s.id);
 
-  const expenses = sheetIds.length
-    ? await Expense.findAll({
-        where: { sheetId: sheetIds }, 
-        attributes: ["id", "name", "amount", "isPaid", "sheetId"],
-        order: [["id", "ASC"]],
-      })
-    : [];
+    const expenses = sheetIds.length
+      ? await Expense.findAll({
+          where: { sheetId: sheetIds },
+          attributes: ["id", "name", "amount", "isPaid", "sheetId"],
+          order: [["id", "ASC"]],
+        })
+      : [];
 
-  res.status(200).json({ sheets, expenses });
-}));
+    res.status(200).json({ sheets, expenses });
+  }),
+);
 
-
-
-// ADD 
+// ADD
 // Adds new expense row to db
-router.post('/add', asyncHandler(async (req, res) => {
-  try {
-    const expense = req.body;
-    await Expense.create(expense);
-    res.status(201).end();
-  } catch (error) {
-    if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
-      const errors = error.errors.map(err => err.message);
-      res.status(400).json({ errors });   
-    } else {
-      throw error;
+router.post(
+  "/add",
+  asyncHandler(async (req, res) => {
+    try {
+      const expense = req.body;
+      await Expense.create(expense);
+      res.status(201).end();
+    } catch (error) {
+      if (
+        error.name === "SequelizeValidationError" ||
+        error.name === "SequelizeUniqueConstraintError"
+      ) {
+        const errors = error.errors.map((err) => err.message);
+        res.status(400).json({ errors });
+      } else {
+        throw error;
+      }
     }
-  }
-}));
+  }),
+);
 
 // UPDATE
 // Updates row inputs and saves to db
-router.put("/:id", authJwt, asyncHandler(async (req, res) => {
-  const userId = req.currentUser.id;
-  const { id } = req.params;
+router.put(
+  "/:id",
+  authJwt,
+  asyncHandler(async (req, res) => {
+    const userId = req.currentUser.id;
+    const { id } = req.params;
 
-  const [updatedCount] = await Expense.update(
-    {
-      name: req.body.name,
-      amount: req.body.amount,
-      isPaid: req.body.isPaid,
-    },
-    { where: { id } }
-  );
+    const [updatedCount] = await Expense.update(
+      {
+        name: req.body.name,
+        amount: req.body.amount,
+        isPaid: req.body.isPaid,
+      },
+      { where: { id } },
+    );
 
-  if (updatedCount === 0) return res.status(404).json({ message: "Not found" });
+    if (updatedCount === 0)
+      return res.status(404).json({ message: "Not found" });
 
-  res.status(204).end();
-}));
+    res.status(204).end();
+  }),
+);
 
-
-
-// DELETE 
+// DELETE
 // Deletes expense row from db
-router.delete('/:id', asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  console.log("YEETING EXPENSE ID:", id);
+router.delete(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
 
-  await Expense.destroy({ where: { id } });
+    await Expense.destroy({ where: { id } });
 
-  res.status(204).end();
-}));
-
-
-
-
-
+    res.status(204).end();
+  }),
+);
 
 module.exports = router;

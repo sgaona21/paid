@@ -5,6 +5,8 @@ import "../styles/register-mobile-first.css";
 
 import UserContext from "../auth/UserContext";
 import paidLogo from "../assets/paid-logo.png";
+import { BsCheckCircleFill } from "react-icons/bs";
+
 
 const UserSignUp = () => {
   const navigate = useNavigate();
@@ -105,6 +107,7 @@ const UserSignUp = () => {
 
         <form className="signup-form" onSubmit={submitNewUser}>
           <h2 className="sign-header">Sign Up</h2>
+
           <div className="form-input-wrapper">
             <label htmlFor="firstName">First Name</label>
             <input
@@ -114,6 +117,9 @@ const UserSignUp = () => {
               value={newUser.firstName}
               onChange={handleChange}
             />
+          </div>
+          <div className="validation-checkmark">
+            <BsCheckCircleFill />
           </div>
 
           <div className="form-input-wrapper">
